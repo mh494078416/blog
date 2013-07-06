@@ -2,7 +2,7 @@
 title: idea intellij go "can’t find import" 解决方法
 date: '2013-07-04'
 description:
-categories:
+categories:go
 ---
 
 
