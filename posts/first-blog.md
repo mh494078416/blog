@@ -5,7 +5,6 @@ title: 你的第一篇博客
 permalink: '/2012/new-born.html'
 categories:
 - Gor
-- Blog
 tags:
 - Gor
 ---

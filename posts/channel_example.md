@@ -2,7 +2,12 @@
 title: go语言channel的别样用法
 date: '2013-07-10'
 description:
-categories:go
+categories:
+- Go
+tags:
+- Go
+- channel
+-并发
 ---
 
 1.返回值使用通道

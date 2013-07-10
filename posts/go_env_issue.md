@@ -2,13 +2,18 @@
 title: idea intellij go "can’t find import" 解决方法
 date: '2013-07-04'
 description:
-categories:go
+categories:
+- Go
+tags:
+- intellij
+- Go
+- ide
 ---
 
 
 尝试重多golang的ide，最后发现intellij目前做的完成度最高
 
-eclipse go 不能进行包、类、方法等的跳转，这点是无法忍受的，所以果断换成indellij
+eclipse go 不能进行包、类、方法等的跳转，这点是无法忍受的，所以果断换成intellij
 
 但是发现在intellij里面不能import `$GOPATH`里src下的包，网上搜索了很长时间，
 在这里找到解决方法：<https://github.com/mtoader/google-go-lang-idea-plugin/issues/224>
