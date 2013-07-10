@@ -4,8 +4,7 @@ date: '2013-07-10'
 description:
 categories:go
 ---
-Go语言channel的别样用法
---------------
+
 1.返回值使用通道
 
 ```
