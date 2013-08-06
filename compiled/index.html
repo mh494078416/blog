@@ -83,6 +83,46 @@
         
 
 <div class="post">
+    <h3 class="title"><a href="/java/java%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B9%8Blambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/">java函数式编程之lambda表达式</a> <span class="date">2013-08-06</span></h3>
+
+    <p>作为比较老牌的面向对象的编程语言java，在对函数式编程的支持上一直不温不火。</p>
+
+<p>认为面向对象式编程就应该纯粹的面向对象，于是经常看到这样的写法：如果你想写一个方法，那么就必须把它放到一个类里面，然后new出来对象，对象调用这个方法。</p>
+
+<p>这种方式在函数式编程语言看来太死板，没有必要在对待多种编程范式上采取非此即彼的做法。</p>
+
+<p>如今比较现代的编程语言也都是多编程范式的支持，不再去对一种编程范式固守一隅，一种语言可能会同时具有面向对象、函数式、元编程等多种特性，这方面java的后来者C#都走在她的前面。</p>
+
+<p>终于在jdk8里发现了lambda表达式的影子，java也开始加入这种函数式编程特性，java码农们终于在之前老土的方法之外有了一种更为简便的选择。</p>
+
+<ul>
+<li>首先来看，lambda之前java的做法：
+使用匿名内部类：</li>
+</ul>
+
+<pre><code>public void testAnonymousClass() {
+    Integer[] nums = {2, 5, 1, 6};
+    Arrays.sort(nums, new Comparator&lt;Integer&gt;() {
+        @Override
+        public int compare(Integer o1, Integer o2) {
+            if(o1 &lt; o2) 
+                return -1;
+            return 0;
+        }
+    });
+    for (Integer n : nums) {
+        System.out.println(n);
+    }
+}
+</code></pre>
+
+
+    <div class="more">
+        <a href="/java/java%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B9%8Blambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="btn">read more..</a>
+    </div>
+</div>
+
+<div class="post">
     <h3 class="title"><a href="/Go/go%E8%AF%AD%E8%A8%80channel%E7%9A%84%E5%88%AB%E6%A0%B7%E7%94%A8%E6%B3%95/">go语言channel的别样用法</a> <span class="date">2013-07-10</span></h3>
 
     <p>1.返回值使用通道</p>
@@ -225,6 +265,10 @@ sudo diskutil eject /dev/rdisk1
                 
                 <li>
   <a href="/categories/#Gor-ref">Gor <span>1</span></a>
+</li>
+                
+                <li>
+  <a href="/categories/#java-ref">java <span>1</span></a>
 </li>
                 
                 <li>
