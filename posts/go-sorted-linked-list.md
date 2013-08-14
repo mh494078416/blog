@@ -12,7 +12,7 @@ tags:go
 
 下面的例子就是使用go package 中的LinkedList实现的排序的链表。
 
-有几个功能特性：
+* 有几个功能特性：
 
 1.支持固定的长度
 
@@ -64,3 +64,37 @@ func (this SortedLinkedList) PutOnTop(value interface{}) {
 	}
 }
 ```
+
+* 使用方法：
+
+```
+package main
+import (
+	"fmt"
+	"codeforfun"
+)
+type WordCount struct {
+	Word  string
+	Count int
+}
+func compareValue(old, new interface {}) bool {
+	if new.(WordCount).Count > old.(WordCount).Count {
+		return true
+	}
+	return false
+}
+func main() {
+	wordCounts := []WordCount{
+		WordCount{"kate", 87},
+		WordCount{"herry", 92},
+		WordCount{"james", 81}}
+	var aSortedLinkedList = codeforfun.NewSortedLinkedList(10, compareValue)
+	for _, wordCount := range wordCounts {
+		aSortedLinkedList.PutOnTop(wordCount)
+	}
+	for element := aSortedLinkedList.List.Front(); element != nil; element = element.Next() {
+		fmt.Println(element.Value.(WordCount))
+	}
+}
+```
+
