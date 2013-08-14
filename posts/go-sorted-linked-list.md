@@ -15,10 +15,12 @@ tags:go
 有几个功能特性：
 
 1.支持固定的长度
+
 2.可自定义排序的规则
+
 3.组合LinkedList功能
 
-```
+```go
 package codeforfun
 import (
 	"container/list"

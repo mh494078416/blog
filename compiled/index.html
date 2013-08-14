@@ -83,6 +83,71 @@
         
 
 <div class="post">
+    <h3 class="title"><a href="/go/go%E5%AE%9E%E7%8E%B0%E6%8E%92%E5%BA%8F%E7%9A%84%E9%93%BE%E8%A1%A8/">go实现排序的链表</a> <span class="date">2013-08-14</span></h3>
+
+    <p>链表的数据结构比较线性数组，优点是 可以方便的对任意的位置进行插入和删除。</p>
+
+<p>这一特性使得它很适合于应用在排序等场景下，由于golang目前类库还不是很完善，在java中可以很简单的使用api提供的支持完成对list或者map的排序，在使用go时就没有那么幸运了，可能需要自己去实现。</p>
+
+<p>下面的例子就是使用go package 中的LinkedList实现的排序的链表。</p>
+
+<p>有几个功能特性：</p>
+
+<p>1.支持固定的长度
+2.可自定义排序的规则
+3.组合LinkedList功能</p>
+
+<pre><code>package codeforfun
+import (
+    &quot;container/list&quot;
+)
+type SortedLinkedList struct {
+    *list.List
+    Limit int
+    compareFunc func (old, new interface{}) bool
+}
+func NewSortedLinkedList(limit int, compare func (old, new interface{}) bool) *SortedLinkedList {
+    return &amp;SortedLinkedList{list.New(), limit, compare}
+}
+func (this SortedLinkedList) findInsertPlaceElement(value interface{}) *list.Element {
+    for element := this.Front(); element != nil; element = element.Next() {
+        tempValue := element.Value
+        if this.compareFunc(tempValue, value) {
+            return element
+        }
+    }
+    return nil
+}
+func (this SortedLinkedList) PutOnTop(value interface{}) {
+    if this.List.Len() == 0 {
+        this.PushFront(value)
+        return
+    }
+    if this.List.Len() &lt; this.Limit &amp;&amp; this.compareFunc(value, this.Back().Value) {
+        this.PushBack(value)
+        return
+    }
+    if this.compareFunc(this.List.Front().Value, value) {
+        this.PushFront(value)
+    } else if this.compareFunc(this.List.Back().Value, value) &amp;&amp; this.compareFunc(value, this.Front().Value) {
+        element := this.findInsertPlaceElement(value)
+        if element != nil {
+            this.InsertBefore(value, element)
+        }
+    }
+    if this.Len() &gt; this.Limit {
+        this.Remove(this.Back())
+    }
+}
+</code></pre>
+
+
+    <div class="more">
+        <a href="/go/go%E5%AE%9E%E7%8E%B0%E6%8E%92%E5%BA%8F%E7%9A%84%E9%93%BE%E8%A1%A8/" class="btn">read more..</a>
+    </div>
+</div>
+
+<div class="post">
     <h3 class="title"><a href="/java/java%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B9%8Blambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/">java函数式编程之lambda表达式</a> <span class="date">2013-08-06</span></h3>
 
     <p>作为比较老牌的面向对象的编程语言java，在对函数式编程的支持上一直不温不火。</p>
@@ -265,6 +330,10 @@ sudo diskutil eject /dev/rdisk1
                 
                 <li>
   <a href="/categories/#Gor-ref">Gor <span>1</span></a>
+</li>
+                
+                <li>
+  <a href="/categories/#go-ref">go <span>1</span></a>
 </li>
                 
                 <li>
