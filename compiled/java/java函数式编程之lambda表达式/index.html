@@ -210,7 +210,17 @@ lambda表达式中的代码块只包含一个语句，因此可以去掉大括�
 
 <p>采用的办法是在使用lambda表达式的类中生成一个实例方法，那么当然能够访问到这个类中定义的实例变量、静态变量和公开、私有方法。
 那和函数式编程相随相生的闭包问题是否支持了呢？
-通过上面的介绍可以看出java对函数式编程的实现，还是主要在编译时对lambda表达式的一些转化，让人看起来像是支持了匿名函数等函数式编程的特性，其实还是使用java自己的一套实现。所以在使用lambda表达式的时候最好头脑清醒，不要纠结是否闭包了。以上谈的是jdk8的预览版本，也可能正式版会做很多的改进，那就不得而知了。</p>
+通过上面的介绍可以看出java对函数式编程的实现，主要还是在编译时对lambda表达式的一些转化。
+让人看起来像是支持了匿名函数等函数式编程的特性，其实还是使用java自己的一套实现。所以在使用lambda表达式的时候最好头脑清醒，不要纠结是否闭包了。
+以上谈的是jdk8的预览版本，也可能正式版会做很多的改进，那就不得而知了。</p>
+
+<p>相关文章：</p>
+
+<p><a href="http://developer.51cto.com/art/201304/387681.htm">Java 8为什么需要Lambda表达式</a></p>
+
+<p><a href="http://developer.51cto.com/art/201206/344308.htm">Java 8的Lambda表达式</a></p>
+
+<p><a href="http://www.cnblogs.com/xuqingfeng/archive/2013/04/26/about-Java8-lambda-expression.html">说说Java 8中的Lambda表达式</a></p>
 
         <hr>
         <div class="pagination">
