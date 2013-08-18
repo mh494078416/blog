@@ -89,7 +89,9 @@
 
 <p>下面的例子就是使用go package 中的LinkedList实现的排序的链表。</p>
 
-<p>有几个功能特性：</p>
+<ul>
+<li>有几个功能特性：</li>
+</ul>
 
 <p>1.支持固定的长度</p>
 
@@ -137,6 +139,40 @@ func (this SortedLinkedList) PutOnTop(value interface{}) {
     }
     if this.Len() &gt; this.Limit {
         this.Remove(this.Back())
+    }
+}
+</code></pre>
+
+<ul>
+<li>使用方法：</li>
+</ul>
+
+<pre><code>package main
+import (
+    &quot;fmt&quot;
+    &quot;codeforfun&quot;
+)
+type WordCount struct {
+    Word  string
+    Count int
+}
+func compareValue(old, new interface {}) bool {
+    if new.(WordCount).Count &gt; old.(WordCount).Count {
+        return true
+    }
+    return false
+}
+func main() {
+    wordCounts := []WordCount{
+        WordCount{&quot;kate&quot;, 87},
+        WordCount{&quot;herry&quot;, 92},
+        WordCount{&quot;james&quot;, 81}}
+    var aSortedLinkedList = codeforfun.NewSortedLinkedList(10, compareValue)
+    for _, wordCount := range wordCounts {
+        aSortedLinkedList.PutOnTop(wordCount)
+    }
+    for element := aSortedLinkedList.List.Front(); element != nil; element = element.Next() {
+        fmt.Println(element.Value.(WordCount))
     }
 }
 </code></pre>
