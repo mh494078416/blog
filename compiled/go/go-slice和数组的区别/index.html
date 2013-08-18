@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>go实现排序的链表</title>
+    <title>go slice和数组的区别</title>
     
     <meta name="author" content="mahang">
 
@@ -78,118 +78,72 @@
 
     <div class="content">
         <div class="page-header">
-    <h1>go实现排序的链表 </h1>
+    <h1>go slice和数组的区别 </h1>
 </div>
 
 <div class="row">
     <div class="span9">
-        <p>链表的数据结构比较线性数组，优点是 可以方便的对任意的位置进行插入和删除。</p>
+        <p>1.使用方式</p>
 
-<p>这一特性使得它很适合于应用在排序等场景下，由于golang目前类库还不是很完善，在java中可以很简单的使用api提供的支持完成对list或者map的排序，在使用go时就没有那么幸运了，可能需要自己去实现。</p>
+<p>数组和slice长的很像，操作方式也都差不多，并且slice包含了数组的基本的操作方式，如下标、range循环，还有一些如len()则是多种类型共用，所以根据操作根本搞不清数组和切片的区别，能够看出区别的地方主要看如何声明的。</p>
 
-<p>下面的例子就是使用go package 中的LinkedList实现的排序的链表。</p>
+<p>数组的声明方式很单一，通常就是下面这样：</p>
 
-<ul>
-<li>有几个功能特性：</li>
-</ul>
-
-<p>1.支持固定的长度</p>
-
-<p>2.可自定义排序的规则</p>
-
-<p>3.组合LinkedList功能</p>
-
-<pre><code class="go">package codeforfun
-import (
-    &quot;container/list&quot;
-)
-type SortedLinkedList struct {
-    *list.List
-    Limit int
-    compareFunc func (old, new interface{}) bool
-}
-func NewSortedLinkedList(limit int, compare func (old, new interface{}) bool) *SortedLinkedList {
-    return &amp;SortedLinkedList{list.New(), limit, compare}
-}
-func (this SortedLinkedList) findInsertPlaceElement(value interface{}) *list.Element {
-    for element := this.Front(); element != nil; element = element.Next() {
-        tempValue := element.Value
-        if this.compareFunc(tempValue, value) {
-            return element
-        }
-    }
-    return nil
-}
-func (this SortedLinkedList) PutOnTop(value interface{}) {
-    if this.List.Len() == 0 {
-        this.PushFront(value)
-        return
-    }
-    if this.List.Len() &lt; this.Limit &amp;&amp; this.compareFunc(value, this.Back().Value) {
-        this.PushBack(value)
-        return
-    }
-    if this.compareFunc(this.List.Front().Value, value) {
-        this.PushFront(value)
-    } else if this.compareFunc(this.List.Back().Value, value) &amp;&amp; this.compareFunc(value, this.Front().Value) {
-        element := this.findInsertPlaceElement(value)
-        if element != nil {
-            this.InsertBefore(value, element)
-        }
-    }
-    if this.Len() &gt; this.Limit {
-        this.Remove(this.Back())
-    }
-}
+<pre><code>array1 := [5]int{1, 2, 3, 4, 5}
+array2 := [5]int{}
 </code></pre>
 
-<ul>
-<li>使用方法：</li>
-</ul>
+<p>slice的声明方式就非常多样了，如前面介绍的几种：</p>
 
-<pre><code>package main
-import (
-    &quot;fmt&quot;
-    &quot;codeforfun&quot;
-)
-type WordCount struct {
-    Word  string
-    Count int
+<pre><code>var slice1 = []int{1, 2, 3, 4, 5}
+var slice2 = make([]int, 0, 5)
+var slice3 = make([]int, 5, 5)
+var slice4 = make([]int, 5)
+</code></pre>
+
+<p>加上对数组的切片和append操作都会产生数组切片(slice)</p>
+
+<p>2.值传递or引用传递</p>
+
+<pre><code>func arrayModify(array [5]int) {
+    newArray := array
+    newArray[0] = 88
 }
-func compareValue(old, new interface {}) bool {
-    if new.(WordCount).Count &gt; old.(WordCount).Count {
-        return true
-    }
-    return false
+func sliceModify(slice []int) {
+    newSlice := slice
+    newSlice[0] = 88
 }
 func main() {
-    wordCounts := []WordCount{
-        WordCount{&quot;kate&quot;, 87},
-        WordCount{&quot;herry&quot;, 92},
-        WordCount{&quot;james&quot;, 81}}
-    var aSortedLinkedList = codeforfun.NewSortedLinkedList(10, compareValue)
-    for _, wordCount := range wordCounts {
-        aSortedLinkedList.PutOnTop(wordCount)
-    }
-    for element := aSortedLinkedList.List.Front(); element != nil; element = element.Next() {
-        fmt.Println(element.Value.(WordCount))
-    }
+    array := [5]int{1, 2, 3, 4, 5}
+    slice := []int{1, 2, 3, 4, 5}
+    arrayModify(array)
+    sliceModify(slice)
+    fmt.Println(array)
+    fmt.Println(slice)
 }
 </code></pre>
+
+<p>输出</p>
+
+<pre><code>[1 2 3 4 5]
+[88 2 3 4 5]
+</code></pre>
+
+<p>其实不只是数组，go语言中的大多数类型在函数中当作参数传递都是值语义的。也就是任何值语义的一种类型当作参数传递到调用的函数中，都会经过一次内容的copy，从一个方法栈中copy到另一个方法栈。这对于熟练java的同学需要进行一次彻底的观念转变，在java中除了少数的值类型是按照值传递，所有的类在函数传递时都是具有引用语义的，也就是通过指针传递，所以在使用时传递对象，不需要去分别值和引用。go说到底不是一种纯粹的面向对象的语言，更多的是一种更简单高效的C，所以在参数传递上跟C保持着基本的一致性。一些较大的数据类型，比如结构体、数组等，最好使用传递指针的方式，这样就能避免在函数传递时对数据的copy。</p>
 
         <hr>
         <div class="pagination">
             <ul>
                 <ul>
                     
-                    <li class="prev"><a href="/go/go%E9%80%92%E5%BD%92%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E4%BC%A0%E9%80%92%E6%95%B0%E7%BB%84%E5%88%87%E7%89%87slice/" title="go递归函数如何传递数组切片slice">&larr; Previous</a></li>
                     
+                    <li class="prev disabled"><a>&larr; Previous</a></li>
                     
 
                     <li><a href="/archive">Archive</a></li>
 
                     
-                    <li class="next"><a href="/java/java%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B9%8Blambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/" title="java函数式编程之lambda表达式">Next &rarr;</a></li>
+                    <li class="next"><a href="/go/go%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E6%95%B0%E7%BB%84%E5%88%87%E7%89%87slice/" title="go语言中的数组切片slice">Next &rarr;</a></li>
                     
                     
                 </ul>
@@ -215,7 +169,7 @@ func main() {
 
     <div class="span3">
         <h4>Published</h4>
-        <div class="date"><span>2013-08-14</span></div>
+        <div class="date"><span>2013-08-18</span></div>
         <br>
         <h4>Categories</h4>
         <ul class="tag_box">

@@ -1,6 +1,6 @@
 ---
 title: go slice和数组的区别
-date: '2013-08-18'
+date: '2013-08-17'
 description:
 categories:go
 tags:go

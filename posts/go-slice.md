@@ -1,6 +1,6 @@
 ---
 title: go语言中的数组切片slice
-date: '2013-08-18'
+date: '2013-08-16'
 description:
 categories:go 
 tags:go

@@ -3,9 +3,9 @@ title: go语言channel的别样用法
 date: '2013-07-10'
 description:
 categories:
-- Go
+- go
 tags:
-- Go
+- go
 - channel
 -并发
 ---
