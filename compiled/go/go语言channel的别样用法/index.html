@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>go实现排序的链表</title>
+    <title>go语言channel的别样用法</title>
     
     <meta name="author" content="mahang">
 
@@ -78,102 +78,165 @@
 
     <div class="content">
         <div class="page-header">
-    <h1>go实现排序的链表 </h1>
+    <h1>go语言channel的别样用法 </h1>
 </div>
 
 <div class="row">
     <div class="span9">
-        <p>链表的数据结构比较线性数组，优点是 可以方便的对任意的位置进行插入和删除。</p>
+        <p>1.返回值使用通道</p>
 
-<p>这一特性使得它很适合于应用在排序等场景下，由于golang目前类库还不是很完善，在java中可以很简单的使用api提供的支持完成对list或者map的排序，在使用go时就没有那么幸运了，可能需要自己去实现。</p>
-
-<p>下面的例子就是使用go package 中的LinkedList实现的排序的链表。</p>
-
-<ul>
-<li>有几个功能特性：</li>
-</ul>
-
-<p>1.支持固定的长度</p>
-
-<p>2.可自定义排序的规则</p>
-
-<p>3.组合LinkedList功能</p>
-
-<pre><code class="go">package codeforfun
-import (
-    &quot;container/list&quot;
-)
-type SortedLinkedList struct {
-    *list.List
-    Limit int
-    compareFunc func (old, new interface{}) bool
+<pre><code>func main() {
+    // 生成随机数作为一个服务
+    randService := randGenerator()
+    // 从服务中读取随机数并打印
+    fmt.Printf(&quot;%d\n&quot;,&lt;-randService)
 }
-func NewSortedLinkedList(limit int, compare func (old, new interface{}) bool) *SortedLinkedList {
-    return &amp;SortedLinkedList{list.New(), limit, compare}
+func randGenerator() chan int {
+    // 创建通道
+    out := make(chan int)
+    // 创建协程
+    go func() {
+        for {
+            //向通道内写入数据，如果无人读取会等待
+            out &lt;- rand.Int()
+        }
+    }()
+    return out
 }
-func (this SortedLinkedList) findInsertPlaceElement(value interface{}) *list.Element {
-    for element := this.Front(); element != nil; element = element.Next() {
-        tempValue := element.Value
-        if this.compareFunc(tempValue, value) {
-            return element
+</code></pre>
+
+<p>2.参数使用通道</p>
+
+<pre><code>//一个查询结构体
+type query struct {
+    //参数Channel
+    sql chan string
+    //结果Channel
+    result chan string
+}
+//执行Query
+func execQuery(q query) {
+    //启动协程
+    go func() {
+        //获取输入
+        sql := &lt;-q.sql
+        //访问数据库，输出结果通道
+        q.result &lt;- &quot;get&quot; + sql
+    }()
+}
+func main() {
+    //初始化Query
+    q := query{make(chan string, 1),make(chan string, 1)}
+    //执行Query，注意执行的时候无需准备参数
+    execQuery(q)
+    //准备参数
+    q.sql &lt;- &quot;select * from table&quot;
+    //获取结果
+    fmt.Println(&lt;-q.result)
+}
+</code></pre>
+
+<p>3.并发循环</p>
+
+<pre><code>func doSomething(num int) (sum int) {
+    for i := 1; i &lt;= 10; i++ {
+        fmt.Printf(&quot;%d + %d = %d\n&quot;, num, num + i, num + num + i)
+        sum = sum + num + i
+    }
+    return sum
+}
+func testLoop() {
+    // 建立计数器，通道大小为cpu核数
+    var NumCPU = runtime.NumCPU()
+    fmt.Printf(&quot;NumCPU = %d\n&quot;, NumCPU)
+    sem :=make(chan int, NumCPU);
+    //FOR循环体
+    data := []int{1, 11, 21, 31, 41, 51, 61, 71, 81, 91}
+    for _,v:= range data {
+        //建立协程
+        go func (v int) {
+            fmt.Printf(&quot;doSomething(%d)...\n&quot;, v)
+            sum := doSomething(v);
+            //计数
+            sem &lt;- sum;
+        } (v);
+    }
+    // 等待循环结束
+    var total int = 0
+    for i := 0; i &lt; len(data); i++ {
+        temp := &lt;- sem
+        fmt.Printf(&quot;%d &lt;- sem\n&quot;, temp)
+        total = total + temp
+    }
+    fmt.Printf(&quot;total = %d\n&quot;, total)
+}
+func main() {
+    testLoop()
+}
+</code></pre>
+
+<p>4.利用channel计算素数</p>
+
+<pre><code>// Send the sequence 2, 3, 4, ... to channel 'in'.
+func Generate(ch chan int) {
+    for i := 2; ; i++ {
+        ch&lt;- i // Send 'i' to channel 'in'.
+    }
+}
+// Copy the values from channel 'in' to channel 'out',
+// removing those divisible by 'prime'.
+func Filter(in chan int, out chan int, prime int) {
+    for {
+        i := &lt;-in // Receive valuefrom 'in'.
+        if i%prime != 0 {
+            out &lt;- i // Send'i' to 'out'.
         }
     }
-    return nil
 }
-func (this SortedLinkedList) PutOnTop(value interface{}) {
-    if this.List.Len() == 0 {
-        this.PushFront(value)
-        return
-    }
-    if this.List.Len() &lt; this.Limit &amp;&amp; this.compareFunc(value, this.Back().Value) {
-        this.PushBack(value)
-        return
-    }
-    if this.compareFunc(this.List.Front().Value, value) {
-        this.PushFront(value)
-    } else if this.compareFunc(this.List.Back().Value, value) &amp;&amp; this.compareFunc(value, this.Front().Value) {
-        element := this.findInsertPlaceElement(value)
-        if element != nil {
-            this.InsertBefore(value, element)
-        }
-    }
-    if this.Len() &gt; this.Limit {
-        this.Remove(this.Back())
+func main() {
+    in := make(chan int)
+    go Generate(in)      // Launch Generate goroutine.
+    for i := 0; i &lt; 100; i++ {
+        prime := &lt;-in
+        print(prime, &quot;\n&quot;)
+        out := make(chan int)
+        go Filter(in, out, prime)
+        in = out
     }
 }
 </code></pre>
 
-<ul>
-<li>使用方法：</li>
-</ul>
+<p>5.共享变量的读写</p>
 
-<pre><code>package main
-import (
-    &quot;fmt&quot;
-    &quot;codeforfun&quot;
-)
-type WordCount struct {
-    Word  string
-    Count int
+<pre><code>//共享变量有一个读通道和一个写通道组成
+type shardedVar struct {
+    reader chan int
+    writer chan int
 }
-func compareValue(old, new interface {}) bool {
-    if new.(WordCount).Count &gt; old.(WordCount).Count {
-        return true
-    }
-    return false
+//共享变量维护协程
+func whachdog(v shardedVar) {
+    go func() {
+        //初始值
+        var value int = 0
+        for {
+            //监听读写通道，完成服务
+            select {
+            case value = &lt;-v.writer:
+            case v.reader &lt;-value:
+            }
+        }
+    }()
 }
 func main() {
-    wordCounts := []WordCount{
-        WordCount{&quot;kate&quot;, 87},
-        WordCount{&quot;herry&quot;, 92},
-        WordCount{&quot;james&quot;, 81}}
-    var aSortedLinkedList = codeforfun.NewSortedLinkedList(10, compareValue)
-    for _, wordCount := range wordCounts {
-        aSortedLinkedList.PutOnTop(wordCount)
-    }
-    for element := aSortedLinkedList.List.Front(); element != nil; element = element.Next() {
-        fmt.Println(element.Value.(WordCount))
-    }
+    //初始化，并开始维护协程
+    v := shardedVar{make(chan int), make(chan int)}
+    whachdog(v)
+    //读取初始值
+    fmt.Println(&lt;-v.reader)
+    //写入一个值
+    v.writer &lt;- 1
+    //读取新写入的值
+    fmt.Println(&lt;-v.reader)
 }
 </code></pre>
 
@@ -182,14 +245,14 @@ func main() {
             <ul>
                 <ul>
                     
-                    <li class="prev"><a href="/go/go%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E6%95%B0%E7%BB%84%E5%88%87%E7%89%87slice/" title="go语言中的数组切片slice">&larr; Previous</a></li>
+                    <li class="prev"><a href="/java/java%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B9%8Blambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/" title="java函数式编程之lambda表达式">&larr; Previous</a></li>
                     
                     
 
                     <li><a href="/archive">Archive</a></li>
 
                     
-                    <li class="next"><a href="/java/java%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B9%8Blambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/" title="java函数式编程之lambda表达式">Next &rarr;</a></li>
+                    <li class="next"><a href="/go/idea-intellij-go-%22can%E2%80%99t-find-import%22-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" title="idea intellij go &#34;can’t find import&#34; 解决方法">Next &rarr;</a></li>
                     
                     
                 </ul>
@@ -215,7 +278,7 @@ func main() {
 
     <div class="span3">
         <h4>Published</h4>
-        <div class="date"><span>2013-08-14</span></div>
+        <div class="date"><span>2013-07-10</span></div>
         <br>
         <h4>Categories</h4>
         <ul class="tag_box">
@@ -231,6 +294,14 @@ func main() {
             
             <li>
   <a href="/tags/#go-ref">go <span>6</span></a>
+</li>
+            
+            <li>
+  <a href="/tags/#channel-ref">channel <span>1</span></a>
+</li>
+            
+            <li>
+  <a href="/tags/#%E5%B9%B6%E5%8F%91-ref">并发 <span>1</span></a>
 </li>
             
         </ul>
