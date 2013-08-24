@@ -130,4 +130,4 @@ void runtime·appendslice(SliceType *t, Slice x, Slice y, Slice ret)
 
 后面的一篇文章会继续介绍切片和数组的一些区别:
 
-[go slice和数组的区别](http://geekfun.xicp.net/go/go-slice%E5%92%8C%E6%95%B0%E7%BB%84%E7%9A%84%E5%8C%BA%E5%88%AB/)
+[go slice和数组的区别](http://www.codeforfun.info/go/go-slice%E5%92%8C%E6%95%B0%E7%BB%84%E7%9A%84%E5%8C%BA%E5%88%AB/)
