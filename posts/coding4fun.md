@@ -2,8 +2,10 @@
 title: coding4fun代码比赛小结
 date: '2013-08-24'
 description:
-categories: go
-tags: go
+categories:
+- go
+tags:
+- go
 ---
 
 上周参加coding4fun的小比赛，赛题的大致意思就是充分利用多核CPU，看谁开发的程序最快。对于这类题目，语言的选择上就显得很重要，因为对于同样的算法，在都做了充分的优化的情况下，就剩下纯粹的比拼语言的执行效率了。

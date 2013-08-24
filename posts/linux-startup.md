@@ -3,9 +3,9 @@ title: 树莓派开机启动程序及启动脚本的制作
 date: '2013-08-24'
 description:
 categories:
-- raspberry pi
+- raspberry
 tags:
-- raspberry pi
+- raspberry
 - linux
 ---
 

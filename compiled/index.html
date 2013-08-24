@@ -83,40 +83,7 @@
         
 
 <div class="post">
-    <h3 class="title"><a href="/go/coding4fun%E4%BB%A3%E7%A0%81%E6%AF%94%E8%B5%9B%E5%B0%8F%E7%BB%93/">coding4fun代码比赛小结</a> <span class="date">2013-08-24</span></h3>
-
-    <p>上周参加coding4fun的小比赛，赛题的大致意思就是充分利用多核CPU，看谁开发的程序最快。对于这类题目，语言的选择上就显得很重要，因为对于同样的算法，在都做了充分的优化的情况下，就剩下纯粹的比拼语言的执行效率了。</p>
-
-<p>所以我选择了用go，可能有些同学还不太了解，首先看一下go语言的显著的几个特点：</p>
-
-<p>1.和c\c++一样都是编译型语言，直接编译成本地机器码执行，官方所说执行效率逼近c</p>
-
-<p>2.语言自带垃圾回收，编译时编译进运行时</p>
-
-<p>3.语言内建协程，以非常廉价的方式实现并行</p>
-
-<p>4.编程多范式支持，可以既面向过程又面向对象，还可以函数式编程</p>
-
-<ul>
-<li>下面简单说一下我的思路:</li>
-</ul>
-
-<p>1.我使用的字典树的数据结构，这种数据结构对于小文本的来说是比较有利的，后面换成大文本，字典树就有些力不从心了。基本结构就是一个节点代表一个字符，里面包含从这个节点向上遍历形成的单词的count。</p>
-
-<pre><code>type CharTreeNode struct {
-    Count    int
-    Children [26]*CharTreeNode
-}
-</code></pre>
-
-
-    <div class="more">
-        <a href="/go/coding4fun%E4%BB%A3%E7%A0%81%E6%AF%94%E8%B5%9B%E5%B0%8F%E7%BB%93/" class="btn">read more..</a>
-    </div>
-</div>
-
-<div class="post">
-    <h3 class="title"><a href="/raspberry pi/%E6%A0%91%E8%8E%93%E6%B4%BE%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8%E7%A8%8B%E5%BA%8F%E5%8F%8A%E5%90%AF%E5%8A%A8%E8%84%9A%E6%9C%AC%E7%9A%84%E5%88%B6%E4%BD%9C/">树莓派开机启动程序及启动脚本的制作</a> <span class="date">2013-08-24</span></h3>
+    <h3 class="title"><a href="/raspberry/%E6%A0%91%E8%8E%93%E6%B4%BE%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8%E7%A8%8B%E5%BA%8F%E5%8F%8A%E5%90%AF%E5%8A%A8%E8%84%9A%E6%9C%AC%E7%9A%84%E5%88%B6%E4%BD%9C/">树莓派开机启动程序及启动脚本的制作</a> <span class="date">2013-08-24</span></h3>
 
     <p>网上有不少关于如何让Linux自动运行自己编写的脚本或者程序的方法，但是大多数都是把命令写到/etc/rc.local里，这样虽然能够实现随机运行，但是并不够灵活。不能像mysql，apache等服务一样能够使用service命令或者调用init.d下的脚本启动、关闭或者重启进程。例如，</p>
 
@@ -159,7 +126,40 @@ esac
 
 
     <div class="more">
-        <a href="/raspberry pi/%E6%A0%91%E8%8E%93%E6%B4%BE%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8%E7%A8%8B%E5%BA%8F%E5%8F%8A%E5%90%AF%E5%8A%A8%E8%84%9A%E6%9C%AC%E7%9A%84%E5%88%B6%E4%BD%9C/" class="btn">read more..</a>
+        <a href="/raspberry/%E6%A0%91%E8%8E%93%E6%B4%BE%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8%E7%A8%8B%E5%BA%8F%E5%8F%8A%E5%90%AF%E5%8A%A8%E8%84%9A%E6%9C%AC%E7%9A%84%E5%88%B6%E4%BD%9C/" class="btn">read more..</a>
+    </div>
+</div>
+
+<div class="post">
+    <h3 class="title"><a href="/go/coding4fun%E4%BB%A3%E7%A0%81%E6%AF%94%E8%B5%9B%E5%B0%8F%E7%BB%93/">coding4fun代码比赛小结</a> <span class="date">2013-08-24</span></h3>
+
+    <p>上周参加coding4fun的小比赛，赛题的大致意思就是充分利用多核CPU，看谁开发的程序最快。对于这类题目，语言的选择上就显得很重要，因为对于同样的算法，在都做了充分的优化的情况下，就剩下纯粹的比拼语言的执行效率了。</p>
+
+<p>所以我选择了用go，可能有些同学还不太了解，首先看一下go语言的显著的几个特点：</p>
+
+<p>1.和c\c++一样都是编译型语言，直接编译成本地机器码执行，官方所说执行效率逼近c</p>
+
+<p>2.语言自带垃圾回收，编译时编译进运行时</p>
+
+<p>3.语言内建协程，以非常廉价的方式实现并行</p>
+
+<p>4.编程多范式支持，可以既面向过程又面向对象，还可以函数式编程</p>
+
+<ul>
+<li>下面简单说一下我的思路:</li>
+</ul>
+
+<p>1.我使用的字典树的数据结构，这种数据结构对于小文本的来说是比较有利的，后面换成大文本，字典树就有些力不从心了。基本结构就是一个节点代表一个字符，里面包含从这个节点向上遍历形成的单词的count。</p>
+
+<pre><code>type CharTreeNode struct {
+    Count    int
+    Children [26]*CharTreeNode
+}
+</code></pre>
+
+
+    <div class="more">
+        <a href="/go/coding4fun%E4%BB%A3%E7%A0%81%E6%AF%94%E8%B5%9B%E5%B0%8F%E7%BB%93/" class="btn">read more..</a>
     </div>
 </div>
 
@@ -475,19 +475,15 @@ sudo diskutil eject /dev/rdisk1
 </li>
                 
                 <li>
-  <a href="/categories/#Gor-ref">Gor <span>1</span></a>
-</li>
-                
-                <li>
   <a href="/categories/#java-ref">java <span>1</span></a>
 </li>
                 
                 <li>
-  <a href="/categories/#raspberry-pi-ref">raspberry pi <span>1</span></a>
+  <a href="/categories/#raspberry-ref">raspberry <span>2</span></a>
 </li>
                 
                 <li>
-  <a href="/categories/#raspberry-ref">raspberry <span>1</span></a>
+  <a href="/categories/#Gor-ref">Gor <span>1</span></a>
 </li>
                 
             </ul>

@@ -2,8 +2,10 @@
 title: go语言中的数组切片slice
 date: '2013-08-16'
 description:
-categories:go 
-tags:go
+categories:
+- go 
+tags:
+- go
 ---
 
 初看go语言中的slice，觉得是可变数组的一种很不错的实现，直接在语言语法的层面支持，操作方面比起java中的ArrayList方便了许多。但是在使用了一段时间后，觉得这东西埋的坑不少，使用方式上和arrayList也有很大的不同，在使用时要格外注意。

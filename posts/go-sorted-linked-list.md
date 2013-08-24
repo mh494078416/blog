@@ -2,8 +2,10 @@
 title: go实现排序的链表
 date: '2013-08-14'
 description:
-categories:go
-tags:go
+categories:
+- go
+tags:
+- go
 ---
 
 链表的数据结构比较线性数组，优点是 可以方便的对任意的位置进行插入和删除。

@@ -7,7 +7,7 @@ categories:
 tags:
 - go
 - channel
--并发
+- 并发
 ---
 
 1.返回值使用通道

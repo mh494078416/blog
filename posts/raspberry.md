@@ -2,7 +2,11 @@
 title: 树莓派折腾手记
 date: '2013-05-22'
 description: play with raspberry pi
-categories:raspberry
+categories:
+- raspberry
+tags:
+- raspberry
+- linux
 ---
 
 OS X下通过下面的命令能够把镜像写入SD

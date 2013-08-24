@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>go递归函数如何传递数组切片slice</title>
+    <title>树莓派开机启动程序及启动脚本的制作</title>
     
     <meta name="author" content="mahang">
 
@@ -78,77 +78,70 @@
 
     <div class="content">
         <div class="page-header">
-    <h1>go递归函数如何传递数组切片slice </h1>
+    <h1>树莓派开机启动程序及启动脚本的制作 </h1>
 </div>
 
 <div class="row">
     <div class="span9">
-        <p>数组切片slice这个东西看起来很美好，真正用起来会发现有诸多的不爽。</p>
+        <p>网上有不少关于如何让Linux自动运行自己编写的脚本或者程序的方法，但是大多数都是把命令写到/etc/rc.local里，这样虽然能够实现随机运行，但是并不够灵活。不能像mysql，apache等服务一样能够使用service命令或者调用init.d下的脚本启动、关闭或者重启进程。例如，</p>
 
-<p>第一，数组、数组切片混淆不清，使用方式完全一样，有时候一些特性又完全不一样，搞不清原理很容易误使用。</p>
+<p>service mysql restart
+service apache2 stop</p>
 
-<p>第二，数组切片的append操作，每次对slice append操作，都返回一个新的slice的引用，对slice的引用没法保持，这样在函数传递slice的情况下append，在调用函数的上下文中看不到slice append的效果。如果想要这种方式凑效，不得不另辟蹊径。本文主要说一下如何解决这个窘境的方法。</p>
+<p>或者</p>
 
-<p>第三，暂时想不起来，待补充..</p>
+<p>/etc/init.d/mysql restart
+/etc/init.d/apache2 stop</p>
 
-<p>函数传递slice存在什么问题？</p>
+<p>因为不同的Linux发行版本，对后台服务的处理方式不大一样，如redhat使用chkconfig来管理开机程序。所以下面的方法以debian类系统为例，如何写一个简单的开机启动脚本。所以，此方法适用于raspbian pi的系统。</p>
 
-<pre><code>func sliceModify(slice []int) {
-    // slice[0] = 88
-    slice = append(slice, 6)
-}
-func main() {
-    slice := []int{1, 2, 3, 4, 5}
-    sliceModify(slice)
-    fmt.Println(slice)
-}
+<p>以svn为例：</p>
+
+<p>1.制作开机启动脚本svn_serve</p>
+
+<pre><code>#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          svn_serve
+# Required-Start:    $remote_fs
+# Required-Stop:     $remote_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start or stop the HTTP Proxy.
+### END INIT INFO
+
+case $1 in
+    start)
+        svnserve -d -r /home/pi/svn_repository
+        ;;
+    stop)
+        killall svnserve
+        ;;
+*)
+echo &quot;Usage: $0 (start|stop)&quot;
+;;
+esac
 </code></pre>
 
-<p>输出：</p>
+<p>如果不加上面的注释，执行下面步骤3时，update-rc.d会报如下的警告信息</p>
 
-<pre><code>[1 2 3 4 5]
+<pre><code>update-rc.d: warning: /etc/init.d/proxy missing LSB information
+update-rc.d: see &lt;http://wiki.debian.org/LSBInitScripts&gt;
 </code></pre>
 
-<p>问题所在：</p>
+<p>2.启动关闭服务</p>
 
-<p>虽然说数组切片在函数传递时是按照引用的语义传递的，比如说在sliceModify函数里面slice[0] = 88，在方法调用的上下文中，调用函数对slice引用的改表是看得见的。</p>
-
-<p>但是在对slice进行append操作的时候，我们惊奇的发现，这次又不管用了。原因就是append操作会返回这个扩展了的slice的引用，必须让原引用重新赋值为新slice的引用，说白了就是，传递过来的这个指针原来指了内存中的A区域，A区域是原数组的真正所在。经过一次 append之后，要把这个指针改为指向B，B对应append后新的slice的引用。但是方法调用的上下文里的slice指针还是指向了老的A内存区域。</p>
-
-<p>这个逻辑实在有些奇葩，这里我不得不再次吐槽append的设计。有人说这个问题好解决啊，只需要在sliceModify函数的返回值中把append后新的slice引用返回就好了。这样做当然是可以滴，但是像递归调用的函数就不好解决了。</p>
-
-<p>下面就说一下这个问题的解决办法，方法也很简单，就是传递指针的指针。虽然有些绕，但是总算把问题解决了。当然也有其他的办法，比如按照java等语言的方式，自己实现一个ArrayList，在对可变数组扩展的时候，千万表改变引用了。</p>
-
-<pre><code>func sliceModify(slice *[]int) {
-    *slice = append(*slice, 6)
-}
-func main() {
-    slice := []int{1, 2, 3, 4, 5}
-    sliceModify(&amp;slice)
-    fmt.Println(slice)
-}
+<pre><code>sudo service svn_serve start
+sudo service svn_serve stop
 </code></pre>
 
-<p>这次就可以输出预期的结果了：</p>
+<p>3.让svn_serve开机启动</p>
 
-<pre><code>[1 2 3 4 5 6]
+<pre><code>sudo update-rc.d svn_serve defaults
 </code></pre>
 
-<p>递归调用的例子：</p>
+<p>4.取消svn_serve的开机自动启动</p>
 
-<pre><code>func insertTo10(arr *[]int) {
-    length := len(*arr)
-    if length == 10 {
-        return
-    }
-    *arr = append(*arr, length)
-    insertTo10(arr)
-}
-func main() {
-    arr10 := []int{}
-    insertTo10(&amp;arr10)
-    fmt.Println(arr10)
-}
+<pre><code>sudo update-rc.d -f svn_serve remove
 </code></pre>
 
         <hr>
@@ -156,14 +149,14 @@ func main() {
             <ul>
                 <ul>
                     
-                    <li class="prev"><a href="/go/coding4fun%E4%BB%A3%E7%A0%81%E6%AF%94%E8%B5%9B%E5%B0%8F%E7%BB%93/" title="coding4fun代码比赛小结">&larr; Previous</a></li>
                     
+                    <li class="prev disabled"><a>&larr; Previous</a></li>
                     
 
                     <li><a href="/archive">Archive</a></li>
 
                     
-                    <li class="next"><a href="/go/go-slice%E5%92%8C%E6%95%B0%E7%BB%84%E7%9A%84%E5%8C%BA%E5%88%AB/" title="go slice和数组的区别">Next &rarr;</a></li>
+                    <li class="next"><a href="/go/coding4fun%E4%BB%A3%E7%A0%81%E6%AF%94%E8%B5%9B%E5%B0%8F%E7%BB%93/" title="coding4fun代码比赛小结">Next &rarr;</a></li>
                     
                     
                 </ul>
@@ -189,13 +182,13 @@ func main() {
 
     <div class="span3">
         <h4>Published</h4>
-        <div class="date"><span>2013-08-18</span></div>
+        <div class="date"><span>2013-08-24</span></div>
         <br>
         <h4>Categories</h4>
         <ul class="tag_box">
             
             <li>
-  <a href="/categories/#go-ref">go <span>7</span></a>
+  <a href="/categories/#raspberry-ref">raspberry <span>2</span></a>
 </li>
             
         </ul>
@@ -204,7 +197,11 @@ func main() {
         <ul class="tag_box">
             
             <li>
-  <a href="/tags/#go-ref">go <span>7</span></a>
+  <a href="/tags/#raspberry-ref">raspberry <span>2</span></a>
+</li>
+            
+            <li>
+  <a href="/tags/#linux-ref">linux <span>2</span></a>
 </li>
             
         </ul>

@@ -2,8 +2,10 @@
 title: go slice和数组的区别
 date: '2013-08-17'
 description:
-categories:go
-tags:go
+categories:
+- go
+tags:
+- go
 ---
 
 1.使用方式

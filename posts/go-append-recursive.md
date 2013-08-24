@@ -2,8 +2,10 @@
 title: go递归函数如何传递数组切片slice
 date: '2013-08-18'
 description:
-categories:go
-tags:go
+categories:
+- go
+tags:
+- go
 ---
 
 

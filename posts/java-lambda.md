@@ -2,8 +2,11 @@
 title: java函数式编程之lambda表达式
 date: '2013-08-06'
 description:
-categories:java
-tags:java
+categories:
+- java
+tags:
+- java
+- lambda
 ---
 作为比较老牌的面向对象的编程语言java，在对函数式编程的支持上一直不温不火。
 
