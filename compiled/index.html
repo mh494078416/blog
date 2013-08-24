@@ -116,6 +116,54 @@
 </div>
 
 <div class="post">
+    <h3 class="title"><a href="/raspberry pi/%E6%A0%91%E8%8E%93%E6%B4%BE%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8%E7%A8%8B%E5%BA%8F%E5%8F%8A%E5%90%AF%E5%8A%A8%E8%84%9A%E6%9C%AC%E7%9A%84%E5%88%B6%E4%BD%9C/">树莓派开机启动程序及启动脚本的制作</a> <span class="date">2013-08-24</span></h3>
+
+    <p>网上有不少关于如何让Linux自动运行自己编写的脚本或者程序的方法，但是大多数都是把命令写到/etc/rc.local里，这样虽然能够实现随机运行，但是并不够灵活。不能像mysql，apache等服务一样能够使用service命令或者调用init.d下的脚本启动、关闭或者重启进程。例如，</p>
+
+<p>service mysql restart
+service apache2 stop</p>
+
+<p>或者</p>
+
+<p>/etc/init.d/mysql restart
+/etc/init.d/apache2 stop</p>
+
+<p>因为不同的Linux发行版本，对后台服务的处理方式不大一样，如redhat使用chkconfig来管理开机程序。所以下面的方法以debian类系统为例，如何写一个简单的开机启动脚本。所以，此方法适用于raspbian pi的系统。</p>
+
+<p>以svn为例：</p>
+
+<p>1.制作开机启动脚本svn_serve</p>
+
+<pre><code>#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          svn_serve
+# Required-Start:    $remote_fs
+# Required-Stop:     $remote_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start or stop the HTTP Proxy.
+### END INIT INFO
+
+case $1 in
+    start)
+        svnserve -d -r /home/pi/svn_repository
+        ;;
+    stop)
+        killall svnserve
+        ;;
+*)
+echo &quot;Usage: $0 (start|stop)&quot;
+;;
+esac
+</code></pre>
+
+
+    <div class="more">
+        <a href="/raspberry pi/%E6%A0%91%E8%8E%93%E6%B4%BE%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8%E7%A8%8B%E5%BA%8F%E5%8F%8A%E5%90%AF%E5%8A%A8%E8%84%9A%E6%9C%AC%E7%9A%84%E5%88%B6%E4%BD%9C/" class="btn">read more..</a>
+    </div>
+</div>
+
+<div class="post">
     <h3 class="title"><a href="/go/go%E9%80%92%E5%BD%92%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E4%BC%A0%E9%80%92%E6%95%B0%E7%BB%84%E5%88%87%E7%89%87slice/">go递归函数如何传递数组切片slice</a> <span class="date">2013-08-18</span></h3>
 
     <p>数组切片slice这个东西看起来很美好，真正用起来会发现有诸多的不爽。</p>
@@ -404,35 +452,6 @@ sudo diskutil eject /dev/rdisk1
     </div>
 </div>
 
-<div class="post">
-    <h3 class="title"><a href="/2012/new-born.html">你的第一篇博客</a> <span class="date">2012-12-22</span></h3>
-
-    <h1>感谢你使用Gor编写博客</h1>
-
-<h2>本文位于 posts/first-blog.md , 你可以任何删掉,修改这个文件。</h2>
-
-<p>文件开头是当前文章的元数据</p>
-
-<ol>
-<li>date为自动生成, 当然,你可以修改,这是你的自由</li>
-<li>permalink 可以是固定地址,也可以由gor为你自动生成</li>
-<li>categories 就是分类, 可以多个</li>
-<li>tags 同理,多个标签也是很常见的</li>
-</ol>
-
-<p>请确保文件使用UTF8 without BOM编码</p>
-
-<h2>你可以通过执行下面的语句来新建一篇博客:</h2>
-
-<pre><code>gor post 文章标题
-</code></pre>
-
-
-    <div class="more">
-        <a href="/2012/new-born.html" class="btn">read more..</a>
-    </div>
-</div>
-
 
     </div>
     <div class="span3">
@@ -456,15 +475,19 @@ sudo diskutil eject /dev/rdisk1
 </li>
                 
                 <li>
+  <a href="/categories/#Gor-ref">Gor <span>1</span></a>
+</li>
+                
+                <li>
   <a href="/categories/#java-ref">java <span>1</span></a>
 </li>
                 
                 <li>
-  <a href="/categories/#raspberry-ref">raspberry <span>1</span></a>
+  <a href="/categories/#raspberry-pi-ref">raspberry pi <span>1</span></a>
 </li>
                 
                 <li>
-  <a href="/categories/#Gor-ref">Gor <span>1</span></a>
+  <a href="/categories/#raspberry-ref">raspberry <span>1</span></a>
 </li>
                 
             </ul>
