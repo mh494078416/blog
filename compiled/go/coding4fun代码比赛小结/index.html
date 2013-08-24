@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>coding4fun代码比赛小结</title>
+    
+    <meta name="author" content="mahang">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/twitter/stylesheets/bootstrap.min.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/twitter/stylesheets/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/twitter/widgets/google_prettify/stylesheets/twitter-bootstrap.css" type="text/css" rel="stylesheet" media="all">
+
+
+    <!-- Le fav and touch icons -->
+    <!-- Update these with your own images
+      <link rel="shortcut icon" href="images/favicon.ico">
+      <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+      <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+      <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+    -->
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" href="/">树莓派的奇幻漂流</a>
+            <ul class="nav">
+                
+                
+
+
+  <li><a href="/archive">Archive</a></li>
+
+
+                
+                
+
+
+  <li><a href="/tags">Tags</a></li>
+
+
+                
+                
+
+
+  <li><a href="/categories">Categories</a></li>
+
+
+                
+                
+
+
+  <li><a href="/pages">Pages</a></li>
+
+
+                
+                
+
+
+  <li><a href="/about">About Me</a></li>
+
+
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="content">
+        <div class="page-header">
+    <h1>coding4fun代码比赛小结 </h1>
+</div>
+
+<div class="row">
+    <div class="span9">
+        <p>上周参加coding4fun的小比赛，赛题的大致意思就是充分利用多核CPU，看谁开发的程序最快。对于这类题目，语言的选择上就显得很重要，因为对于同样的算法，在都做了充分的优化的情况下，就剩下纯粹的比拼语言的执行效率了。</p>
+
+<p>所以我选择了用go，可能有些同学还不太了解，首先看一下go语言的显著的几个特点：</p>
+
+<p>1.和c\c++一样都是编译型语言，直接编译成本地机器码执行，官方所说执行效率逼近c</p>
+
+<p>2.语言自带垃圾回收，编译时编译进运行时</p>
+
+<p>3.语言内建协程，以非常廉价的方式实现并行</p>
+
+<p>4.编程多范式支持，可以既面向过程又面向对象，还可以函数式编程</p>
+
+<ul>
+<li>下面简单说一下我的思路:</li>
+</ul>
+
+<p>1.我使用的字典树的数据结构，这种数据结构对于小文本的来说是比较有利的，后面换成大文本，字典树就有些力不从心了。基本结构就是一个节点代表一个字符，里面包含从这个节点向上遍历形成的单词的count。</p>
+
+<pre><code>type CharTreeNode struct {
+    Count    int
+    Children [26]*CharTreeNode
+}
+</code></pre>
+
+<p>2.申请一个很大的byte数组，一次性把文本读入内存。这个时间没什么好优化的了，因为即使是1.1G的文件，这个时间大约是600多ms。</p>
+
+<p>3.多协程构建字典树。引入生产者消费者模型，有生产线程不断从byte数组中拆分byte片段，这里的拆分需要注意的是不能把一个单词拆分成两半。</p>
+
+<p>然后把拆分出来的byte片段的指针不断放到缓冲通道里去，同时会启动和cpu核数相当的消费者协程不断从缓冲通道里消费byte片段。</p>
+
+<p>消费者协程共享同一棵字典树，一旦拿到byte片段，就调用构建字典树的方法。这里为什么采用这样的方案是因为，最初可以分为cpu核数 大的byte片段，然后每个线程分别去构建这几个大的片段，这时会发现，分割的粒度太粗，每个协程构建字典树的时间差异很大，有的很快完成，有的会慢一些。那么最终的总耗时时间会由最慢的协程决定。所以引入生产者消费者来达到使分割的粒度足够小，每个协程的构建时间能比较平均，最后总的耗时会整体变小。这里也是利用了go语言的高效并发通信的优势，go内建了协程间的通信通道，不同执行体之间的通信不像java一样采用共享内存的方式，而是采用erlang的方案，通过语言提供的高效通信通道来通信，换用go的话说就是Do not communicate by sharing memory; instead, share memory by communicating。通过这样的优化确实能达到各个执行体的耗时比较平均，总体的提升有1秒多的样子，但是依然是主要耗时任务，这个过程差不多就要3s了。</p>
+
+<p>4.等待所有协程构建字典树完成，然后遍历字典树，count的值大于1的节点向上遍历就可以形成一个单词，然后把单词和他的count插入到一个长度固定的排序的链表，就可以拿到最后的结果。这个遍历字典树和排序的过程会总共耗时30~40ms。</p>
+
+<ul>
+<li>比赛总结：</li>
+</ul>
+
+<p>所以上面的主要四个过程，可以说构建字典树占用了绝大多数的时间。这也就是文本开始是20m大小时，比较快的几个中有好多字典树的方案，到后面使用1G的文本时，他们多消失不见了。字典树这种结构个人感觉比较适合于小文本的情况，文本越大，它的劣势也就越明显。粗略估计，问题在于，字典树以字符为维度统计，而map以单词为维度统计。例如，一个小文本，可以共有100w个字符、2w种单词，比例为50；一个大文本，字符共有10000w个，单词可能是4w种，比例为2500。所以文本越大map就会相对越节省时间。</p>
+
+<p>语言的选择固然重要，所以看到前五名都是c++。但是现代语言都已经很成熟，运行效率相差不大的情况下，采用的数据结构和算法才是决定因素。</p>
+
+        <hr>
+        <div class="pagination">
+            <ul>
+                <ul>
+                    
+                    
+                    <li class="prev disabled"><a>&larr; Previous</a></li>
+                    
+
+                    <li><a href="/archive">Archive</a></li>
+
+                    
+                    <li class="next"><a href="/go/go%E9%80%92%E5%BD%92%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E4%BC%A0%E9%80%92%E6%95%B0%E7%BB%84%E5%88%87%E7%89%87slice/" title="go递归函数如何传递数组切片slice">Next &rarr;</a></li>
+                    
+                    
+                </ul>
+            </ul>
+        </div>
+        <hr>
+        
+<div id="disqus_thread"></div>
+<script>
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    </div>
+
+    <div class="span3">
+        <h4>Published</h4>
+        <div class="date"><span>2013-08-24</span></div>
+        <br>
+        <h4>Categories</h4>
+        <ul class="tag_box">
+            
+            <li>
+  <a href="/categories/#go-ref">go <span>7</span></a>
+</li>
+            
+        </ul>
+        <br>
+        <h4>Tags</h4>
+        <ul class="tag_box">
+            
+            <li>
+  <a href="/tags/#go-ref">go <span>7</span></a>
+</li>
+            
+        </ul>
+    </div>
+</div>
+
+    </div>
+
+    <footer>
+        <p>&copy; mahang 2013
+            with help from <a href="http://github.com/wendal/gor" target="_blank" title="Gor -- Fast Blog">Gor</a>
+            and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+            and Idea from <a href="http://ruhoh.com" target="_blank" title="The Definitive Technical Blogging Framework">ruhoh</a>
+        </p>
+    </footer>
+
+</div> <!-- /container -->
+
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint linenums";
+  }
+  prettyPrint();
+</script>
+
+
+<script>
+    var _gaq=[['_setAccount','UA-123-12'],['_trackPageview']];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g,s)}(document,'script'));
+</script>
+</body>
+</html>
