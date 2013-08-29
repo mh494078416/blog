@@ -1,6 +1,6 @@
 ---
 title: coding4fun代码比赛小结
-date: '2013-08-24'
+date: '2013-08-27'
 description:
 categories:
 - go
@@ -32,7 +32,7 @@ type CharTreeNode struct {
 ```
 2.总体的流程图是：
 
-<img src="/assets/media/coding4fun.png" width="80%"/>
+<img src="/assets/media/coding4fun.png" style="max-width:800px" />
 
 3.申请一个很大的byte数组，一次性把文本读入内存。这个时间没什么好优化的了，因为即使是1.1G的文件，这个时间大约是600多ms。
 
