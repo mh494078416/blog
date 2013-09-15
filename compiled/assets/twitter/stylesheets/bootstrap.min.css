@@ -24,7 +24,7 @@ a{color:#0088cc;text-decoration:none;}
 a:hover{color:#005580;text-decoration:underline;}
 .row{margin-left:-20px;*zoom:1;}.row:before,.row:after{display:table;content:"";}
 .row:after{clear:both;}
-[class*="span"]{float:left;margin-left:50px;}
+[class*="span"]{float:left;margin-left:40px;}
 .container,.navbar-fixed-top .container,.navbar-fixed-bottom .container{width:85%;}
 .span12{width:95%;}
 .span11{width:860px;}
