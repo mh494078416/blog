@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>os x10.9源码编译升级svn1.8</title>
+    
+    <meta name="author" content="mahang">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/twitter/stylesheets/bootstrap.min.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/twitter/stylesheets/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/twitter/widgets/google_prettify/stylesheets/twitter-bootstrap.css" type="text/css" rel="stylesheet" media="all">
+
+
+    <!-- Le fav and touch icons -->
+    <!-- Update these with your own images
+      <link rel="shortcut icon" href="images/favicon.ico">
+      <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+      <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+      <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+    -->
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" href="/">树莓派的奇幻漂流</a>
+            <ul class="nav">
+                
+                
+
+
+  <li><a href="/archive">Archive</a></li>
+
+
+                
+                
+
+
+  <li><a href="/tags">Tags</a></li>
+
+
+                
+                
+
+
+  <li><a href="/categories">Categories</a></li>
+
+
+                
+                
+
+
+  <li><a href="/pages">Pages</a></li>
+
+
+                
+                
+
+
+  <li><a href="/about">About Me</a></li>
+
+
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="content">
+        <div class="page-header">
+    <h1>os x10.9源码编译升级svn1.8 </h1>
+</div>
+
+<div class="row">
+    <div class="span9">
+        <p>之前升级了开发者预览版的冲浪胜地os x 10.9，发现xcode里command line tools附带的svn版本是1.7，自己很多的代码工程都是svn1.8的版本，所以需要升级svn版本到1.8。但是尝试了几种方法，发现并不是很容易，折腾了几个小时的时间，下面把过程记录如下，方便后来者。</p>
+
+<p>首先想到的是，升级最新的xcode5.0，这样就可以使用最新的command line tools，开始时，这种方法是凑效的，升级xcode5.0后， svn确实是1.8了。但是过了没多久，系统提示升级xcode，升级之后发现，svn版本又退回到1.7。在尝试升级command line tools无果，所以尝试别的办法。</p>
+
+<p>从subversion官网下载二进制的安装包，但是只有os x 10.8的，安装到一半继续不下去，此路也不通。</p>
+
+<p>最后尝试svn源码编译，步骤如下：</p>
+
+<ol>
+<li>从<a href="http://subversion.apache.org/download/">官网</a>下载subversion-1.8.3.tar.gz（zip的试过不行），然后<code>tar -xvf subversion-1.8.3</code>解压缩。</li>
+<li>编译源码</li>
+</ol>
+
+<pre><code>cd subversion-1.8.3
+./configure --with-ssl
+make
+sudo make install
+</code></pre>
+
+<ol>
+<li>建立软链接</li>
+</ol>
+
+<pre><code>cd /usr/bin
+sudo ln -s ~/subversion-1.8.3/subversion/svn svn
+</code></pre>
+
+        <hr>
+        <div class="pagination">
+            <ul>
+                <ul>
+                    
+                    
+                    <li class="prev disabled"><a>&larr; Previous</a></li>
+                    
+
+                    <li><a href="/archive">Archive</a></li>
+
+                    
+                    <li class="next"><a href="/go/coding4fun%E4%BB%A3%E7%A0%81%E6%AF%94%E8%B5%9B%E5%B0%8F%E7%BB%93/" title="coding4fun代码比赛小结">Next &rarr;</a></li>
+                    
+                    
+                </ul>
+            </ul>
+        </div>
+        <hr>
+        
+<div id="disqus_thread"></div>
+<script>
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    </div>
+
+    <div class="span3">
+        <h4>Published</h4>
+        <div class="date"><span>2013-10-10</span></div>
+        <br>
+        <h4>Categories</h4>
+        <ul class="tag_box">
+            
+            <li>
+  <a href="/categories/#mac-ref">mac <span>1</span></a>
+</li>
+            
+        </ul>
+        <br>
+        <h4>Tags</h4>
+        <ul class="tag_box">
+            
+            <li>
+  <a href="/tags/#os-x-ref">os x <span>1</span></a>
+</li>
+            
+            <li>
+  <a href="/tags/#mac-ref">mac <span>1</span></a>
+</li>
+            
+            <li>
+  <a href="/tags/#svn-ref">svn <span>1</span></a>
+</li>
+            
+        </ul>
+    </div>
+</div>
+
+    </div>
+
+    <footer>
+        <p>&copy; mahang 2013
+            with help from <a href="http://github.com/wendal/gor" target="_blank" title="Gor -- Fast Blog">Gor</a>
+            and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+            and Idea from <a href="http://ruhoh.com" target="_blank" title="The Definitive Technical Blogging Framework">ruhoh</a>
+	</p>
+	<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cdiv align='center' id='cnzz_stat_icon_1000037964'%3E%3C/div%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1000037964%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+    </footer>
+
+</div> <!-- /container -->
+
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint linenums";
+  }
+  prettyPrint();
+</script>
+
+
+<script>
+    var _gaq=[['_setAccount','UA-123-12'],['_trackPageview']];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g,s)}(document,'script'));
+</script>
+</body>
+</html>

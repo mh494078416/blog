@@ -3,11 +3,11 @@ title: os x10.9源码编译升级svn1.8
 date: '2013-10-10'
 description:
 categories:
-mac
+- mac
 tags:
-os x
-mac
-svn
+- os x
+- mac
+- svn
 ---
 
 之前升级了开发者预览版的冲浪胜地os x 10.9，发现xcode里command line tools附带的svn版本是1.7，自己很多的代码工程都是svn1.8的版本，所以需要升级svn版本到1.8。但是尝试了几种方法，发现并不是很容易，折腾了几个小时的时间，下面把过程记录如下，方便后来者。

@@ -83,6 +83,38 @@
         
 
 <div class="post">
+    <h3 class="title"><a href="/mac/os-x10.9%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91%E5%8D%87%E7%BA%A7svn1.8/">os x10.9源码编译升级svn1.8</a> <span class="date">2013-10-10</span></h3>
+
+    <p>之前升级了开发者预览版的冲浪胜地os x 10.9，发现xcode里command line tools附带的svn版本是1.7，自己很多的代码工程都是svn1.8的版本，所以需要升级svn版本到1.8。但是尝试了几种方法，发现并不是很容易，折腾了几个小时的时间，下面把过程记录如下，方便后来者。</p>
+
+<p>首先想到的是，升级最新的xcode5.0，这样就可以使用最新的command line tools，开始时，这种方法是凑效的，升级xcode5.0后， svn确实是1.8了。但是过了没多久，系统提示升级xcode，升级之后发现，svn版本又退回到1.7。在尝试升级command line tools无果，所以尝试别的办法。</p>
+
+<p>从subversion官网下载二进制的安装包，但是只有os x 10.8的，安装到一半继续不下去，此路也不通。</p>
+
+<p>最后尝试svn源码编译，步骤如下：</p>
+
+<ol>
+<li>从<a href="http://subversion.apache.org/download/">官网</a>下载subversion-1.8.3.tar.gz（zip的试过不行），然后<code>tar -xvf subversion-1.8.3</code>解压缩。</li>
+<li>编译源码</li>
+</ol>
+
+<pre><code>cd subversion-1.8.3
+./configure --with-ssl
+make
+sudo make install
+</code></pre>
+
+<ol>
+<li>建立软链接</li>
+</ol>
+
+
+    <div class="more">
+        <a href="/mac/os-x10.9%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91%E5%8D%87%E7%BA%A7svn1.8/" class="btn">read more..</a>
+    </div>
+</div>
+
+<div class="post">
     <h3 class="title"><a href="/go/coding4fun%E4%BB%A3%E7%A0%81%E6%AF%94%E8%B5%9B%E5%B0%8F%E7%BB%93/">coding4fun代码比赛小结</a> <span class="date">2013-08-27</span></h3>
 
     <p>上周参加coding4fun的小比赛，赛题的大致意思就是充分利用多核CPU，看谁开发的程序最快。对于这类题目，语言的选择上就显得很重要，因为对于同样的算法，在都做了充分的优化的情况下，就剩下纯粹的比拼语言的执行效率了。</p>
@@ -424,34 +456,6 @@ In setting up the plugin you have to
     </div>
 </div>
 
-<div class="post">
-    <h3 class="title"><a href="/raspberry/%E6%A0%91%E8%8E%93%E6%B4%BE%E6%8A%98%E8%85%BE%E6%89%8B%E8%AE%B0/">树莓派折腾手记</a> <span class="date">2013-05-22</span></h3>
-
-    <h2>OS X下通过下面的命令能够把镜像写入SD</h2>
-
-<pre><code>unzip 2013-02-09-wheezy-raspbian.zip
-df -h
-sudo diskutil unmount /dev/rdisk1s1
-sudo dd bs=1m if=2013-02-09-wheezy-raspbian.img of=/dev/rdisk1
-sudo diskutil eject /dev/rdisk1
-</code></pre>
-
-<p>更换了一个更加快速的源</p>
-
-<hr />
-
-<p>pi的源列表: <a href="http://www.raspbian.org/RaspbianMirrors">http://www.raspbian.org/RaspbianMirrors</a> 测试了之后发现这个源在国内更新最快 <a href="http://mirror.devunt.kr/raspbian/raspbian/">http://mirror.devunt.kr/raspbian/raspbian/</a></p>
-
-<p>更换源：
-<code>sudo vi /etc/apt/sources.list</code>
-更改为：</p>
-
-
-    <div class="more">
-        <a href="/raspberry/%E6%A0%91%E8%8E%93%E6%B4%BE%E6%8A%98%E8%85%BE%E6%89%8B%E8%AE%B0/" class="btn">read more..</a>
-    </div>
-</div>
-
 
     </div>
     <div class="span3">
@@ -480,6 +484,10 @@ sudo diskutil eject /dev/rdisk1
                 
                 <li>
   <a href="/categories/#raspberry-ref">raspberry <span>2</span></a>
+</li>
+                
+                <li>
+  <a href="/categories/#mac-ref">mac <span>1</span></a>
 </li>
                 
                 <li>

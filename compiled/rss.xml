@@ -2,7 +2,13 @@
 <rss version="2.0">  <channel>
     <title>树莓派的奇幻漂流</title>
     <link>http://sample.com</link>
-    <pubDate>2013-09-15 04:04:54 +0800</pubDate>
+    <pubDate>2013-10-10 09:51:15 +0800</pubDate>
+    <item>
+      <title>os x10.9源码编译升级svn1.8</title>
+      <link>http://sample.com/mac/os-x10.9%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91%E5%8D%87%E7%BA%A7svn1.8/</link>
+      <pubDate>2013-10-10 12:00:00 +0800</pubDate>
+      <description>&lt;p&gt;之前升级了开发者预览版的冲浪胜地os x 10.9，发现xcode里command line tools附带的svn版本是1.7，自己很多的代码工程都是svn1.8的版本，所以需要升级svn版本到1.8。但是尝试了几种方法，发现并不是很容易，折腾了几个小时的时间，下面把过程记录如下，方便后来者。&lt;/p&gt;&#xA;&#xA;&lt;p&gt;首先想到的是，升级最新的xcode5.0，这样就可以使用最新的command line tools，开始时，这种方法是凑效的，升级xcode5.0后， svn确实是1.8了。但是过了没多久，系统提示升级xcode，升级之后发现，svn版本又退回到1.7。在尝试升级command line tools无果，所以尝试别的办法。&lt;/p&gt;&#xA;&#xA;&lt;p&gt;从subversion官网下载二进制的安装包，但是只有os x 10.8的，安装到一半继续不下去，此路也不通。&lt;/p&gt;&#xA;&#xA;&lt;p&gt;最后尝试svn源码编译，步骤如下：&lt;/p&gt;&#xA;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;从&lt;a href=&#34;http://subversion.apache.org/download/&#34;&gt;官网&lt;/a&gt;下载subversion-1.8.3.tar.gz（zip的试过不行），然后&lt;code&gt;tar -xvf subversion-1.8.3&lt;/code&gt;解压缩。&lt;/li&gt;&#xA;&lt;li&gt;编译源码&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&#xA;&lt;pre&gt;&lt;code&gt;cd subversion-1.8.3&#xA;./configure --with-ssl&#xA;make&#xA;sudo make install&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;建立软链接&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&#xA;&lt;pre&gt;&lt;code&gt;cd /usr/bin&#xA;sudo ln -s ~/subversion-1.8.3/subversion/svn svn&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;</description>
+    </item>
     <item>
       <title>coding4fun代码比赛小结</title>
       <link>http://sample.com/go/coding4fun%E4%BB%A3%E7%A0%81%E6%AF%94%E8%B5%9B%E5%B0%8F%E7%BB%93/</link>
