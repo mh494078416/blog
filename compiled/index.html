@@ -83,6 +83,33 @@
         
 
 <div class="post">
+    <h3 class="title"><a href="/坑/%E8%AE%B0openJDK%E9%87%8C%E8%B8%A9%E8%BF%87%E7%9A%84%E4%B8%80%E5%9D%91/">记openJDK里踩过的一坑</a> <span class="date">2013-10-26</span></h3>
+
+    <p>自己开发机器使用的是orcale官方jdk，在本地调试ok的代码，发到厂里线上的机器，采用的openjdk的版本，发现如何调试都不通。不同jdk对同样代码采用不同的处理方式，踩进这样的坑里，着实蛋疼，排查也很难想到在这里会出问题。最后发现有问题的是以下代码，因为jdk版本的不同，导致表现的结果不一样。</p>
+
+<pre><code>public static void main(String [] args) {
+    List&lt;Integer&gt; list = new ArrayList&lt;Integer&gt;();
+    list.add(5);
+    list.add(7);
+    list.add(3);
+    Collections.sort(list , new Comparator&lt;Integer&gt;() {
+        @Override
+        public int compare(Integer o1, Integer o2) {
+            return o1 - o2 &gt; 0 ? -1 : 0;
+        }
+    });
+    System.out.println(list);
+    
+}
+</code></pre>
+
+
+    <div class="more">
+        <a href="/坑/%E8%AE%B0openJDK%E9%87%8C%E8%B8%A9%E8%BF%87%E7%9A%84%E4%B8%80%E5%9D%91/" class="btn">read more..</a>
+    </div>
+</div>
+
+<div class="post">
     <h3 class="title"><a href="/mac/os-x10.9%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91%E5%8D%87%E7%BA%A7svn1.8/">os x10.9源码编译升级svn1.8</a> <span class="date">2013-10-10</span></h3>
 
     <p>之前升级了开发者预览版的冲浪胜地os x 10.9，发现xcode里command line tools附带的svn版本是1.7，自己很多的代码工程都是svn1.8的版本，所以需要升级svn版本到1.8。但是尝试了几种方法，发现并不是很容易，折腾了几个小时的时间，下面把过程记录如下，方便后来者。</p>
@@ -425,37 +452,6 @@ func randGenerator() chan int {
     </div>
 </div>
 
-<div class="post">
-    <h3 class="title"><a href="/go/idea-intellij-go-%22can%E2%80%99t-find-import%22-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/">idea intellij go &#34;can’t find import&#34; 解决方法</a> <span class="date">2013-07-04</span></h3>
-
-    <p>尝试重多golang的ide，最后发现intellij目前做的完成度最高</p>
-
-<p>eclipse go 不能进行包、类、方法等的跳转，这点是无法忍受的，所以果断换成intellij</p>
-
-<p>但是发现在intellij里面不能import <code>$GOPATH</code>里src下的包，网上搜索了很长时间，
-在这里找到解决方法：<a href="https://github.com/mtoader/google-go-lang-idea-plugin/issues/224">https://github.com/mtoader/google-go-lang-idea-plugin/issues/224</a></p>
-
-<blockquote>
-<pre><code>Looking through the source, it seems that the plugin doesn't use the $GOPATH (to be fair, I think earlier Go docs didn't make the distinction between using $GOPATH and $GOROOT quite as clear as they do now).
-In setting up the plugin you have to 
-1.) create symlinks for all of the imported package directories in your $GOPATH:
-    a. $GOROOT/src/pkg/ -&gt; $GOPATH/src
-    ex. from within $GOROOT/src/pkg, ln -s $GOPATH/src/github.com
-    b. $GOROOT/pkg/target/ -&gt; $GOPATH/pkg/target/
-    ex. from within $GOROOT/pkg/darwin_amd64, ln -s $GOPATH/pkg/darwin_amd64/code.google.com
-2.) you MUST set up a source directory when creating the project (however, it can be an empty string, which will then cause the wizard to prompt you that it will set the project root as the source directory)
-</code></pre>
-</blockquote>
-
-<p>附上一片比较完整搭建go环境的博文：
-<a href="http://icfly.cn/archives/2013/05/golang-ide.html">http://icfly.cn/archives/2013/05/golang-ide.html</a></p>
-
-
-    <div class="more">
-        <a href="/go/idea-intellij-go-%22can%E2%80%99t-find-import%22-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" class="btn">read more..</a>
-    </div>
-</div>
-
 
     </div>
     <div class="span3">
@@ -479,6 +475,14 @@ In setting up the plugin you have to
 </li>
                 
                 <li>
+  <a href="/categories/#Gor-ref">Gor <span>1</span></a>
+</li>
+                
+                <li>
+  <a href="/categories/#%E5%9D%91-ref">坑 <span>1</span></a>
+</li>
+                
+                <li>
   <a href="/categories/#java-ref">java <span>1</span></a>
 </li>
                 
@@ -488,10 +492,6 @@ In setting up the plugin you have to
                 
                 <li>
   <a href="/categories/#mac-ref">mac <span>1</span></a>
-</li>
-                
-                <li>
-  <a href="/categories/#Gor-ref">Gor <span>1</span></a>
 </li>
                 
             </ul>

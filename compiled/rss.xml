@@ -2,7 +2,13 @@
 <rss version="2.0">  <channel>
     <title>树莓派的奇幻漂流</title>
     <link>http://sample.com</link>
-    <pubDate>2013-10-10 09:51:15 +0800</pubDate>
+    <pubDate>2013-10-26 11:25:27 +0800</pubDate>
+    <item>
+      <title>记openJDK里踩过的一坑</title>
+      <link>http://sample.com/坑/%E8%AE%B0openJDK%E9%87%8C%E8%B8%A9%E8%BF%87%E7%9A%84%E4%B8%80%E5%9D%91/</link>
+      <pubDate>2013-10-26 12:00:00 +0800</pubDate>
+      <description>&lt;p&gt;自己开发机器使用的是orcale官方jdk，在本地调试ok的代码，发到厂里线上的机器，采用的openjdk的版本，发现如何调试都不通。不同jdk对同样代码采用不同的处理方式，踩进这样的坑里，着实蛋疼，排查也很难想到在这里会出问题。最后发现有问题的是以下代码，因为jdk版本的不同，导致表现的结果不一样。&lt;/p&gt;&#xA;&#xA;&lt;pre&gt;&lt;code&gt;public static void main(String [] args) {&#xA;    List&amp;lt;Integer&amp;gt; list = new ArrayList&amp;lt;Integer&amp;gt;();&#xA;    list.add(5);&#xA;    list.add(7);&#xA;    list.add(3);&#xA;    Collections.sort(list , new Comparator&amp;lt;Integer&amp;gt;() {&#xA;        @Override&#xA;        public int compare(Integer o1, Integer o2) {&#xA;            return o1 - o2 &amp;gt; 0 ? -1 : 0;&#xA;        }&#xA;    });&#xA;    System.out.println(list);&#xA;    &#xA;}&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&#xA;&lt;p&gt;在orcale jdk里，上面代面是能够按照预期正确排序的，输出结果：&lt;code&gt;[7, 5, 3]&lt;/code&gt;&lt;/p&gt;&#xA;&#xA;&lt;p&gt;open jdk里，输出结果： &lt;code&gt;[5, 7, 3]&lt;/code&gt;&lt;/p&gt;&#xA;&#xA;&lt;p&gt;原因在于&lt;code&gt;Comparator&lt;/code&gt;对&lt;code&gt;compare&lt;/code&gt;方法返回值的处理上。&lt;/p&gt;&#xA;&#xA;&lt;p&gt;躲坑的方法把&lt;code&gt;o1 - o2 &amp;gt; 0 ? -1 : 0&lt;/code&gt;改为&lt;code&gt;o1 - o2 &amp;gt; 0 ? -1 : 1&lt;/code&gt;&lt;/p&gt;&#xA;</description>
+    </item>
     <item>
       <title>os x10.9源码编译升级svn1.8</title>
       <link>http://sample.com/mac/os-x10.9%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91%E5%8D%87%E7%BA%A7svn1.8/</link>

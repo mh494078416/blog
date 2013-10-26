@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Pages</title>
+    <title>记openJDK里踩过的一坑</title>
     
     <meta name="author" content="mahang">
 
@@ -56,9 +56,9 @@
 
                 
                 
-  <li class="active"><a href="/pages" class="active">Pages</a></li>
 
 
+  <li><a href="/pages">Pages</a></li>
 
 
                 
@@ -77,109 +77,99 @@
 <div class="container">
 
     <div class="content">
-        
+        <div class="page-header">
+    <h1>记openJDK里踩过的一坑 </h1>
+</div>
+
 <div class="row">
     <div class="span9">
-        
-<ul>
+        <p>自己开发机器使用的是orcale官方jdk，在本地调试ok的代码，发到厂里线上的机器，采用的openjdk的版本，发现如何调试都不通。不同jdk对同样代码采用不同的处理方式，踩进这样的坑里，着实蛋疼，排查也很难想到在这里会出问题。最后发现有问题的是以下代码，因为jdk版本的不同，导致表现的结果不一样。</p>
 
-  
+<pre><code>public static void main(String [] args) {
+    List&lt;Integer&gt; list = new ArrayList&lt;Integer&gt;();
+    list.add(5);
+    list.add(7);
+    list.add(3);
+    Collections.sort(list , new Comparator&lt;Integer&gt;() {
+        @Override
+        public int compare(Integer o1, Integer o2) {
+            return o1 - o2 &gt; 0 ? -1 : 0;
+        }
+    });
+    System.out.println(list);
+    
+}
+</code></pre>
 
+<p>在orcale jdk里，上面代面是能够按照预期正确排序的，输出结果：<code>[7, 5, 3]</code></p>
 
-  <li><a href="/about">About Me</a></li>
+<p>open jdk里，输出结果： <code>[5, 7, 3]</code></p>
 
+<p>原因在于<code>Comparator</code>对<code>compare</code>方法返回值的处理上。</p>
 
+<p>躲坑的方法把<code>o1 - o2 &gt; 0 ? -1 : 0</code>改为<code>o1 - o2 &gt; 0 ? -1 : 1</code></p>
 
-  
+        <hr>
+        <div class="pagination">
+            <ul>
+                <ul>
+                    
+                    
+                    <li class="prev disabled"><a>&larr; Previous</a></li>
+                    
 
+                    <li><a href="/archive">Archive</a></li>
 
-  <li><a href="/archive">Archive</a></li>
-
-
-
-  
-
-
-  <li><a href="/categories">Categories</a></li>
-
-
-
-  
-
-
-  <li><a href="/">树莓派的奇幻漂流</a></li>
-
-
-
-  
-
-
-  <li><a href="/pages">Pages</a></li>
-
-
-
-  
-
-
-  <li><a href="/tags">Tags</a></li>
-
-
-
-</ul>
-    </div>
-    <div class="span3">
-        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
-            <ul class="nav nav-list">
-                <li class="nav-header">Site</li>
-                <li><a href="/archive">Archives</a></li>
-                <li><a href="/categories">Categories</a></li>
-                <li><a href="/tags">Tags</a></li>
-                <li><a href="/about">About</a></li>
+                    
+                    <li class="next"><a href="/mac/os-x10.9%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91%E5%8D%87%E7%BA%A7svn1.8/" title="os x10.9源码编译升级svn1.8">Next &rarr;</a></li>
+                    
+                    
+                </ul>
             </ul>
         </div>
-        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
-            <ul class="nav nav-list">
-                <li class="nav-header">
-                    Categories
-                </li>
-                
-                <li>
-  <a href="/categories/#go-ref">go <span>7</span></a>
-</li>
-                
-                <li>
-  <a href="/categories/#Gor-ref">Gor <span>1</span></a>
-</li>
-                
-                <li>
+        <hr>
+        
+<div id="disqus_thread"></div>
+<script>
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    </div>
+
+    <div class="span3">
+        <h4>Published</h4>
+        <div class="date"><span>2013-10-26</span></div>
+        <br>
+        <h4>Categories</h4>
+        <ul class="tag_box">
+            
+            <li>
   <a href="/categories/#%E5%9D%91-ref">坑 <span>1</span></a>
 </li>
-                
-                <li>
-  <a href="/categories/#java-ref">java <span>1</span></a>
+            
+        </ul>
+        <br>
+        <h4>Tags</h4>
+        <ul class="tag_box">
+            
+            <li>
+  <a href="/tags/#%E5%9D%91-ref">坑 <span>1</span></a>
 </li>
-                
-                <li>
-  <a href="/categories/#raspberry-ref">raspberry <span>2</span></a>
+            
+            <li>
+  <a href="/tags/#openJDK-ref">openJDK <span>1</span></a>
 </li>
-                
-                <li>
-  <a href="/categories/#mac-ref">mac <span>1</span></a>
-</li>
-                
-            </ul>
-        </div>
-        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
-            <ul class="nav nav-list">
-                <li class="nav-header">
-                    Links
-                </li>
-                <li><a href="http://www.cnblogs.com/mahang/" target="_blank">mac的学习笔记</a></li>
-            </ul>
-        </div>
-        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
-            <iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=2&ptype=1&speed=0&skin=5&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=1876499121&verifier=49ff9b08&dpc=1"></iframe>
-        </div>
+            
+        </ul>
     </div>
 </div>
 
