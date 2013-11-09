@@ -241,14 +241,17 @@ lsusb查看是否能找到移动硬盘的硬件
 ls -l /dev/查看sda开头的设备
 
 首先安装ntfs-3g
+
 ```sudo apt-get install ntfs-3g```
 
 ```sudo mount -t ntfs -o utf-8 /dev/sda5 /mnt/sda5```
+
 sda5是取决于你的实际情况，a表示第一个硬盘，5表示第5个分区。
 -t ntfs以ntfs文件格式挂载
 -o utf-8 设置文件编码
 开机自动挂载硬盘
 把上述的命令写入 /etc/fstab 文件中
+
 ```
 pi@raspberrypi /mnt/sda5 $ cat /etc/fstab
 proc            /proc           proc    defaults          0       0
@@ -257,6 +260,7 @@ proc            /proc           proc    defaults          0       0
 #/dev/mmcblk0p2  /               ext4    defaults,noatime  0       1
 /dev/sda5	/mnt/sda5	ntfs-3g	utf-8,noexec,umask=0000	0	0
 ```
+
 开机启动脚本
 -----------
 在/etc/init.d/ 下新建svnserve，新建完成后：sudo chmod +x svnserve，加可执行权限
