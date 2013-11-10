@@ -8,6 +8,7 @@ author :
   feedburner : mh494078416
 
 navigation :
+  - posts.md
   - archive.html
   - tags.html
   - categories.html
