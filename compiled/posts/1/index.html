@@ -1,0 +1,1031 @@
+
+
+
+<!DOCTYPE html>
+<html>
+  <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# githubog: http://ogp.me/ns/fb/githubog#">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=10">
+        <title>blog/themes/twitter/layouts/paginator.html at master · hugozhu/blog</title>
+    <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="GitHub" />
+    <link rel="fluid-icon" href="https://github.com/fluidicon.png" title="GitHub" />
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-114.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-144.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144.png" />
+    <link rel="logo" type="image/svg" href="https://github-media-downloads.s3.amazonaws.com/github-logo.svg" />
+    <meta property="og:image" content="https://github.global.ssl.fastly.net/images/modules/logos_page/Octocat.png">
+    <meta name="hostname" content="github-fe124-cp1-prd.iad.github.net">
+    <meta name="ruby" content="ruby 1.9.3p194-tcs-github-tcmalloc (0e75de19f8) [x86_64-linux]">
+    <link rel="assets" href="https://github.global.ssl.fastly.net/">
+    <link rel="conduit-xhr" href="https://ghconduit.com:25035/">
+    <link rel="xhr-socket" href="/_sockets" />
+    
+
+
+    <meta name="msapplication-TileImage" content="/windows-tile.png" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="selected-link" value="repo_source" data-pjax-transient />
+    <meta content="collector.githubapp.com" name="octolytics-host" /><meta content="collector-cdn.github.com" name="octolytics-script-host" /><meta content="github" name="octolytics-app-id" /><meta content="DCBF215E:3448:263CDF3:527F15ED" name="octolytics-dimension-request_id" /><meta content="3435178" name="octolytics-actor-id" /><meta content="mh494078416" name="octolytics-actor-login" /><meta content="ddbab7051dcc82306267eb70835e085afcb023aa411337b8d37b61072dde45fc" name="octolytics-actor-hash" />
+    
+
+    
+    
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="FlHps4D3gOAHlzblgQleGly5LSLrS0hr+nWnfZAS8FY=" name="csrf-token" />
+
+    <link href="https://github.global.ssl.fastly.net/assets/github-804556dba6658262abda18880c76c8b30304dcb3.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="https://github.global.ssl.fastly.net/assets/github2-3f000d5f6a217f4a3e6bf4941cce685bef6be8f8.css" media="all" rel="stylesheet" type="text/css" />
+    
+
+    
+
+      <script src="https://github.global.ssl.fastly.net/assets/frameworks-bca527bb59d94c16d6bf2a759779d7953fa41e76.js" type="text/javascript"></script>
+      <script src="https://github.global.ssl.fastly.net/assets/github-562aef0f367577dc23ee5d12795ac4e31b75e5fa.js" type="text/javascript"></script>
+      
+      <meta http-equiv="x-pjax-version" content="28c852459656e837e136705aa7db0159">
+
+        <link data-pjax-transient rel='permalink' href='/hugozhu/blog/blob/4173cda1e4cd02204d00bb8aef86dbe2175b3d8d/themes/twitter/layouts/paginator.html'>
+  <meta property="og:title" content="blog"/>
+  <meta property="og:type" content="githubog:gitrepository"/>
+  <meta property="og:url" content="https://github.com/hugozhu/blog"/>
+  <meta property="og:image" content="https://github.global.ssl.fastly.net/images/gravatars/gravatar-user-420.png"/>
+  <meta property="og:site_name" content="GitHub"/>
+  <meta property="og:description" content="blog - Personal Blog for hugozhu.myalert.info"/>
+
+  <meta name="description" content="blog - Personal Blog for hugozhu.myalert.info" />
+
+  <meta content="53586" name="octolytics-dimension-user_id" /><meta content="hugozhu" name="octolytics-dimension-user_login" /><meta content="8409536" name="octolytics-dimension-repository_id" /><meta content="hugozhu/blog" name="octolytics-dimension-repository_nwo" /><meta content="true" name="octolytics-dimension-repository_public" /><meta content="false" name="octolytics-dimension-repository_is_fork" /><meta content="8409536" name="octolytics-dimension-repository_network_root_id" /><meta content="hugozhu/blog" name="octolytics-dimension-repository_network_root_nwo" />
+  <link href="https://github.com/hugozhu/blog/commits/master.atom" rel="alternate" title="Recent Commits to blog:master" type="application/atom+xml" />
+
+  </head>
+
+
+  <body class="logged_in  env-production macintosh vis-public  page-blob">
+    <div class="wrapper">
+      
+      
+      
+      
+
+
+      <div class="header header-logged-in true">
+  <div class="container clearfix">
+
+    <a class="header-logo-invertocat" href="https://github.com/">
+  <span class="mega-octicon octicon-mark-github"></span>
+</a>
+
+    
+    <a href="/notifications" class="notification-indicator tooltipped downwards" data-gotokey="n" title="You have no unread notifications">
+        <span class="mail-status all-read"></span>
+</a>
+
+      <div class="command-bar js-command-bar  in-repository">
+          <form accept-charset="UTF-8" action="/search" class="command-bar-form" id="top_search_form" method="get">
+
+<input type="text" data-hotkey="/ s" name="q" id="js-command-bar-field" placeholder="Search or type a command" tabindex="1" autocapitalize="off"
+    
+    data-username="mh494078416"
+      data-repo="hugozhu/blog"
+      data-branch="master"
+      data-sha="fcb1d77f2cea92ac5dab8d6e55787a987c4b6cc4"
+  >
+
+    <input type="hidden" name="nwo" value="hugozhu/blog" />
+
+    <div class="select-menu js-menu-container js-select-menu search-context-select-menu">
+      <span class="minibutton select-menu-button js-menu-target">
+        <span class="js-select-button">This repository</span>
+      </span>
+
+      <div class="select-menu-modal-holder js-menu-content js-navigation-container">
+        <div class="select-menu-modal">
+
+          <div class="select-menu-item js-navigation-item js-this-repository-navigation-item selected">
+            <span class="select-menu-item-icon octicon octicon-check"></span>
+            <input type="radio" class="js-search-this-repository" name="search_target" value="repository" checked="checked" />
+            <div class="select-menu-item-text js-select-button-text">This repository</div>
+          </div> <!-- /.select-menu-item -->
+
+          <div class="select-menu-item js-navigation-item js-all-repositories-navigation-item">
+            <span class="select-menu-item-icon octicon octicon-check"></span>
+            <input type="radio" name="search_target" value="global" />
+            <div class="select-menu-item-text js-select-button-text">All repositories</div>
+          </div> <!-- /.select-menu-item -->
+
+        </div>
+      </div>
+    </div>
+
+  <span class="octicon help tooltipped downwards" title="Show command bar help">
+    <span class="octicon octicon-question"></span>
+  </span>
+
+
+  <input type="hidden" name="ref" value="cmdform">
+
+</form>
+        <ul class="top-nav">
+          <li class="explore"><a href="/explore">Explore</a></li>
+            <li><a href="https://gist.github.com">Gist</a></li>
+            <li><a href="/blog">Blog</a></li>
+          <li><a href="https://help.github.com">Help</a></li>
+        </ul>
+      </div>
+
+    
+
+
+  <ul id="user-links">
+    <li>
+      <a href="/mh494078416" class="name">
+        <img height="20" src="https://0.gravatar.com/avatar/ae2b1f41bda7343d401f26e484c496a8?d=https%3A%2F%2Fidenticons.github.com%2F542279f178eb57490bfd998d727ed617.png&amp;r=x&amp;s=140" width="20" /> mh494078416
+      </a>
+    </li>
+
+      <li>
+        <a href="/new" id="new_repo" class="tooltipped downwards" title="Create a new repo" aria-label="Create a new repo">
+          <span class="octicon octicon-repo-create"></span>
+        </a>
+      </li>
+
+      <li>
+        <a href="/settings/profile" id="account_settings"
+          class="tooltipped downwards"
+          aria-label="Account settings "
+          title="Account settings ">
+          <span class="octicon octicon-tools"></span>
+        </a>
+      </li>
+      <li>
+        <a class="tooltipped downwards" href="/logout" data-method="post" id="logout" title="Sign out" aria-label="Sign out">
+          <span class="octicon octicon-log-out"></span>
+        </a>
+      </li>
+
+  </ul>
+
+<div class="js-new-dropdown-contents hidden">
+  
+
+<ul class="dropdown-menu">
+  <li>
+    <a href="/new"><span class="octicon octicon-repo-create"></span> New repository</a>
+  </li>
+  <li>
+    <a href="/organizations/new"><span class="octicon octicon-organization"></span> New organization</a>
+  </li>
+
+
+
+    <li class="section-title">
+      <span title="hugozhu/blog">This repository</span>
+    </li>
+      <li>
+        <a href="/hugozhu/blog/issues/new"><span class="octicon octicon-issue-opened"></span> New issue</a>
+      </li>
+</ul>
+
+</div>
+
+
+    
+  </div>
+</div>
+
+      
+
+      
+
+
+
+
+          <div class="site" itemscope itemtype="http://schema.org/WebPage">
+    
+    <div class="pagehead repohead instapaper_ignore readability-menu">
+      <div class="container">
+        
+
+<ul class="pagehead-actions">
+
+    <li class="subscription">
+      <form accept-charset="UTF-8" action="/notifications/subscribe" class="js-social-container" data-autosubmit="true" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="authenticity_token" type="hidden" value="FlHps4D3gOAHlzblgQleGly5LSLrS0hr+nWnfZAS8FY=" /></div>  <input id="repository_id" name="repository_id" type="hidden" value="8409536" />
+
+    <div class="select-menu js-menu-container js-select-menu">
+      <a class="social-count js-social-count" href="/hugozhu/blog/watchers">
+        8
+      </a>
+      <span class="minibutton select-menu-button with-count js-menu-target" role="button" tabindex="0">
+        <span class="js-select-button">
+          <span class="octicon octicon-eye-watch"></span>
+          Watch
+        </span>
+      </span>
+
+      <div class="select-menu-modal-holder">
+        <div class="select-menu-modal subscription-menu-modal js-menu-content">
+          <div class="select-menu-header">
+            <span class="select-menu-title">Notification status</span>
+            <span class="octicon octicon-remove-close js-menu-close"></span>
+          </div> <!-- /.select-menu-header -->
+
+          <div class="select-menu-list js-navigation-container" role="menu">
+
+            <div class="select-menu-item js-navigation-item selected" role="menuitem" tabindex="0">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text">
+                <input checked="checked" id="do_included" name="do" type="radio" value="included" />
+                <h4>Not watching</h4>
+                <span class="description">You only receive notifications for discussions in which you participate or are @mentioned.</span>
+                <span class="js-select-button-text hidden-select-button-text">
+                  <span class="octicon octicon-eye-watch"></span>
+                  Watch
+                </span>
+              </div>
+            </div> <!-- /.select-menu-item -->
+
+            <div class="select-menu-item js-navigation-item " role="menuitem" tabindex="0">
+              <span class="select-menu-item-icon octicon octicon octicon-check"></span>
+              <div class="select-menu-item-text">
+                <input id="do_subscribed" name="do" type="radio" value="subscribed" />
+                <h4>Watching</h4>
+                <span class="description">You receive notifications for all discussions in this repository.</span>
+                <span class="js-select-button-text hidden-select-button-text">
+                  <span class="octicon octicon-eye-unwatch"></span>
+                  Unwatch
+                </span>
+              </div>
+            </div> <!-- /.select-menu-item -->
+
+            <div class="select-menu-item js-navigation-item " role="menuitem" tabindex="0">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text">
+                <input id="do_ignore" name="do" type="radio" value="ignore" />
+                <h4>Ignoring</h4>
+                <span class="description">You do not receive any notifications for discussions in this repository.</span>
+                <span class="js-select-button-text hidden-select-button-text">
+                  <span class="octicon octicon-mute"></span>
+                  Stop ignoring
+                </span>
+              </div>
+            </div> <!-- /.select-menu-item -->
+
+          </div> <!-- /.select-menu-list -->
+
+        </div> <!-- /.select-menu-modal -->
+      </div> <!-- /.select-menu-modal-holder -->
+    </div> <!-- /.select-menu -->
+
+</form>
+    </li>
+
+  <li>
+  
+
+  <div class="js-toggler-container js-social-container starring-container ">
+    <a href="/hugozhu/blog/unstar"
+      class="minibutton with-count js-toggler-target star-button starred upwards"
+      title="Unstar this repository" data-remote="true" data-method="post" rel="nofollow">
+      <span class="octicon octicon-star-delete"></span><span class="text">Unstar</span>
+    </a>
+
+    <a href="/hugozhu/blog/star"
+      class="minibutton with-count js-toggler-target star-button unstarred upwards"
+      title="Star this repository" data-remote="true" data-method="post" rel="nofollow">
+      <span class="octicon octicon-star"></span><span class="text">Star</span>
+    </a>
+
+      <a class="social-count js-social-count" href="/hugozhu/blog/stargazers">
+        25
+      </a>
+  </div>
+
+  </li>
+
+
+        <li>
+          <a href="/hugozhu/blog/fork" class="minibutton with-count js-toggler-target fork-button lighter upwards" title="Fork this repo" rel="nofollow" data-method="post">
+            <span class="octicon octicon-git-branch-create"></span><span class="text">Fork</span>
+          </a>
+          <a href="/hugozhu/blog/network" class="social-count">19</a>
+        </li>
+
+
+</ul>
+
+        <h1 itemscope itemtype="http://data-vocabulary.org/Breadcrumb" class="entry-title public">
+          <span class="repo-label"><span>public</span></span>
+          <span class="mega-octicon octicon-repo"></span>
+          <span class="author">
+            <a href="/hugozhu" class="url fn" itemprop="url" rel="author"><span itemprop="title">hugozhu</span></a>
+          </span>
+          <span class="repohead-name-divider">/</span>
+          <strong><a href="/hugozhu/blog" class="js-current-repository js-repo-home-link">blog</a></strong>
+
+          <span class="page-context-loader">
+            <img alt="Octocat-spinner-32" height="16" src="https://github.global.ssl.fastly.net/images/spinners/octocat-spinner-32.gif" width="16" />
+          </span>
+
+        </h1>
+      </div><!-- /.container -->
+    </div><!-- /.repohead -->
+
+    <div class="container">
+
+      <div class="repository-with-sidebar repo-container ">
+
+        <div class="repository-sidebar">
+            
+
+<div class="sunken-menu vertical-right repo-nav js-repo-nav js-repository-container-pjax js-octicon-loaders">
+  <div class="sunken-menu-contents">
+    <ul class="sunken-menu-group">
+      <li class="tooltipped leftwards" title="Code">
+        <a href="/hugozhu/blog" aria-label="Code" class="selected js-selected-navigation-item sunken-menu-item" data-gotokey="c" data-pjax="true" data-selected-links="repo_source repo_downloads repo_commits repo_tags repo_branches /hugozhu/blog">
+          <span class="octicon octicon-code"></span> <span class="full-word">Code</span>
+          <img alt="Octocat-spinner-32" class="mini-loader" height="16" src="https://github.global.ssl.fastly.net/images/spinners/octocat-spinner-32.gif" width="16" />
+</a>      </li>
+
+        <li class="tooltipped leftwards" title="Issues">
+          <a href="/hugozhu/blog/issues" aria-label="Issues" class="js-selected-navigation-item sunken-menu-item js-disable-pjax" data-gotokey="i" data-selected-links="repo_issues /hugozhu/blog/issues">
+            <span class="octicon octicon-issue-opened"></span> <span class="full-word">Issues</span>
+            <span class='counter'>1</span>
+            <img alt="Octocat-spinner-32" class="mini-loader" height="16" src="https://github.global.ssl.fastly.net/images/spinners/octocat-spinner-32.gif" width="16" />
+</a>        </li>
+
+      <li class="tooltipped leftwards" title="Pull Requests"><a href="/hugozhu/blog/pulls" aria-label="Pull Requests" class="js-selected-navigation-item sunken-menu-item js-disable-pjax" data-gotokey="p" data-selected-links="repo_pulls /hugozhu/blog/pulls">
+            <span class="octicon octicon-git-pull-request"></span> <span class="full-word">Pull Requests</span>
+            <span class='counter'>0</span>
+            <img alt="Octocat-spinner-32" class="mini-loader" height="16" src="https://github.global.ssl.fastly.net/images/spinners/octocat-spinner-32.gif" width="16" />
+</a>      </li>
+
+
+        <li class="tooltipped leftwards" title="Wiki">
+          <a href="/hugozhu/blog/wiki" aria-label="Wiki" class="js-selected-navigation-item sunken-menu-item" data-pjax="true" data-selected-links="repo_wiki /hugozhu/blog/wiki">
+            <span class="octicon octicon-book"></span> <span class="full-word">Wiki</span>
+            <img alt="Octocat-spinner-32" class="mini-loader" height="16" src="https://github.global.ssl.fastly.net/images/spinners/octocat-spinner-32.gif" width="16" />
+</a>        </li>
+    </ul>
+    <div class="sunken-menu-separator"></div>
+    <ul class="sunken-menu-group">
+
+      <li class="tooltipped leftwards" title="Pulse">
+        <a href="/hugozhu/blog/pulse" aria-label="Pulse" class="js-selected-navigation-item sunken-menu-item" data-pjax="true" data-selected-links="pulse /hugozhu/blog/pulse">
+          <span class="octicon octicon-pulse"></span> <span class="full-word">Pulse</span>
+          <img alt="Octocat-spinner-32" class="mini-loader" height="16" src="https://github.global.ssl.fastly.net/images/spinners/octocat-spinner-32.gif" width="16" />
+</a>      </li>
+
+      <li class="tooltipped leftwards" title="Graphs">
+        <a href="/hugozhu/blog/graphs" aria-label="Graphs" class="js-selected-navigation-item sunken-menu-item" data-pjax="true" data-selected-links="repo_graphs repo_contributors /hugozhu/blog/graphs">
+          <span class="octicon octicon-graph"></span> <span class="full-word">Graphs</span>
+          <img alt="Octocat-spinner-32" class="mini-loader" height="16" src="https://github.global.ssl.fastly.net/images/spinners/octocat-spinner-32.gif" width="16" />
+</a>      </li>
+
+      <li class="tooltipped leftwards" title="Network">
+        <a href="/hugozhu/blog/network" aria-label="Network" class="js-selected-navigation-item sunken-menu-item js-disable-pjax" data-selected-links="repo_network /hugozhu/blog/network">
+          <span class="octicon octicon-git-branch"></span> <span class="full-word">Network</span>
+          <img alt="Octocat-spinner-32" class="mini-loader" height="16" src="https://github.global.ssl.fastly.net/images/spinners/octocat-spinner-32.gif" width="16" />
+</a>      </li>
+    </ul>
+
+
+  </div>
+</div>
+
+            <div class="only-with-full-nav">
+              
+
+  
+
+<div class="clone-url open"
+  data-protocol-type="http"
+  data-url="/users/set_protocol?protocol_selector=http&amp;protocol_type=clone">
+  <h3><strong>HTTPS</strong> clone URL</h3>
+  <div class="clone-url-box">
+    <input type="text" class="clone js-url-field"
+           value="https://github.com/hugozhu/blog.git" readonly="readonly">
+
+    <span class="js-zeroclipboard url-box-clippy minibutton zeroclipboard-button" data-clipboard-text="https://github.com/hugozhu/blog.git" data-copied-hint="copied!" title="copy to clipboard"><span class="octicon octicon-clippy"></span></span>
+  </div>
+</div>
+
+  
+
+<div class="clone-url "
+  data-protocol-type="ssh"
+  data-url="/users/set_protocol?protocol_selector=ssh&amp;protocol_type=clone">
+  <h3><strong>SSH</strong> clone URL</h3>
+  <div class="clone-url-box">
+    <input type="text" class="clone js-url-field"
+           value="git@github.com:hugozhu/blog.git" readonly="readonly">
+
+    <span class="js-zeroclipboard url-box-clippy minibutton zeroclipboard-button" data-clipboard-text="git@github.com:hugozhu/blog.git" data-copied-hint="copied!" title="copy to clipboard"><span class="octicon octicon-clippy"></span></span>
+  </div>
+</div>
+
+  
+
+<div class="clone-url "
+  data-protocol-type="subversion"
+  data-url="/users/set_protocol?protocol_selector=subversion&amp;protocol_type=clone">
+  <h3><strong>Subversion</strong> checkout URL</h3>
+  <div class="clone-url-box">
+    <input type="text" class="clone js-url-field"
+           value="https://github.com/hugozhu/blog" readonly="readonly">
+
+    <span class="js-zeroclipboard url-box-clippy minibutton zeroclipboard-button" data-clipboard-text="https://github.com/hugozhu/blog" data-copied-hint="copied!" title="copy to clipboard"><span class="octicon octicon-clippy"></span></span>
+  </div>
+</div>
+
+
+<p class="clone-options">You can clone with
+      <a href="#" class="js-clone-selector" data-protocol="http">HTTPS</a>,
+      <a href="#" class="js-clone-selector" data-protocol="ssh">SSH</a>,
+      or <a href="#" class="js-clone-selector" data-protocol="subversion">Subversion</a>.
+  <span class="octicon help tooltipped upwards" title="Get help on which URL is right for you.">
+    <a href="https://help.github.com/articles/which-remote-url-should-i-use">
+    <span class="octicon octicon-question"></span>
+    </a>
+  </span>
+</p>
+
+  <a href="github-mac://openRepo/https://github.com/hugozhu/blog" data-url="github-mac://openRepo/https://github.com/hugozhu/blog" class="minibutton sidebar-button js-conduit-rewrite-url">
+    <span class="octicon octicon-device-desktop"></span>
+    Clone in Desktop
+  </a>
+
+
+              <a href="/hugozhu/blog/archive/master.zip"
+                 class="minibutton sidebar-button"
+                 title="Download this repository as a zip file"
+                 rel="nofollow">
+                <span class="octicon octicon-cloud-download"></span>
+                Download ZIP
+              </a>
+            </div>
+        </div><!-- /.repository-sidebar -->
+
+        <div id="js-repo-pjax-container" class="repository-content context-loader-container" data-pjax-container>
+          
+
+
+<!-- blob contrib key: blob_contributors:v21:2bbedf36241a5b0813d2cda2b430e018 -->
+
+<p title="This is a placeholder element" class="js-history-link-replace hidden"></p>
+
+<a href="/hugozhu/blog/find/master" data-pjax data-hotkey="t" class="js-show-file-finder" style="display:none">Show File Finder</a>
+
+<div class="file-navigation">
+  
+  
+
+<div class="select-menu js-menu-container js-select-menu" >
+  <span class="minibutton select-menu-button js-menu-target" data-hotkey="w"
+    data-master-branch="master"
+    data-ref="master"
+    role="button" aria-label="Switch branches or tags" tabindex="0">
+    <span class="octicon octicon-git-branch"></span>
+    <i>branch:</i>
+    <span class="js-select-button">master</span>
+  </span>
+
+  <div class="select-menu-modal-holder js-menu-content js-navigation-container" data-pjax>
+
+    <div class="select-menu-modal">
+      <div class="select-menu-header">
+        <span class="select-menu-title">Switch branches/tags</span>
+        <span class="octicon octicon-remove-close js-menu-close"></span>
+      </div> <!-- /.select-menu-header -->
+
+      <div class="select-menu-filters">
+        <div class="select-menu-text-filter">
+          <input type="text" aria-label="Filter branches/tags" id="context-commitish-filter-field" class="js-filterable-field js-navigation-enable" placeholder="Filter branches/tags">
+        </div>
+        <div class="select-menu-tabs">
+          <ul>
+            <li class="select-menu-tab">
+              <a href="#" data-tab-filter="branches" class="js-select-menu-tab">Branches</a>
+            </li>
+            <li class="select-menu-tab">
+              <a href="#" data-tab-filter="tags" class="js-select-menu-tab">Tags</a>
+            </li>
+          </ul>
+        </div><!-- /.select-menu-tabs -->
+      </div><!-- /.select-menu-filters -->
+
+      <div class="select-menu-list select-menu-tab-bucket js-select-menu-tab-bucket" data-tab-filter="branches">
+
+        <div data-filterable-for="context-commitish-filter-field" data-filterable-type="substring">
+
+
+            <div class="select-menu-item js-navigation-item selected">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/hugozhu/blog/blob/master/themes/twitter/layouts/paginator.html"
+                 data-name="master"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target"
+                 title="master">master</a>
+            </div> <!-- /.select-menu-item -->
+        </div>
+
+          <div class="select-menu-no-results">Nothing to show</div>
+      </div> <!-- /.select-menu-list -->
+
+      <div class="select-menu-list select-menu-tab-bucket js-select-menu-tab-bucket" data-tab-filter="tags">
+        <div data-filterable-for="context-commitish-filter-field" data-filterable-type="substring">
+
+
+        </div>
+
+        <div class="select-menu-no-results">Nothing to show</div>
+      </div> <!-- /.select-menu-list -->
+
+    </div> <!-- /.select-menu-modal -->
+  </div> <!-- /.select-menu-modal-holder -->
+</div> <!-- /.select-menu -->
+
+  <div class="breadcrumb">
+    <span class='repo-root js-repo-root'><span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="/hugozhu/blog" data-branch="master" data-direction="back" data-pjax="true" itemscope="url"><span itemprop="title">blog</span></a></span></span><span class="separator"> / </span><span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="/hugozhu/blog/tree/master/themes" data-branch="master" data-direction="back" data-pjax="true" itemscope="url"><span itemprop="title">themes</span></a></span><span class="separator"> / </span><span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="/hugozhu/blog/tree/master/themes/twitter" data-branch="master" data-direction="back" data-pjax="true" itemscope="url"><span itemprop="title">twitter</span></a></span><span class="separator"> / </span><span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="/hugozhu/blog/tree/master/themes/twitter/layouts" data-branch="master" data-direction="back" data-pjax="true" itemscope="url"><span itemprop="title">layouts</span></a></span><span class="separator"> / </span><strong class="final-path">paginator.html</strong> <span class="js-zeroclipboard minibutton zeroclipboard-button" data-clipboard-text="themes/twitter/layouts/paginator.html" data-copied-hint="copied!" title="copy to clipboard"><span class="octicon octicon-clippy"></span></span>
+  </div>
+</div>
+
+
+
+  <div class="commit file-history-tease">
+    <img class="main-avatar" height="24" src="https://1.gravatar.com/avatar/7617bc17dcd536c501360d62bce4db25?d=https%3A%2F%2Fidenticons.github.com%2F9af9d4f2b4b7b0f08fbeb001f87e77a5.png&amp;r=x&amp;s=140" width="24" />
+    <span class="author"><a href="/hugozhu" rel="author">hugozhu</a></span>
+    <time class="js-relative-date" datetime="2013-03-22T10:27:54-07:00" title="2013-03-22 10:27:54">March 22, 2013</time>
+    <div class="commit-title">
+        <a href="/hugozhu/blog/commit/1753558e95d86b8441a5317cd81b5de8fa043f67" class="message" data-pjax="true" title="updated">updated</a>
+    </div>
+
+    <div class="participation">
+      <p class="quickstat"><a href="#blob_contributors_box" rel="facebox"><strong>1</strong> contributor</a></p>
+      
+    </div>
+    <div id="blob_contributors_box" style="display:none">
+      <h2 class="facebox-header">Users who have contributed to this file</h2>
+      <ul class="facebox-user-list">
+          <li class="facebox-user-list-item">
+            <img height="24" src="https://1.gravatar.com/avatar/7617bc17dcd536c501360d62bce4db25?d=https%3A%2F%2Fidenticons.github.com%2F9af9d4f2b4b7b0f08fbeb001f87e77a5.png&amp;r=x&amp;s=140" width="24" />
+            <a href="/hugozhu">hugozhu</a>
+          </li>
+      </ul>
+    </div>
+  </div>
+
+<div id="files" class="bubble">
+  <div class="file">
+    <div class="meta">
+      <div class="info">
+        <span class="icon"><b class="octicon octicon-file-text"></b></span>
+        <span class="mode" title="File Mode">file</span>
+          <span>53 lines (43 sloc)</span>
+        <span>1.206 kb</span>
+      </div>
+      <div class="actions">
+        <div class="button-group">
+            <a class="minibutton tooltipped leftwards js-conduit-openfile-check"
+               href="github-mac://openRepo/https://github.com/hugozhu/blog?branch=master&amp;filepath=themes%2Ftwitter%2Flayouts%2Fpaginator.html"
+               data-url="github-mac://openRepo/https://github.com/hugozhu/blog?branch=master&amp;filepath=themes%2Ftwitter%2Flayouts%2Fpaginator.html"
+               title="Open this file in GitHub for Mac"
+               data-failed-title="Your version of GitHub for Mac is too old to open this file. Try checking for updates.">
+                <span class="octicon octicon-device-desktop"></span> Open
+            </a>
+                <a class="minibutton tooltipped upwards"
+                   title="Clicking this button will automatically fork this project so you can edit the file"
+                   href="/hugozhu/blog/edit/master/themes/twitter/layouts/paginator.html"
+                   data-method="post" rel="nofollow">Edit</a>
+          <a href="/hugozhu/blog/raw/master/themes/twitter/layouts/paginator.html" class="button minibutton " id="raw-url">Raw</a>
+            <a href="/hugozhu/blog/blame/master/themes/twitter/layouts/paginator.html" class="button minibutton ">Blame</a>
+          <a href="/hugozhu/blog/commits/master/themes/twitter/layouts/paginator.html" class="button minibutton " rel="nofollow">History</a>
+        </div><!-- /.button-group -->
+          <a class="minibutton danger empty-icon tooltipped downwards"
+             href="/hugozhu/blog/delete/master/themes/twitter/layouts/paginator.html"
+             title="Fork this project and delete file"
+             data-method="post" data-test-id="delete-blob-file" rel="nofollow">
+          Delete
+        </a>
+      </div><!-- /.actions -->
+
+    </div>
+        <div class="blob-wrapper data type-html js-blob-data">
+        <table class="file-code file-diff">
+          <tr class="file-code-line">
+            <td class="blob-line-nums">
+              <span id="L1" rel="#L1">1</span>
+<span id="L2" rel="#L2">2</span>
+<span id="L3" rel="#L3">3</span>
+<span id="L4" rel="#L4">4</span>
+<span id="L5" rel="#L5">5</span>
+<span id="L6" rel="#L6">6</span>
+<span id="L7" rel="#L7">7</span>
+<span id="L8" rel="#L8">8</span>
+<span id="L9" rel="#L9">9</span>
+<span id="L10" rel="#L10">10</span>
+<span id="L11" rel="#L11">11</span>
+<span id="L12" rel="#L12">12</span>
+<span id="L13" rel="#L13">13</span>
+<span id="L14" rel="#L14">14</span>
+<span id="L15" rel="#L15">15</span>
+<span id="L16" rel="#L16">16</span>
+<span id="L17" rel="#L17">17</span>
+<span id="L18" rel="#L18">18</span>
+<span id="L19" rel="#L19">19</span>
+<span id="L20" rel="#L20">20</span>
+<span id="L21" rel="#L21">21</span>
+<span id="L22" rel="#L22">22</span>
+<span id="L23" rel="#L23">23</span>
+<span id="L24" rel="#L24">24</span>
+<span id="L25" rel="#L25">25</span>
+<span id="L26" rel="#L26">26</span>
+<span id="L27" rel="#L27">27</span>
+<span id="L28" rel="#L28">28</span>
+<span id="L29" rel="#L29">29</span>
+<span id="L30" rel="#L30">30</span>
+<span id="L31" rel="#L31">31</span>
+<span id="L32" rel="#L32">32</span>
+<span id="L33" rel="#L33">33</span>
+<span id="L34" rel="#L34">34</span>
+<span id="L35" rel="#L35">35</span>
+<span id="L36" rel="#L36">36</span>
+<span id="L37" rel="#L37">37</span>
+<span id="L38" rel="#L38">38</span>
+<span id="L39" rel="#L39">39</span>
+<span id="L40" rel="#L40">40</span>
+<span id="L41" rel="#L41">41</span>
+<span id="L42" rel="#L42">42</span>
+<span id="L43" rel="#L43">43</span>
+<span id="L44" rel="#L44">44</span>
+<span id="L45" rel="#L45">45</span>
+<span id="L46" rel="#L46">46</span>
+<span id="L47" rel="#L47">47</span>
+<span id="L48" rel="#L48">48</span>
+<span id="L49" rel="#L49">49</span>
+<span id="L50" rel="#L50">50</span>
+<span id="L51" rel="#L51">51</span>
+<span id="L52" rel="#L52">52</span>
+
+            </td>
+            <td class="blob-line-code">
+                    <div class="highlight"><pre><div class='line' id='LC1'>---</div><div class='line' id='LC2'>layout : default</div><div class='line' id='LC3'>---</div><div class='line' id='LC4'><br/></div><div class='line' id='LC5'><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;page-header&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC6'>&nbsp;&nbsp;<span class="nt">&lt;h1&gt;</span>Blogs<span class="nt">&lt;/h1&gt;</span></div><div class='line' id='LC7'><span class="nt">&lt;/div&gt;</span></div><div class='line' id='LC8'><br/></div><div class='line' id='LC9'><br/></div><div class='line' id='LC10'><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;row&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC11'>&nbsp;&nbsp;<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;span12&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC12'><br/></div><div class='line' id='LC13'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;pagination&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC14'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;ul&gt;</span></div><div class='line' id='LC15'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC16'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC17'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">&quot;active&quot;</span><span class="nt">&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;/posts/1/&quot;</span><span class="nt">&gt;</span>1<span class="nt">&lt;/a&gt;&lt;/li&gt;</span></div><div class='line' id='LC18'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC19'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC22'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC16'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC19'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC20'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;/posts/2/&quot;</span><span class="nt">&gt;</span>2<span class="nt">&lt;/a&gt;&lt;/li&gt;</span></div><div class='line' id='LC21'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC22'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC23'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;/ul&gt;</span></div><div class='line' id='LC24'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;/div&gt;</span></div><div class='line' id='LC25'><br/></div><div class='line' id='LC26'><br/></div><div class='line' id='LC27'>&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC28'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;post&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC29'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;h1</span> <span class="na">class=</span><span class="s">&quot;title&quot;</span><span class="nt">&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;/坑/%E8%AE%B0openJDK%E9%87%8C%E8%B8%A9%E8%BF%87%E7%9A%84%E4%B8%80%E5%9D%91/&quot;</span><span class="nt">&gt;</span>记openJDK里踩过的一坑<span class="nt">&lt;/a&gt;</span> <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">&quot;date&quot;</span><span class="nt">&gt;</span>2013-10-26<span class="nt">&lt;/span&gt;&lt;/h1&gt;</span></div><div class='line' id='LC30'><br/></div><div class='line' id='LC31'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p>自己开发机器使用的是orcale官方jdk，在本地调试ok的代码，发到厂里线上的机器，采用的openjdk的版本，发现如何调试都不通。不同jdk对同样代码采用不同的处理方式，踩进这样的坑里，着实蛋疼，排查也很难想到在这里会出问题。最后发现有问题的是以下代码，因为jdk版本的不同，导致表现的结果不一样。</p>
+
+<pre><code>public static void main(String [] args) {
+    List&lt;Integer&gt; list = new ArrayList&lt;Integer&gt;();
+    list.add(5);
+    list.add(7);
+    list.add(3);
+    Collections.sort(list , new Comparator&lt;Integer&gt;() {
+        @Override
+        public int compare(Integer o1, Integer o2) {
+            return o1 - o2 &gt; 0 ? -1 : 0;
+        }
+    });
+    System.out.println(list);
+    
+}
+</code></pre>
+</div><div class='line' id='LC32'><br/></div><div class='line' id='LC33'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;more&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC34'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;/坑/%E8%AE%B0openJDK%E9%87%8C%E8%B8%A9%E8%BF%87%E7%9A%84%E4%B8%80%E5%9D%91/&quot;</span> <span class="na">class=</span><span class="s">&quot;btn btn-small&quot;</span><span class="nt">&gt;</span>阅读全文<span class="nt">&lt;/a&gt;</span></div><div class='line' id='LC35'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;/div&gt;</span></div><div class='line' id='LC36'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;/div&gt;</span></div><div class='line' id='LC37'>&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC28'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;post&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC29'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;h1</span> <span class="na">class=</span><span class="s">&quot;title&quot;</span><span class="nt">&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;/mac/os-x10.9%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91%E5%8D%87%E7%BA%A7svn1.8/&quot;</span><span class="nt">&gt;</span>os x10.9源码编译升级svn1.8<span class="nt">&lt;/a&gt;</span> <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">&quot;date&quot;</span><span class="nt">&gt;</span>2013-10-10<span class="nt">&lt;/span&gt;&lt;/h1&gt;</span></div><div class='line' id='LC30'><br/></div><div class='line' id='LC31'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p>之前升级了开发者预览版的冲浪胜地os x 10.9，发现xcode里command line tools附带的svn版本是1.7，自己很多的代码工程都是svn1.8的版本，所以需要升级svn版本到1.8。但是尝试了几种方法，发现并不是很容易，折腾了几个小时的时间，下面把过程记录如下，方便后来者。</p>
+
+<p>首先想到的是，升级最新的xcode5.0，这样就可以使用最新的command line tools，开始时，这种方法是凑效的，升级xcode5.0后， svn确实是1.8了。但是过了没多久，系统提示升级xcode，升级之后发现，svn版本又退回到1.7。在尝试升级command line tools无果，所以尝试别的办法。</p>
+
+<p>从subversion官网下载二进制的安装包，但是只有os x 10.8的，安装到一半继续不下去，此路也不通。</p>
+
+<p>最后尝试svn源码编译，步骤如下：</p>
+
+<ol>
+<li>从<a href="http://subversion.apache.org/download/">官网</a>下载subversion-1.8.3.tar.gz（zip的试过不行），然后<code>tar -xvf subversion-1.8.3</code>解压缩。</li>
+<li>编译源码</li>
+</ol>
+
+<pre><code>cd subversion-1.8.3
+./configure --with-ssl
+make
+sudo make install
+</code></pre>
+
+<ol>
+<li>建立软链接</li>
+</ol>
+</div><div class='line' id='LC32'><br/></div><div class='line' id='LC33'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;more&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC34'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;/mac/os-x10.9%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91%E5%8D%87%E7%BA%A7svn1.8/&quot;</span> <span class="na">class=</span><span class="s">&quot;btn btn-small&quot;</span><span class="nt">&gt;</span>阅读全文<span class="nt">&lt;/a&gt;</span></div><div class='line' id='LC35'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;/div&gt;</span></div><div class='line' id='LC36'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;/div&gt;</span></div><div class='line' id='LC37'>&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC28'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;post&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC29'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;h1</span> <span class="na">class=</span><span class="s">&quot;title&quot;</span><span class="nt">&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;/go/coding4fun%E4%BB%A3%E7%A0%81%E6%AF%94%E8%B5%9B%E5%B0%8F%E7%BB%93/&quot;</span><span class="nt">&gt;</span>coding4fun代码比赛小结<span class="nt">&lt;/a&gt;</span> <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">&quot;date&quot;</span><span class="nt">&gt;</span>2013-08-27<span class="nt">&lt;/span&gt;&lt;/h1&gt;</span></div><div class='line' id='LC30'><br/></div><div class='line' id='LC31'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p>上周参加coding4fun的小比赛，赛题的大致意思就是充分利用多核CPU，看谁开发的程序最快。对于这类题目，语言的选择上就显得很重要，因为对于同样的算法，在都做了充分的优化的情况下，就剩下纯粹的比拼语言的执行效率了。</p>
+
+<p>所以我选择了用go，可能有些同学还不太了解，首先看一下go语言的显著的几个特点：</p>
+
+<p>1.和c\c++一样都是编译型语言，直接编译成本地机器码执行，官方所说执行效率逼近c</p>
+
+<p>2.语言自带垃圾回收，编译时编译进运行时</p>
+
+<p>3.语言内建协程，以非常廉价的方式实现并行</p>
+
+<p>4.编程多范式支持，可以既面向过程又面向对象，还可以函数式编程</p>
+
+<ul>
+<li>下面简单说一下我的思路:</li>
+</ul>
+
+<p>1.我使用的字典树的数据结构，这种数据结构对于小文本的来说是比较有利的，后面换成大文本，字典树就有些力不从心了。基本结构就是一个节点代表一个字符，里面包含从这个节点向上遍历形成的单词的count。</p>
+
+<pre><code>type CharTreeNode struct {
+    Count    int
+    Children [26]*CharTreeNode
+}
+</code></pre>
+</div><div class='line' id='LC32'><br/></div><div class='line' id='LC33'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;more&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC34'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;/go/coding4fun%E4%BB%A3%E7%A0%81%E6%AF%94%E8%B5%9B%E5%B0%8F%E7%BB%93/&quot;</span> <span class="na">class=</span><span class="s">&quot;btn btn-small&quot;</span><span class="nt">&gt;</span>阅读全文<span class="nt">&lt;/a&gt;</span></div><div class='line' id='LC35'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;/div&gt;</span></div><div class='line' id='LC36'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;/div&gt;</span></div><div class='line' id='LC37'>&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC28'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;post&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC29'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;h1</span> <span class="na">class=</span><span class="s">&quot;title&quot;</span><span class="nt">&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;/raspberry/%E6%A0%91%E8%8E%93%E6%B4%BE%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8%E7%A8%8B%E5%BA%8F%E5%8F%8A%E5%90%AF%E5%8A%A8%E8%84%9A%E6%9C%AC%E7%9A%84%E5%88%B6%E4%BD%9C/&quot;</span><span class="nt">&gt;</span>树莓派开机启动程序及启动脚本的制作<span class="nt">&lt;/a&gt;</span> <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">&quot;date&quot;</span><span class="nt">&gt;</span>2013-08-24<span class="nt">&lt;/span&gt;&lt;/h1&gt;</span></div><div class='line' id='LC30'><br/></div><div class='line' id='LC31'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p>网上有不少关于如何让Linux自动运行自己编写的脚本或者程序的方法，但是大多数都是把命令写到/etc/rc.local里，这样虽然能够实现随机运行，但是并不够灵活。不能像mysql，apache等服务一样能够使用service命令或者调用init.d下的脚本启动、关闭或者重启进程。例如，</p>
+
+<p>service mysql restart
+service apache2 stop</p>
+
+<p>或者</p>
+
+<p>/etc/init.d/mysql restart
+/etc/init.d/apache2 stop</p>
+
+<p>因为不同的Linux发行版本，对后台服务的处理方式不大一样，如redhat使用chkconfig来管理开机程序。所以下面的方法以debian类系统为例，如何写一个简单的开机启动脚本。所以，此方法适用于raspbian pi的系统。</p>
+
+<p>以svn为例：</p>
+
+<p>1.制作开机启动脚本svn_serve</p>
+
+<pre><code>#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          svn_serve
+# Required-Start:    $remote_fs
+# Required-Stop:     $remote_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start or stop the HTTP Proxy.
+### END INIT INFO
+
+case $1 in
+    start)
+        svnserve -d -r /home/pi/svn_repository
+        ;;
+    stop)
+        killall svnserve
+        ;;
+*)
+echo &quot;Usage: $0 (start|stop)&quot;
+;;
+esac
+</code></pre>
+</div><div class='line' id='LC32'><br/></div><div class='line' id='LC33'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;more&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC34'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;/raspberry/%E6%A0%91%E8%8E%93%E6%B4%BE%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8%E7%A8%8B%E5%BA%8F%E5%8F%8A%E5%90%AF%E5%8A%A8%E8%84%9A%E6%9C%AC%E7%9A%84%E5%88%B6%E4%BD%9C/&quot;</span> <span class="na">class=</span><span class="s">&quot;btn btn-small&quot;</span><span class="nt">&gt;</span>阅读全文<span class="nt">&lt;/a&gt;</span></div><div class='line' id='LC35'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;/div&gt;</span></div><div class='line' id='LC36'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;/div&gt;</span></div><div class='line' id='LC37'>&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC28'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;post&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC29'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;h1</span> <span class="na">class=</span><span class="s">&quot;title&quot;</span><span class="nt">&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;/go/go%E9%80%92%E5%BD%92%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E4%BC%A0%E9%80%92%E6%95%B0%E7%BB%84%E5%88%87%E7%89%87slice/&quot;</span><span class="nt">&gt;</span>go递归函数如何传递数组切片slice<span class="nt">&lt;/a&gt;</span> <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">&quot;date&quot;</span><span class="nt">&gt;</span>2013-08-18<span class="nt">&lt;/span&gt;&lt;/h1&gt;</span></div><div class='line' id='LC30'><br/></div><div class='line' id='LC31'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p>数组切片slice这个东西看起来很美好，真正用起来会发现有诸多的不爽。</p>
+
+<p>第一，数组、数组切片混淆不清，使用方式完全一样，有时候一些特性又完全不一样，搞不清原理很容易误使用。</p>
+
+<p>第二，数组切片的append操作，每次对slice append操作，都返回一个新的slice的引用，对slice的引用没法保持，这样在函数传递slice的情况下append，在调用函数的上下文中看不到slice append的效果。如果想要这种方式凑效，不得不另辟蹊径。本文主要说一下如何解决这个窘境的方法。</p>
+
+<p>第三，暂时想不起来，待补充..</p>
+
+<p>函数传递slice存在什么问题？</p>
+
+<pre><code>func sliceModify(slice []int) {
+    // slice[0] = 88
+    slice = append(slice, 6)
+}
+func main() {
+    slice := []int{1, 2, 3, 4, 5}
+    sliceModify(slice)
+    fmt.Println(slice)
+}
+</code></pre>
+</div><div class='line' id='LC32'><br/></div><div class='line' id='LC33'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;more&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC34'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;/go/go%E9%80%92%E5%BD%92%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E4%BC%A0%E9%80%92%E6%95%B0%E7%BB%84%E5%88%87%E7%89%87slice/&quot;</span> <span class="na">class=</span><span class="s">&quot;btn btn-small&quot;</span><span class="nt">&gt;</span>阅读全文<span class="nt">&lt;/a&gt;</span></div><div class='line' id='LC35'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;/div&gt;</span></div><div class='line' id='LC36'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;/div&gt;</span></div><div class='line' id='LC37'>&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC28'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;post&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC29'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;h1</span> <span class="na">class=</span><span class="s">&quot;title&quot;</span><span class="nt">&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;/go/go-slice%E5%92%8C%E6%95%B0%E7%BB%84%E7%9A%84%E5%8C%BA%E5%88%AB/&quot;</span><span class="nt">&gt;</span>go slice和数组的区别<span class="nt">&lt;/a&gt;</span> <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">&quot;date&quot;</span><span class="nt">&gt;</span>2013-08-17<span class="nt">&lt;/span&gt;&lt;/h1&gt;</span></div><div class='line' id='LC30'><br/></div><div class='line' id='LC31'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p>1.使用方式</p>
+
+<p>数组和slice长的很像，操作方式也都差不多，并且slice包含了数组的基本的操作方式，如下标、range循环，还有一些如len()则是多种类型共用，所以根据操作根本搞不清数组和切片的区别，能够看出区别的地方主要看如何声明的。</p>
+
+<p>数组的声明方式很单一，通常就是下面这样：</p>
+
+<pre><code>array1 := [5]int{1, 2, 3, 4, 5}
+array2 := [5]int{}
+</code></pre>
+
+<p>slice的声明方式就非常多样了，如前面介绍的几种：</p>
+
+<pre><code>var slice1 = []int{1, 2, 3, 4, 5}
+var slice2 = make([]int, 0, 5)
+var slice3 = make([]int, 5, 5)
+var slice4 = make([]int, 5)
+</code></pre>
+
+<p>加上对数组的切片和append操作都会产生数组切片(slice)</p>
+</div><div class='line' id='LC32'><br/></div><div class='line' id='LC33'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;more&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC34'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;/go/go-slice%E5%92%8C%E6%95%B0%E7%BB%84%E7%9A%84%E5%8C%BA%E5%88%AB/&quot;</span> <span class="na">class=</span><span class="s">&quot;btn btn-small&quot;</span><span class="nt">&gt;</span>阅读全文<span class="nt">&lt;/a&gt;</span></div><div class='line' id='LC35'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;/div&gt;</span></div><div class='line' id='LC36'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;/div&gt;</span></div><div class='line' id='LC37'>&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC28'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;post&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC29'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;h1</span> <span class="na">class=</span><span class="s">&quot;title&quot;</span><span class="nt">&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;/go/go%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E6%95%B0%E7%BB%84%E5%88%87%E7%89%87slice/&quot;</span><span class="nt">&gt;</span>go语言中的数组切片slice<span class="nt">&lt;/a&gt;</span> <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">&quot;date&quot;</span><span class="nt">&gt;</span>2013-08-16<span class="nt">&lt;/span&gt;&lt;/h1&gt;</span></div><div class='line' id='LC30'><br/></div><div class='line' id='LC31'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p>初看go语言中的slice，觉得是可变数组的一种很不错的实现，直接在语言语法的层面支持，操作方面比起java中的ArrayList方便了许多。但是在使用了一段时间后，觉得这东西埋的坑不少，使用方式上和arrayList也有很大的不同，在使用时要格外注意。</p>
+
+<h2>slice的数据结构</h2>
+
+<p>首先说一下slice的数据结构，源码可以在google code上找到，<a href="http://code.google.com/p/go/source/browse/src/pkg/runtime/runtime.h">http://code.google.com/p/go/source/browse/src/pkg/runtime/runtime.h</a></p>
+
+<pre><code>struct Slice
+{                          
+    byte*   array;  // actual data
+    uintgo  len;    // number of elements
+    uintgo  cap;    // allocated number of elements
+};
+</code></pre>
+
+<p>可以看出主要保存了三个信息：</p>
+
+<ul>
+<li>一个指向原生数组的指针</li>
+<li>元素的个数</li>
+<li>数组分配的存储空间</li>
+</ul>
+</div><div class='line' id='LC32'><br/></div><div class='line' id='LC33'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;more&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC34'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;/go/go%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E6%95%B0%E7%BB%84%E5%88%87%E7%89%87slice/&quot;</span> <span class="na">class=</span><span class="s">&quot;btn btn-small&quot;</span><span class="nt">&gt;</span>阅读全文<span class="nt">&lt;/a&gt;</span></div><div class='line' id='LC35'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;/div&gt;</span></div><div class='line' id='LC36'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;/div&gt;</span></div><div class='line' id='LC37'>&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC28'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;post&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC29'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;h1</span> <span class="na">class=</span><span class="s">&quot;title&quot;</span><span class="nt">&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;/go/go%E5%AE%9E%E7%8E%B0%E6%8E%92%E5%BA%8F%E7%9A%84%E9%93%BE%E8%A1%A8/&quot;</span><span class="nt">&gt;</span>go实现排序的链表<span class="nt">&lt;/a&gt;</span> <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">&quot;date&quot;</span><span class="nt">&gt;</span>2013-08-14<span class="nt">&lt;/span&gt;&lt;/h1&gt;</span></div><div class='line' id='LC30'><br/></div><div class='line' id='LC31'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p>链表的数据结构比较线性数组，优点是 可以方便的对任意的位置进行插入和删除。</p>
+
+<p>这一特性使得它很适合于应用在排序等场景下，由于golang目前类库还不是很完善，在java中可以很简单的使用api提供的支持完成对list或者map的排序，在使用go时就没有那么幸运了，可能需要自己去实现。</p>
+
+<p>下面的例子就是使用go package 中的LinkedList实现的排序的链表。</p>
+
+<ul>
+<li>有几个功能特性：</li>
+</ul>
+
+<p>1.支持固定的长度</p>
+
+<p>2.可自定义排序的规则</p>
+
+<p>3.组合LinkedList功能</p>
+
+<pre><code class="go">package codeforfun
+import (
+    &quot;container/list&quot;
+)
+type SortedLinkedList struct {
+    *list.List
+    Limit int
+    compareFunc func (old, new interface{}) bool
+}
+func NewSortedLinkedList(limit int, compare func (old, new interface{}) bool) *SortedLinkedList {
+    return &amp;SortedLinkedList{list.New(), limit, compare}
+}
+func (this SortedLinkedList) findInsertPlaceElement(value interface{}) *list.Element {
+    for element := this.Front(); element != nil; element = element.Next() {
+        tempValue := element.Value
+        if this.compareFunc(tempValue, value) {
+            return element
+        }
+    }
+    return nil
+}
+func (this SortedLinkedList) PutOnTop(value interface{}) {
+    if this.List.Len() == 0 {
+        this.PushFront(value)
+        return
+    }
+    if this.List.Len() &lt; this.Limit &amp;&amp; this.compareFunc(value, this.Back().Value) {
+        this.PushBack(value)
+        return
+    }
+    if this.compareFunc(this.List.Front().Value, value) {
+        this.PushFront(value)
+    } else if this.compareFunc(this.List.Back().Value, value) &amp;&amp; this.compareFunc(value, this.Front().Value) {
+        element := this.findInsertPlaceElement(value)
+        if element != nil {
+            this.InsertBefore(value, element)
+        }
+    }
+    if this.Len() &gt; this.Limit {
+        this.Remove(this.Back())
+    }
+}
+</code></pre>
+</div><div class='line' id='LC32'><br/></div><div class='line' id='LC33'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;more&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC34'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;/go/go%E5%AE%9E%E7%8E%B0%E6%8E%92%E5%BA%8F%E7%9A%84%E9%93%BE%E8%A1%A8/&quot;</span> <span class="na">class=</span><span class="s">&quot;btn btn-small&quot;</span><span class="nt">&gt;</span>阅读全文<span class="nt">&lt;/a&gt;</span></div><div class='line' id='LC35'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;/div&gt;</span></div><div class='line' id='LC36'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;/div&gt;</span></div><div class='line' id='LC37'>&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC28'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;post&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC29'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;h1</span> <span class="na">class=</span><span class="s">&quot;title&quot;</span><span class="nt">&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;/java/java%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B9%8Blambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/&quot;</span><span class="nt">&gt;</span>java函数式编程之lambda表达式<span class="nt">&lt;/a&gt;</span> <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">&quot;date&quot;</span><span class="nt">&gt;</span>2013-08-06<span class="nt">&lt;/span&gt;&lt;/h1&gt;</span></div><div class='line' id='LC30'><br/></div><div class='line' id='LC31'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p>作为比较老牌的面向对象的编程语言java，在对函数式编程的支持上一直不温不火。</p>
+
+<p>认为面向对象式编程就应该纯粹的面向对象，于是经常看到这样的写法：如果你想写一个方法，那么就必须把它放到一个类里面，然后new出来对象，对象调用这个方法。</p>
+
+<p>这种方式在函数式编程语言看来太死板，没有必要在对待多种编程范式上采取非此即彼的做法。</p>
+
+<p>如今比较现代的编程语言也都是多编程范式的支持，不再去对一种编程范式固守一隅，一种语言可能会同时具有面向对象、函数式、元编程等多种特性，这方面java的后来者C#都走在她的前面。</p>
+
+<p>终于在jdk8里发现了lambda表达式的影子，java也开始加入这种函数式编程特性，java码农们终于在之前老土的方法之外有了一种更为简便的选择。</p>
+
+<ul>
+<li>首先来看，lambda之前java的做法：
+使用匿名内部类：</li>
+</ul>
+
+<pre><code>public void testAnonymousClass() {
+    Integer[] nums = {2, 5, 1, 6};
+    Arrays.sort(nums, new Comparator&lt;Integer&gt;() {
+        @Override
+        public int compare(Integer o1, Integer o2) {
+            if(o1 &lt; o2) 
+                return -1;
+            return 0;
+        }
+    });
+    for (Integer n : nums) {
+        System.out.println(n);
+    }
+}
+</code></pre>
+</div><div class='line' id='LC32'><br/></div><div class='line' id='LC33'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;more&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC34'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;/java/java%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B9%8Blambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/&quot;</span> <span class="na">class=</span><span class="s">&quot;btn btn-small&quot;</span><span class="nt">&gt;</span>阅读全文<span class="nt">&lt;/a&gt;</span></div><div class='line' id='LC35'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;/div&gt;</span></div><div class='line' id='LC36'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;/div&gt;</span></div><div class='line' id='LC37'>&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC28'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;post&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC29'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;h1</span> <span class="na">class=</span><span class="s">&quot;title&quot;</span><span class="nt">&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;/go/go%E8%AF%AD%E8%A8%80channel%E7%9A%84%E5%88%AB%E6%A0%B7%E7%94%A8%E6%B3%95/&quot;</span><span class="nt">&gt;</span>go语言channel的别样用法<span class="nt">&lt;/a&gt;</span> <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">&quot;date&quot;</span><span class="nt">&gt;</span>2013-07-10<span class="nt">&lt;/span&gt;&lt;/h1&gt;</span></div><div class='line' id='LC30'><br/></div><div class='line' id='LC31'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p>1.返回值使用通道</p>
+
+<pre><code>func main() {
+    // 生成随机数作为一个服务
+    randService := randGenerator()
+    // 从服务中读取随机数并打印
+    fmt.Printf(&quot;%d\n&quot;,&lt;-randService)
+}
+func randGenerator() chan int {
+    // 创建通道
+    out := make(chan int)
+    // 创建协程
+    go func() {
+        for {
+            //向通道内写入数据，如果无人读取会等待
+            out &lt;- rand.Int()
+        }
+    }()
+    return out
+}
+</code></pre>
+</div><div class='line' id='LC32'><br/></div><div class='line' id='LC33'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;more&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC34'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;/go/go%E8%AF%AD%E8%A8%80channel%E7%9A%84%E5%88%AB%E6%A0%B7%E7%94%A8%E6%B3%95/&quot;</span> <span class="na">class=</span><span class="s">&quot;btn btn-small&quot;</span><span class="nt">&gt;</span>阅读全文<span class="nt">&lt;/a&gt;</span></div><div class='line' id='LC35'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;/div&gt;</span></div><div class='line' id='LC36'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;/div&gt;</span></div><div class='line' id='LC37'>&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC38'><br/></div><div class='line' id='LC39'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;pagination&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC40'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;ul&gt;</span></div><div class='line' id='LC41'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC42'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC43'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">&quot;active&quot;</span><span class="nt">&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;/posts/1/&quot;</span><span class="nt">&gt;</span>1<span class="nt">&lt;/a&gt;&lt;/li&gt;</span></div><div class='line' id='LC44'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC45'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC48'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC42'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC45'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC46'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;/posts/2/&quot;</span><span class="nt">&gt;</span>2<span class="nt">&lt;/a&gt;&lt;/li&gt;</span></div><div class='line' id='LC47'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC48'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC49'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;/ul&gt;</span></div><div class='line' id='LC50'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;/div&gt;</span></div><div class='line' id='LC51'>&nbsp;&nbsp;<span class="nt">&lt;/div&gt;</span></div><div class='line' id='LC52'><span class="nt">&lt;/div&gt;</span></div></pre></div>
+            </td>
+          </tr>
+        </table>
+  </div>
+
+  </div>
+</div>
+
+<a href="#jump-to-line" rel="facebox[.linejump]" data-hotkey="l" class="js-jump-to-line" style="display:none">Jump to Line</a>
+<div id="jump-to-line" style="display:none">
+  <form accept-charset="UTF-8" class="js-jump-to-line-form">
+    <input class="linejump-input js-jump-to-line-field" type="text" placeholder="Jump to line&hellip;" autofocus>
+    <button type="submit" class="button">Go</button>
+  </form>
+</div>
+
+        </div>
+
+      </div><!-- /.repo-container -->
+      <div class="modal-backdrop"></div>
+    </div><!-- /.container -->
+  </div><!-- /.site -->
+
+
+    </div><!-- /.wrapper -->
+
+      <div class="container">
+  <div class="site-footer">
+    <ul class="site-footer-links right">
+      <li><a href="https://status.github.com/">Status</a></li>
+      <li><a href="http://developer.github.com">API</a></li>
+      <li><a href="http://training.github.com">Training</a></li>
+      <li><a href="http://shop.github.com">Shop</a></li>
+      <li><a href="/blog">Blog</a></li>
+      <li><a href="/about">About</a></li>
+
+    </ul>
+
+    <a href="/">
+      <span class="mega-octicon octicon-mark-github"></span>
+    </a>
+
+    <ul class="site-footer-links">
+      <li>&copy; 2013 <span title="0.04068s from github-fe124-cp1-prd.iad.github.net">GitHub</span>, Inc.</li>
+        <li><a href="/site/terms">Terms</a></li>
+        <li><a href="/site/privacy">Privacy</a></li>
+        <li><a href="/security">Security</a></li>
+        <li><a href="/contact">Contact</a></li>
+    </ul>
+  </div><!-- /.site-footer -->
+</div><!-- /.container -->
+
+
+    <div class="fullscreen-overlay js-fullscreen-overlay" id="fullscreen_overlay">
+  <div class="fullscreen-container js-fullscreen-container">
+    <div class="textarea-wrap">
+      <textarea name="fullscreen-contents" id="fullscreen-contents" class="js-fullscreen-contents" placeholder="" data-suggester="fullscreen_suggester"></textarea>
+          <div class="suggester-container">
+              <div class="suggester fullscreen-suggester js-navigation-container" id="fullscreen_suggester"
+                 data-url="/hugozhu/blog/suggestions/commit">
+              </div>
+          </div>
+    </div>
+  </div>
+  <div class="fullscreen-sidebar">
+    <a href="#" class="exit-fullscreen js-exit-fullscreen tooltipped leftwards" title="Exit Zen Mode">
+      <span class="mega-octicon octicon-screen-normal"></span>
+    </a>
+    <a href="#" class="theme-switcher js-theme-switcher tooltipped leftwards"
+      title="Switch themes">
+      <span class="octicon octicon-color-mode"></span>
+    </a>
+  </div>
+</div>
+
+
+
+    <div id="ajax-error-message" class="flash flash-error">
+      <span class="octicon octicon-alert"></span>
+      <a href="#" class="octicon octicon-remove-close close ajax-error-dismiss"></a>
+      Something went wrong with that request. Please try again.
+    </div>
+
+  </body>
+</html>
+
