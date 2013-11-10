@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Blogs</title>
+    
+    <meta name="description" content="My blogs">
+    
+    <meta name="author" content="mahang">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/twitter/stylesheets/bootstrap.min.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/twitter/stylesheets/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/twitter/widgets/google_prettify/stylesheets/twitter-bootstrap.css" type="text/css" rel="stylesheet" media="all">
+
+
+    <!-- Le fav and touch icons -->
+    <!-- Update these with your own images
+      <link rel="shortcut icon" href="images/favicon.ico">
+      <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+      <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+      <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+    -->
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" href="/">树莓派的奇幻漂流</a>
+            <ul class="nav">
+                
+                
+
+
+  <li><a href="/archive">Archive</a></li>
+
+
+                
+                
+
+
+  <li><a href="/tags">Tags</a></li>
+
+
+                
+                
+
+
+  <li><a href="/categories">Categories</a></li>
+
+
+                
+                
+
+
+  <li><a href="/pages">Pages</a></li>
+
+
+                
+                
+
+
+  <li><a href="/about">About Me</a></li>
+
+
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="content">
+        
+<div class="row">
+    <div class="span9">
+        <div class="post">
+  <h1 class="title"><a href="/坑/%E8%AE%B0openJDK%E9%87%8C%E8%B8%A9%E8%BF%87%E7%9A%84%E4%B8%80%E5%9D%91/">记openJDK里踩过的一坑</a> <span class="date">2013-10-26</span></h1>
+
+  <p>自己开发机器使用的是orcale官方jdk，在本地调试ok的代码，发到厂里线上的机器，采用的openjdk的版本，发现如何调试都不通。不同jdk对同样代码采用不同的处理方式，踩进这样的坑里，着实蛋疼，排查也很难想到在这里会出问题。最后发现有问题的是以下代码，因为jdk版本的不同，导致表现的结果不一样。</p>
+
+<pre><code>public static void main(String [] args) {
+    List&lt;Integer&gt; list = new ArrayList&lt;Integer&gt;();
+    list.add(5);
+    list.add(7);
+    list.add(3);
+    Collections.sort(list , new Comparator&lt;Integer&gt;() {
+        @Override
+        public int compare(Integer o1, Integer o2) {
+            return o1 - o2 &gt; 0 ? -1 : 0;
+        }
+    });
+    System.out.println(list);
+    
+}
+</code></pre>
+
+
+  <div class="more">
+    <a href="/坑/%E8%AE%B0openJDK%E9%87%8C%E8%B8%A9%E8%BF%87%E7%9A%84%E4%B8%80%E5%9D%91/" class="btn btn-small">阅读全文</a>
+  </div>
+</div>
+
+<div class="post">
+  <h1 class="title"><a href="/mac/os-x10.9%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91%E5%8D%87%E7%BA%A7svn1.8/">os x10.9源码编译升级svn1.8</a> <span class="date">2013-10-10</span></h1>
+
+  <p>之前升级了开发者预览版的冲浪胜地os x 10.9，发现xcode里command line tools附带的svn版本是1.7，自己很多的代码工程都是svn1.8的版本，所以需要升级svn版本到1.8。但是尝试了几种方法，发现并不是很容易，折腾了几个小时的时间，下面把过程记录如下，方便后来者。</p>
+
+<p>首先想到的是，升级最新的xcode5.0，这样就可以使用最新的command line tools，开始时，这种方法是凑效的，升级xcode5.0后， svn确实是1.8了。但是过了没多久，系统提示升级xcode，升级之后发现，svn版本又退回到1.7。在尝试升级command line tools无果，所以尝试别的办法。</p>
+
+<p>从subversion官网下载二进制的安装包，但是只有os x 10.8的，安装到一半继续不下去，此路也不通。</p>
+
+<p>最后尝试svn源码编译，步骤如下：</p>
+
+<ol>
+<li>从<a href="http://subversion.apache.org/download/">官网</a>下载subversion-1.8.3.tar.gz（zip的试过不行），然后<code>tar -xvf subversion-1.8.3</code>解压缩。</li>
+<li>编译源码</li>
+</ol>
+
+<pre><code>cd subversion-1.8.3
+./configure --with-ssl
+make
+sudo make install
+</code></pre>
+
+<ol>
+<li>建立软链接</li>
+</ol>
+
+
+  <div class="more">
+    <a href="/mac/os-x10.9%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91%E5%8D%87%E7%BA%A7svn1.8/" class="btn btn-small">阅读全文</a>
+  </div>
+</div>
+
+<div class="post">
+  <h1 class="title"><a href="/go/coding4fun%E4%BB%A3%E7%A0%81%E6%AF%94%E8%B5%9B%E5%B0%8F%E7%BB%93/">coding4fun代码比赛小结</a> <span class="date">2013-08-27</span></h1>
+
+  <p>上周参加coding4fun的小比赛，赛题的大致意思就是充分利用多核CPU，看谁开发的程序最快。对于这类题目，语言的选择上就显得很重要，因为对于同样的算法，在都做了充分的优化的情况下，就剩下纯粹的比拼语言的执行效率了。</p>
+
+<p>所以我选择了用go，可能有些同学还不太了解，首先看一下go语言的显著的几个特点：</p>
+
+<p>1.和c\c++一样都是编译型语言，直接编译成本地机器码执行，官方所说执行效率逼近c</p>
+
+<p>2.语言自带垃圾回收，编译时编译进运行时</p>
+
+<p>3.语言内建协程，以非常廉价的方式实现并行</p>
+
+<p>4.编程多范式支持，可以既面向过程又面向对象，还可以函数式编程</p>
+
+<ul>
+<li>下面简单说一下我的思路:</li>
+</ul>
+
+<p>1.我使用的字典树的数据结构，这种数据结构对于小文本的来说是比较有利的，后面换成大文本，字典树就有些力不从心了。基本结构就是一个节点代表一个字符，里面包含从这个节点向上遍历形成的单词的count。</p>
+
+<pre><code>type CharTreeNode struct {
+    Count    int
+    Children [26]*CharTreeNode
+}
+</code></pre>
+
+
+  <div class="more">
+    <a href="/go/coding4fun%E4%BB%A3%E7%A0%81%E6%AF%94%E8%B5%9B%E5%B0%8F%E7%BB%93/" class="btn btn-small">阅读全文</a>
+  </div>
+</div>
+
+<div class="post">
+  <h1 class="title"><a href="/raspberry/%E6%A0%91%E8%8E%93%E6%B4%BE%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8%E7%A8%8B%E5%BA%8F%E5%8F%8A%E5%90%AF%E5%8A%A8%E8%84%9A%E6%9C%AC%E7%9A%84%E5%88%B6%E4%BD%9C/">树莓派开机启动程序及启动脚本的制作</a> <span class="date">2013-08-24</span></h1>
+
+  <p>网上有不少关于如何让Linux自动运行自己编写的脚本或者程序的方法，但是大多数都是把命令写到/etc/rc.local里，这样虽然能够实现随机运行，但是并不够灵活。不能像mysql，apache等服务一样能够使用service命令或者调用init.d下的脚本启动、关闭或者重启进程。例如，</p>
+
+<p>service mysql restart
+service apache2 stop</p>
+
+<p>或者</p>
+
+<p>/etc/init.d/mysql restart
+/etc/init.d/apache2 stop</p>
+
+<p>因为不同的Linux发行版本，对后台服务的处理方式不大一样，如redhat使用chkconfig来管理开机程序。所以下面的方法以debian类系统为例，如何写一个简单的开机启动脚本。所以，此方法适用于raspbian pi的系统。</p>
+
+<p>以svn为例：</p>
+
+<p>1.制作开机启动脚本svn_serve</p>
+
+<pre><code>#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          svn_serve
+# Required-Start:    $remote_fs
+# Required-Stop:     $remote_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start or stop the HTTP Proxy.
+### END INIT INFO
+
+case $1 in
+    start)
+        svnserve -d -r /home/pi/svn_repository
+        ;;
+    stop)
+        killall svnserve
+        ;;
+*)
+echo &quot;Usage: $0 (start|stop)&quot;
+;;
+esac
+</code></pre>
+
+
+  <div class="more">
+    <a href="/raspberry/%E6%A0%91%E8%8E%93%E6%B4%BE%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8%E7%A8%8B%E5%BA%8F%E5%8F%8A%E5%90%AF%E5%8A%A8%E8%84%9A%E6%9C%AC%E7%9A%84%E5%88%B6%E4%BD%9C/" class="btn btn-small">阅读全文</a>
+  </div>
+</div>
+
+<div class="post">
+  <h1 class="title"><a href="/go/go%E9%80%92%E5%BD%92%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E4%BC%A0%E9%80%92%E6%95%B0%E7%BB%84%E5%88%87%E7%89%87slice/">go递归函数如何传递数组切片slice</a> <span class="date">2013-08-18</span></h1>
+
+  <p>数组切片slice这个东西看起来很美好，真正用起来会发现有诸多的不爽。</p>
+
+<p>第一，数组、数组切片混淆不清，使用方式完全一样，有时候一些特性又完全不一样，搞不清原理很容易误使用。</p>
+
+<p>第二，数组切片的append操作，每次对slice append操作，都返回一个新的slice的引用，对slice的引用没法保持，这样在函数传递slice的情况下append，在调用函数的上下文中看不到slice append的效果。如果想要这种方式凑效，不得不另辟蹊径。本文主要说一下如何解决这个窘境的方法。</p>
+
+<p>第三，暂时想不起来，待补充..</p>
+
+<p>函数传递slice存在什么问题？</p>
+
+<pre><code>func sliceModify(slice []int) {
+    // slice[0] = 88
+    slice = append(slice, 6)
+}
+func main() {
+    slice := []int{1, 2, 3, 4, 5}
+    sliceModify(slice)
+    fmt.Println(slice)
+}
+</code></pre>
+
+
+  <div class="more">
+    <a href="/go/go%E9%80%92%E5%BD%92%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E4%BC%A0%E9%80%92%E6%95%B0%E7%BB%84%E5%88%87%E7%89%87slice/" class="btn btn-small">阅读全文</a>
+  </div>
+</div>
+
+<div class="post">
+  <h1 class="title"><a href="/go/go-slice%E5%92%8C%E6%95%B0%E7%BB%84%E7%9A%84%E5%8C%BA%E5%88%AB/">go slice和数组的区别</a> <span class="date">2013-08-17</span></h1>
+
+  <p>1.使用方式</p>
+
+<p>数组和slice长的很像，操作方式也都差不多，并且slice包含了数组的基本的操作方式，如下标、range循环，还有一些如len()则是多种类型共用，所以根据操作根本搞不清数组和切片的区别，能够看出区别的地方主要看如何声明的。</p>
+
+<p>数组的声明方式很单一，通常就是下面这样：</p>
+
+<pre><code>array1 := [5]int{1, 2, 3, 4, 5}
+array2 := [5]int{}
+</code></pre>
+
+<p>slice的声明方式就非常多样了，如前面介绍的几种：</p>
+
+<pre><code>var slice1 = []int{1, 2, 3, 4, 5}
+var slice2 = make([]int, 0, 5)
+var slice3 = make([]int, 5, 5)
+var slice4 = make([]int, 5)
+</code></pre>
+
+<p>加上对数组的切片和append操作都会产生数组切片(slice)</p>
+
+
+  <div class="more">
+    <a href="/go/go-slice%E5%92%8C%E6%95%B0%E7%BB%84%E7%9A%84%E5%8C%BA%E5%88%AB/" class="btn btn-small">阅读全文</a>
+  </div>
+</div>
+
+<div class="post">
+  <h1 class="title"><a href="/go/go%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E6%95%B0%E7%BB%84%E5%88%87%E7%89%87slice/">go语言中的数组切片slice</a> <span class="date">2013-08-16</span></h1>
+
+  <p>初看go语言中的slice，觉得是可变数组的一种很不错的实现，直接在语言语法的层面支持，操作方面比起java中的ArrayList方便了许多。但是在使用了一段时间后，觉得这东西埋的坑不少，使用方式上和arrayList也有很大的不同，在使用时要格外注意。</p>
+
+<h2>slice的数据结构</h2>
+
+<p>首先说一下slice的数据结构，源码可以在google code上找到，<a href="http://code.google.com/p/go/source/browse/src/pkg/runtime/runtime.h">http://code.google.com/p/go/source/browse/src/pkg/runtime/runtime.h</a></p>
+
+<pre><code>struct Slice
+{                          
+    byte*   array;  // actual data
+    uintgo  len;    // number of elements
+    uintgo  cap;    // allocated number of elements
+};
+</code></pre>
+
+<p>可以看出主要保存了三个信息：</p>
+
+<ul>
+<li>一个指向原生数组的指针</li>
+<li>元素的个数</li>
+<li>数组分配的存储空间</li>
+</ul>
+
+
+  <div class="more">
+    <a href="/go/go%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E6%95%B0%E7%BB%84%E5%88%87%E7%89%87slice/" class="btn btn-small">阅读全文</a>
+  </div>
+</div>
+
+<div class="post">
+  <h1 class="title"><a href="/go/go%E5%AE%9E%E7%8E%B0%E6%8E%92%E5%BA%8F%E7%9A%84%E9%93%BE%E8%A1%A8/">go实现排序的链表</a> <span class="date">2013-08-14</span></h1>
+
+  <p>链表的数据结构比较线性数组，优点是 可以方便的对任意的位置进行插入和删除。</p>
+
+<p>这一特性使得它很适合于应用在排序等场景下，由于golang目前类库还不是很完善，在java中可以很简单的使用api提供的支持完成对list或者map的排序，在使用go时就没有那么幸运了，可能需要自己去实现。</p>
+
+<p>下面的例子就是使用go package 中的LinkedList实现的排序的链表。</p>
+
+<ul>
+<li>有几个功能特性：</li>
+</ul>
+
+<p>1.支持固定的长度</p>
+
+<p>2.可自定义排序的规则</p>
+
+<p>3.组合LinkedList功能</p>
+
+<pre><code class="go">package codeforfun
+import (
+    &quot;container/list&quot;
+)
+type SortedLinkedList struct {
+    *list.List
+    Limit int
+    compareFunc func (old, new interface{}) bool
+}
+func NewSortedLinkedList(limit int, compare func (old, new interface{}) bool) *SortedLinkedList {
+    return &amp;SortedLinkedList{list.New(), limit, compare}
+}
+func (this SortedLinkedList) findInsertPlaceElement(value interface{}) *list.Element {
+    for element := this.Front(); element != nil; element = element.Next() {
+        tempValue := element.Value
+        if this.compareFunc(tempValue, value) {
+            return element
+        }
+    }
+    return nil
+}
+func (this SortedLinkedList) PutOnTop(value interface{}) {
+    if this.List.Len() == 0 {
+        this.PushFront(value)
+        return
+    }
+    if this.List.Len() &lt; this.Limit &amp;&amp; this.compareFunc(value, this.Back().Value) {
+        this.PushBack(value)
+        return
+    }
+    if this.compareFunc(this.List.Front().Value, value) {
+        this.PushFront(value)
+    } else if this.compareFunc(this.List.Back().Value, value) &amp;&amp; this.compareFunc(value, this.Front().Value) {
+        element := this.findInsertPlaceElement(value)
+        if element != nil {
+            this.InsertBefore(value, element)
+        }
+    }
+    if this.Len() &gt; this.Limit {
+        this.Remove(this.Back())
+    }
+}
+</code></pre>
+
+
+  <div class="more">
+    <a href="/go/go%E5%AE%9E%E7%8E%B0%E6%8E%92%E5%BA%8F%E7%9A%84%E9%93%BE%E8%A1%A8/" class="btn btn-small">阅读全文</a>
+  </div>
+</div>
+
+<div class="post">
+  <h1 class="title"><a href="/java/java%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B9%8Blambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/">java函数式编程之lambda表达式</a> <span class="date">2013-08-06</span></h1>
+
+  <p>作为比较老牌的面向对象的编程语言java，在对函数式编程的支持上一直不温不火。</p>
+
+<p>认为面向对象式编程就应该纯粹的面向对象，于是经常看到这样的写法：如果你想写一个方法，那么就必须把它放到一个类里面，然后new出来对象，对象调用这个方法。</p>
+
+<p>这种方式在函数式编程语言看来太死板，没有必要在对待多种编程范式上采取非此即彼的做法。</p>
+
+<p>如今比较现代的编程语言也都是多编程范式的支持，不再去对一种编程范式固守一隅，一种语言可能会同时具有面向对象、函数式、元编程等多种特性，这方面java的后来者C#都走在她的前面。</p>
+
+<p>终于在jdk8里发现了lambda表达式的影子，java也开始加入这种函数式编程特性，java码农们终于在之前老土的方法之外有了一种更为简便的选择。</p>
+
+<ul>
+<li>首先来看，lambda之前java的做法：
+使用匿名内部类：</li>
+</ul>
+
+<pre><code>public void testAnonymousClass() {
+    Integer[] nums = {2, 5, 1, 6};
+    Arrays.sort(nums, new Comparator&lt;Integer&gt;() {
+        @Override
+        public int compare(Integer o1, Integer o2) {
+            if(o1 &lt; o2) 
+                return -1;
+            return 0;
+        }
+    });
+    for (Integer n : nums) {
+        System.out.println(n);
+    }
+}
+</code></pre>
+
+
+  <div class="more">
+    <a href="/java/java%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B9%8Blambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="btn btn-small">阅读全文</a>
+  </div>
+</div>
+
+<div class="post">
+  <h1 class="title"><a href="/go/go%E8%AF%AD%E8%A8%80channel%E7%9A%84%E5%88%AB%E6%A0%B7%E7%94%A8%E6%B3%95/">go语言channel的别样用法</a> <span class="date">2013-07-10</span></h1>
+
+  <p>1.返回值使用通道</p>
+
+<pre><code>func main() {
+    // 生成随机数作为一个服务
+    randService := randGenerator()
+    // 从服务中读取随机数并打印
+    fmt.Printf(&quot;%d\n&quot;,&lt;-randService)
+}
+func randGenerator() chan int {
+    // 创建通道
+    out := make(chan int)
+    // 创建协程
+    go func() {
+        for {
+            //向通道内写入数据，如果无人读取会等待
+            out &lt;- rand.Int()
+        }
+    }()
+    return out
+}
+</code></pre>
+
+
+  <div class="more">
+    <a href="/go/go%E8%AF%AD%E8%A8%80channel%E7%9A%84%E5%88%AB%E6%A0%B7%E7%94%A8%E6%B3%95/" class="btn btn-small">阅读全文</a>
+  </div>
+</div>
+
+<div class="pagination">
+  <ul>
+      <li><a href="/posts/2/">更多文章...</a></li>
+  </ul>
+</div>
+
+    </div>
+    <div class="span3">
+        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">Site</li>
+                <li><a href="/archive">Archives</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+        </div>
+        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                    Categories
+                </li>
+                
+                <li>
+  <a href="/categories/#go-ref">go <span>7</span></a>
+</li>
+                
+                <li>
+  <a href="/categories/#mac-ref">mac <span>1</span></a>
+</li>
+                
+                <li>
+  <a href="/categories/#code-ref">code <span>2</span></a>
+</li>
+                
+                <li>
+  <a href="/categories/#java-ref">java <span>3</span></a>
+</li>
+                
+                <li>
+  <a href="/categories/#Gor-ref">Gor <span>1</span></a>
+</li>
+                
+                <li>
+  <a href="/categories/#%E5%9D%91-ref">坑 <span>1</span></a>
+</li>
+                
+                <li>
+  <a href="/categories/#raspberry-ref">raspberry <span>2</span></a>
+</li>
+                
+            </ul>
+        </div>
+        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                    Links
+                </li>
+                <li><a href="http://www.cnblogs.com/mahang/" target="_blank">mac的学习笔记</a></li>
+            </ul>
+        </div>
+        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=2&ptype=1&speed=0&skin=5&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=1876499121&verifier=49ff9b08&dpc=1"></iframe>
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    <footer>
+        <p>&copy; mahang 2013
+            with help from <a href="http://github.com/wendal/gor" target="_blank" title="Gor -- Fast Blog">Gor</a>
+            and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+            and Idea from <a href="http://ruhoh.com" target="_blank" title="The Definitive Technical Blogging Framework">ruhoh</a>
+	</p>
+	<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cdiv align='center' id='cnzz_stat_icon_1000037964'%3E%3C/div%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1000037964%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+    </footer>
+
+</div> <!-- /container -->
+
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint linenums";
+  }
+  prettyPrint();
+</script>
+
+
+<script>
+    var _gaq=[['_setAccount','UA-123-12'],['_trackPageview']];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g,s)}(document,'script'));
+</script>
+</body>
+</html>
