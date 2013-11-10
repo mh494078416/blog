@@ -86,7 +86,7 @@ chrome
 扫描无线网络`sudo iwlist wlan0 scan`
 
 ```
-$ sudo vim /etc/wpa_supplicant/wpa_supplicant.conf
+$ sudo vim /etc/wpa.conf
     network={
 	ssid="TP-LINK_B3A8BC"
 	proto=RSN
@@ -250,10 +250,9 @@ sda5是取决于你的实际情况，a表示第一个硬盘，5表示第5个分�
 -t ntfs以ntfs文件格式挂载
 -o utf-8 设置文件编码
 开机自动挂载硬盘
-把上述的命令写入 /etc/fstab 文件中
+把上述的命令写入 /etc/fstab 文件中`cat /etc/fstab`
 
 ```
-pi@raspberrypi /mnt/sda5 $ cat /etc/fstab
 proc            /proc           proc    defaults          0       0
 #Handled by Berryboot 
 #/dev/mmcblk0p1  /boot           vfat    defaults          0       2

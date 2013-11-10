@@ -160,7 +160,7 @@ $ sudo rpi-update
 
 <p>扫描无线网络<code>sudo iwlist wlan0 scan</code></p>
 
-<pre><code>$ sudo vim /etc/wpa_supplicant/wpa_supplicant.conf
+<pre><code>$ sudo vim /etc/wpa.conf
     network={
     ssid=&quot;TP-LINK_B3A8BC&quot;
     proto=RSN
@@ -323,10 +323,9 @@ sudo reboot
 -t ntfs以ntfs文件格式挂载
 -o utf-8 设置文件编码
 开机自动挂载硬盘
-把上述的命令写入 /etc/fstab 文件中</p>
+把上述的命令写入 /etc/fstab 文件中<code>cat /etc/fstab</code></p>
 
-<pre><code>pi@raspberrypi /mnt/sda5 $ cat /etc/fstab
-proc            /proc           proc    defaults          0       0
+<pre><code>proc            /proc           proc    defaults          0       0
 #Handled by Berryboot 
 #/dev/mmcblk0p1  /boot           vfat    defaults          0       2
 #/dev/mmcblk0p2  /               ext4    defaults,noatime  0       1
