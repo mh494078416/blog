@@ -3,7 +3,7 @@
 
 RuhohSpec: '1.0'
 theme : twitter
-production_url : http://sample.com
+production_url : http://www.codeforfun.info
 
 posts:
   permalink: /:categories/:title/
@@ -12,3 +12,8 @@ posts:
 
 pages:
   permalink: 'pretty'
+
+paginator:
+  layout: 'paginator'
+  per_page: 10
+  namespace: '/posts/'
