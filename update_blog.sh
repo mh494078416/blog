@@ -1,6 +1,3 @@
-echo "cd /home/pi/codeforfun.info"
-cd /home/pi/codeforfun.info
-
 echo "git pull"
 git pull
 
