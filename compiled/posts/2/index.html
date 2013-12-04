@@ -87,33 +87,6 @@ sudo diskutil eject /dev/rdisk1
       </div>
     
       <div class="post">
-        <h1 class="title"><a href="/坑/%E8%AE%B0openJDK%E9%87%8C%E8%B8%A9%E8%BF%87%E7%9A%84%E4%B8%80%E5%9D%91/">记openJDK里踩过的一坑</a> <span class="date">2012-05-26</span></h1>
-
-        <p>自己开发机器使用的是orcale官方jdk，在本地调试ok的代码，发到厂里线上的机器，采用的openjdk的版本，发现如何调试都不通。不同jdk对同样代码采用不同的处理方式，踩进这样的坑里，着实蛋疼，排查也很难想到在这里会出问题。最后发现有问题的是以下代码，因为jdk版本的不同，内部采用排序的实现方式不一样，导致输出不一样的结果。</p>
-
-<pre><code>public static void main(String [] args) {
-    List&lt;Integer&gt; list = new ArrayList&lt;Integer&gt;();
-    list.add(5);
-    list.add(7);
-    list.add(3);
-    Collections.sort(list , new Comparator&lt;Integer&gt;() {
-        @Override
-        public int compare(Integer o1, Integer o2) {
-            return o1 - o2 &gt; 0 ? -1 : 0;
-        }
-    });
-    System.out.println(list);
-    
-}
-</code></pre>
-
-
-        <div class="more">
-          <a href="/坑/%E8%AE%B0openJDK%E9%87%8C%E8%B8%A9%E8%BF%87%E7%9A%84%E4%B8%80%E5%9D%91/" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
-      <div class="post">
         <h1 class="title"><a href="/code/%E8%AF%BB%E5%8F%96%E7%BD%91%E7%BB%9C%E4%B8%8A%E6%96%87%E4%BB%B6%E5%88%B0%E5%86%85%E5%AD%98/">读取网络上文件到内存</a> <span class="date">2011-12-19</span></h1>
 
         <p>从网络上下载文件到硬盘相对简单，拿到文件输出流，网络上的输入流，一边读输入流一边写输出流，都读取完毕，关掉输入、输出流就好。

@@ -2,7 +2,7 @@
 <rss version="2.0">  <channel>
     <title>树莓派的奇幻漂流</title>
     <link>http://www.codeforfun.info</link>
-    <pubDate>2013-11-30 03:15:12 +0800</pubDate>
+    <pubDate>2013-12-04 04:49:18 +0800</pubDate>
     <item>
       <title>os x10.9源码编译升级svn1.8</title>
       <link>http://www.codeforfun.info/mac/os-x10.9%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91%E5%8D%87%E7%BA%A7svn1.8/</link>
@@ -74,12 +74,6 @@
       <link>http://www.codeforfun.info/2012/new-born.html</link>
       <pubDate>2012-12-22 12:00:00 +0800</pubDate>
       <description>&lt;h1&gt;感谢你使用Gor编写博客&lt;/h1&gt;&#xA;&#xA;&lt;h2&gt;本文位于 posts/first-blog.md , 你可以任何删掉,修改这个文件。&lt;/h2&gt;&#xA;&#xA;&lt;p&gt;文件开头是当前文章的元数据&lt;/p&gt;&#xA;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;date为自动生成, 当然,你可以修改,这是你的自由&lt;/li&gt;&#xA;&lt;li&gt;permalink 可以是固定地址,也可以由gor为你自动生成&lt;/li&gt;&#xA;&lt;li&gt;categories 就是分类, 可以多个&lt;/li&gt;&#xA;&lt;li&gt;tags 同理,多个标签也是很常见的&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&#xA;&lt;p&gt;请确保文件使用UTF8 without BOM编码&lt;/p&gt;&#xA;&#xA;&lt;h2&gt;你可以通过执行下面的语句来新建一篇博客:&lt;/h2&gt;&#xA;&#xA;&lt;pre&gt;&lt;code&gt;gor post 文章标题&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&#xA;&lt;h2&gt;编译你的博客,并预览之&lt;/h2&gt;&#xA;&#xA;&lt;pre&gt;&lt;code&gt;gor compile #编译&#xA;gor http&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&#xA;&lt;p&gt;然后打开你的浏览器,访问 &lt;a href=&#34;http://127.0.0.1:8080&#34;&gt;http://127.0.0.1:8080&lt;/a&gt; 来预览&lt;/p&gt;&#xA;&#xA;&lt;h2&gt;你将使用Markdown来编写博客&lt;/h2&gt;&#xA;&#xA;&lt;p&gt;&lt;a href=&#34;http://wowubuntu.com/markdown/&#34;&gt;Markdown 语法中文版&lt;/a&gt; 能让你快速入门其语法&lt;/p&gt;&#xA;&#xA;&lt;p&gt;相信&lt;a href=&#34;http://markdownpad.com&#34;&gt;MarkdownPad&lt;/a&gt;或&lt;a href=&#34;http://code.google.com/p/liteide/&#34;&gt;liteide&lt;/a&gt;会是你的编写博客的好帮手&lt;/p&gt;&#xA;&#xA;&lt;h2&gt;如果你打算部署到github的pages上&lt;/h2&gt;&#xA;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;申请github帐户&lt;/li&gt;&#xA;&lt;li&gt;新建一个库 username.github.com 即你的用户名命名的地址&lt;/li&gt;&#xA;&lt;li&gt;将compiled目录,作为根路径,提交上去github.com上&lt;/li&gt;&#xA;&lt;li&gt;稍等几分钟, 你即可通过 &lt;a href=&#34;http://username.github.com&#34;&gt;http://username.github.com&lt;/a&gt; 访问到&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&#xA;&lt;h2&gt;附上git教程 &lt;a href=&#34;http://gitbook.liuhui998.com/&#34;&gt;GitBook中文版&lt;/a&gt;&lt;/h2&gt;&#xA;&#xA;&lt;p&gt;一般来说,你只需要几个简单的git命令就足以应付大部分需求(仅示例)&lt;/p&gt;&#xA;&#xA;&lt;pre&gt;&lt;code&gt;git clone git://github.com/wendal/wendal.net.git&#xA;git add -A&#xA;git commit -m &amp;quot;...&amp;quot;&#xA;git pull&#xA;git push&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&#xA;&lt;h2&gt;用gor编写博客将会是一件很开心的事,如果有任何意见或建议,欢迎到 &lt;a href=&#34;http://github.com/wendal/gor&#34;&gt;gor的官网&lt;/a&gt; 提交issue&lt;/h2&gt;&#xA;&#xA;&lt;h1&gt;祝你使用愉快&lt;/h1&gt;&#xA;</description>
-    </item>
-    <item>
-      <title>记openJDK里踩过的一坑</title>
-      <link>http://www.codeforfun.info/坑/%E8%AE%B0openJDK%E9%87%8C%E8%B8%A9%E8%BF%87%E7%9A%84%E4%B8%80%E5%9D%91/</link>
-      <pubDate>2012-05-26 12:00:00 +0800</pubDate>
-      <description>&lt;p&gt;自己开发机器使用的是orcale官方jdk，在本地调试ok的代码，发到厂里线上的机器，采用的openjdk的版本，发现如何调试都不通。不同jdk对同样代码采用不同的处理方式，踩进这样的坑里，着实蛋疼，排查也很难想到在这里会出问题。最后发现有问题的是以下代码，因为jdk版本的不同，内部采用排序的实现方式不一样，导致输出不一样的结果。&lt;/p&gt;&#xA;&#xA;&lt;pre&gt;&lt;code&gt;public static void main(String [] args) {&#xA;    List&amp;lt;Integer&amp;gt; list = new ArrayList&amp;lt;Integer&amp;gt;();&#xA;    list.add(5);&#xA;    list.add(7);&#xA;    list.add(3);&#xA;    Collections.sort(list , new Comparator&amp;lt;Integer&amp;gt;() {&#xA;        @Override&#xA;        public int compare(Integer o1, Integer o2) {&#xA;            return o1 - o2 &amp;gt; 0 ? -1 : 0;&#xA;        }&#xA;    });&#xA;    System.out.println(list);&#xA;    &#xA;}&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&#xA;&lt;p&gt;在orcale jdk里，上面代面是能够按照预期正确排序的，输出结果：&lt;code&gt;[7, 5, 3]&lt;/code&gt;&lt;/p&gt;&#xA;&#xA;&lt;p&gt;open jdk里，输出结果： &lt;code&gt;[5, 7, 3]&lt;/code&gt;&lt;/p&gt;&#xA;&#xA;&lt;p&gt;原因在于&lt;code&gt;Comparator&lt;/code&gt;对&lt;code&gt;compare&lt;/code&gt;方法返回值的处理上。&lt;/p&gt;&#xA;&#xA;&lt;p&gt;保险的做法是把&lt;code&gt;o1 - o2 &amp;gt; 0 ? -1 : 0&lt;/code&gt;改为&lt;code&gt;o1 - o2 &amp;gt; 0 ? (o1 - o2 &amp;lt; 0 ? 1 : 0)&lt;/code&gt;&lt;/p&gt;&#xA;</description>
     </item>
     <item>
       <title>读取网络上文件到内存</title>
