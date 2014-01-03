@@ -10,8 +10,6 @@ tags:
 - java
 ---
 
-hbase orm中间层hbasedao
-===
 
 背景
 ---
