@@ -109,24 +109,19 @@
 </ul>
 
 <table>
-<thead>
-<tr>
-<td>列名</td>
-<td align="center">说明</td>
-</tr>
-</thead>
-
+<thead><tr>
+<th>列名</th>
+<th align="center">说明</th>
+</tr></thead>
 <tbody>
 <tr>
 <td>id</td>
 <td align="center">用户id</td>
 </tr>
-
 <tr>
 <td>head_image</td>
 <td align="center">头像</td>
 </tr>
-
 <tr>
 <td>last_visit_time</td>
 <td align="center">上次登录时间</td>
@@ -139,19 +134,15 @@
 </ul>
 
 <table>
-<thead>
-<tr>
-<td>列名</td>
-<td align="center">说明</td>
-</tr>
-</thead>
-
+<thead><tr>
+<th>列名</th>
+<th align="center">说明</th>
+</tr></thead>
 <tbody>
 <tr>
 <td>userId</td>
 <td align="center">用户id</td>
 </tr>
-
 <tr>
 <td>follow_user</td>
 <td align="center">关注的人</td>
@@ -164,19 +155,15 @@
 </ul>
 
 <table>
-<thead>
-<tr>
-<td>列名</td>
-<td align="center">说明</td>
-</tr>
-</thead>
-
+<thead><tr>
+<th>列名</th>
+<th align="center">说明</th>
+</tr></thead>
 <tbody>
 <tr>
 <td>userId</td>
 <td align="center">用户id</td>
 </tr>
-
 <tr>
 <td>be_followed_user</td>
 <td align="center">关注我的人</td>
@@ -191,33 +178,27 @@
 <p>####hbase的方式：</p>
 
 <table>
-<thead>
-<tr>
-<td>rowKey</td>
-<td>列簇</td>
-<td>列</td>
-</tr>
-</thead>
-
+<thead><tr>
+<th>rowKey</th>
+<th>列簇</th>
+<th>列</th>
+</tr></thead>
 <tbody>
 <tr>
 <td>userId</td>
 <td>info_cf（单version）</td>
 <td>head_image</td>
 </tr>
-
 <tr>
 <td></td>
 <td></td>
 <td>last_visit_time</td>
 </tr>
-
 <tr>
 <td></td>
 <td>relation_cf   (多个version)</td>
 <td>follow_user</td>
 </tr>
-
 <tr>
 <td></td>
 <td></td>
@@ -472,7 +453,8 @@ System.out.println(userHBaseDO);
 </ol>
 
 <blockquote>
-<p>完整地代码示例请参考<code>com.taobao.hbasedao.sample</code></p>
+<p>完整地代码示例请参考<code>com.taobao.hbasedao.sample</code>
+源码工程在：<a href="https://github.com/mh494078416/hbasedao">hbasedao</a></p>
 </blockquote>
 
         <hr>

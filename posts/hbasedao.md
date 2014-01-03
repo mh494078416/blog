@@ -30,36 +30,98 @@ hbase要解决的问题是海量数据的分布式存储，传统数据库如mys
 
 * 用户信息表
 
-| 列名					| 说明				|
-| ----------------- |:-------------:	|
-| id     				| 用户id		 	|
-| head_image  		| 头像				|
-| last_visit_time	| 上次登录时间		|
+<table>
+<thead><tr>
+<th>列名</th>
+<th align="center">说明</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>id</td>
+<td align="center">用户id</td>
+</tr>
+<tr>
+<td>head_image</td>
+<td align="center">头像</td>
+</tr>
+<tr>
+<td>last_visit_time</td>
+<td align="center">上次登录时间</td>
+</tr>
+</tbody>
+</table>
 
 * 用户关注表
 
-| 列名					| 说明				|
-| ----------------- |:-------------:	|
-| userId     			| 用户id		 	|
-| follow_user  		| 关注的人			|
+<table>
+<thead><tr>
+<th>列名</th>
+<th align="center">说明</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>userId</td>
+<td align="center">用户id</td>
+</tr>
+<tr>
+<td>follow_user</td>
+<td align="center">关注的人</td>
+</tr>
+</tbody>
+</table>
 
 * 用户粉丝表
 
-| 列名					| 说明				|
-| ----------------- |:-------------:	|
-| userId     			| 用户id		 	|
-| be_followed_user  | 关注我的人		|
+<table>
+<thead><tr>
+<th>列名</th>
+<th align="center">说明</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>userId</td>
+<td align="center">用户id</td>
+</tr>
+<tr>
+<td>be_followed_user</td>
+<td align="center">关注我的人</td>
+</tr>
+</tbody>
+</table>
 
 >之所以用户关系两张表来保存是因为，用户关系数据量比较大的情况下，采用分库分表存储的方案，又要提供正向、反向的查询，所以需要分别以关注者和被关注者为路由字段存储两份。
 
 ####hbase的方式：
 
-| rowKey	| 列簇							|列	|
-|-------- |-------------------------	|---------|
-| userId  | info_cf（单version）		| head_image|
-| 			| 								|last_visit_time|
-| 			| relation_cf	(多个version)	|follow_user|
-| 			| 								|be_followed_user|
+<table>
+<thead><tr>
+<th>rowKey</th>
+<th>列簇</th>
+<th>列</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>userId</td>
+<td>info_cf（单version）</td>
+<td>head_image</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>last_visit_time</td>
+</tr>
+<tr>
+<td></td>
+<td>relation_cf   (多个version)</td>
+<td>follow_user</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>be_followed_user</td>
+</tr>
+</tbody>
+</table>
 
 存入hbase的数据的逻辑结构会是：
 <img src="/assets/media/hbase_data.png" width="90%"/>
@@ -308,6 +370,7 @@ public void test_get() throws HBaseDAOException {
 ```
 
 >完整地代码示例请参考`com.taobao.hbasedao.sample`
+源码工程在：[hbasedao](https://github.com/mh494078416/hbasedao)
 
 
 
