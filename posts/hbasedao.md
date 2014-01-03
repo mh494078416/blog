@@ -1,5 +1,5 @@
 ---
-title: hbasedao
+title: hbase orm中间层hbasedao
 date: '2014-01-03'
 description: hbase orm
 categories:
