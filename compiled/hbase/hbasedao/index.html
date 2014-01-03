@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>hbasedao</title>
+    
+    <meta name="description" content="hbase orm">
+    
+    <meta name="author" content="mahang">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/twitter/stylesheets/bootstrap.min.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/twitter/stylesheets/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/twitter/widgets/google_prettify/stylesheets/twitter-bootstrap.css" type="text/css" rel="stylesheet" media="all">
+
+
+    <!-- Le fav and touch icons -->
+    <!-- Update these with your own images
+      <link rel="shortcut icon" href="images/favicon.ico">
+      <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+      <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+      <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+    -->
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" href="/">树莓派的奇幻漂流</a>
+            <ul class="nav">
+                
+                
+
+
+  <li><a href="/archive">Archive</a></li>
+
+
+                
+                
+
+
+  <li><a href="/tags">Tags</a></li>
+
+
+                
+                
+
+
+  <li><a href="/categories">Categories</a></li>
+
+
+                
+                
+
+
+  <li><a href="/pages">Pages</a></li>
+
+
+                
+                
+
+
+  <li><a href="/about">About Me</a></li>
+
+
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="content">
+        <div class="page-header">
+    <h1>hbasedao </h1>
+</div>
+
+<div class="row">
+    <div class="span9">
+        <h2>背景</h2>
+
+<p>hbase是分布式的kv(key value)存储系统，hbase提供的针对底层数据的操作也是基于kv维度的，使用起来更像是Map的操作方式。但是上层业务应用一般是采用的面向对象的设计，这就导致了使用hbase的底层api必须要写很多的代码来做KV原始数据到上层业务对象的转化。</p>
+
+<p>使用关系型数据库如MySQL，也会遇到关系型数据跟对象之间的适配问题，所以出现了很多成熟的做对象关系映射的产品，像<code>hibernate</code>和<code>mybatis</code>。</p>
+
+<p>hbase当然也需要一个类似的东西，来做对象到kv数据的适配，这样上层应用可以继续专注于上层 面向对象的方式的开发，而不用直接操作kv数据，提高工作效率。</p>
+
+<h2>hbase使用场景</h2>
+
+<p>hbase要解决的问题是海量数据的分布式存储，传统数据库如mysql解决这个问题也是有办法的，可以通过分库分表的方式做到。
+所以，hbase和mysql的竞争点是在需要mysql分库分表的情况。下面以一个很常见的场景举例，来看之前数据存储使用mysql的场景，迁移hbase上的过程。</p>
+
+<blockquote>
+<p>问题描述：用户的基本信息（包括：用户头像，上次登录时间），好友关系（正向 我关注的人，反向关注我的人）</p>
+</blockquote>
+
+<p>####mysql的方式：</p>
+
+<ul>
+<li>用户信息表</li>
+</ul>
+
+<table>
+<thead>
+<tr>
+<td>列名</td>
+<td align="center">说明</td>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>id</td>
+<td align="center">用户id</td>
+</tr>
+
+<tr>
+<td>head_image</td>
+<td align="center">头像</td>
+</tr>
+
+<tr>
+<td>last_visit_time</td>
+<td align="center">上次登录时间</td>
+</tr>
+</tbody>
+</table>
+
+<ul>
+<li>用户关注表</li>
+</ul>
+
+<table>
+<thead>
+<tr>
+<td>列名</td>
+<td align="center">说明</td>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>userId</td>
+<td align="center">用户id</td>
+</tr>
+
+<tr>
+<td>follow_user</td>
+<td align="center">关注的人</td>
+</tr>
+</tbody>
+</table>
+
+<ul>
+<li>用户粉丝表</li>
+</ul>
+
+<table>
+<thead>
+<tr>
+<td>列名</td>
+<td align="center">说明</td>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>userId</td>
+<td align="center">用户id</td>
+</tr>
+
+<tr>
+<td>be_followed_user</td>
+<td align="center">关注我的人</td>
+</tr>
+</tbody>
+</table>
+
+<blockquote>
+<p>之所以用户关系两张表来保存是因为，用户关系数据量比较大的情况下，采用分库分表存储的方案，又要提供正向、反向的查询，所以需要分别以关注者和被关注者为路由字段存储两份。</p>
+</blockquote>
+
+<p>####hbase的方式：</p>
+
+<table>
+<thead>
+<tr>
+<td>rowKey</td>
+<td>列簇</td>
+<td>列</td>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>userId</td>
+<td>info_cf（单version）</td>
+<td>head_image</td>
+</tr>
+
+<tr>
+<td></td>
+<td></td>
+<td>last_visit_time</td>
+</tr>
+
+<tr>
+<td></td>
+<td>relation_cf   (多个version)</td>
+<td>follow_user</td>
+</tr>
+
+<tr>
+<td></td>
+<td></td>
+<td>be_followed_user</td>
+</tr>
+</tbody>
+</table>
+
+<p>存入hbase的数据的逻辑结构会是：
+<img src="/assets/media/hbase_data.png" width="90%"/></p>
+
+<blockquote>
+<p>通过上面mysql表到hbase表的迁移过程，可以清楚地看到：mysql中 和userId一对一的用户基本信息迁移到hbase可以用无version特性的列簇保存；一对多的关注关系迁移到hbase，可以利用hbase多version的列簇保存。下面介绍的hbasedao中间层就会主要解决mysql迁移到hbase的适配，包括单version（一对一）和多version（一对多）的情形。</p>
+
+<p><strong>NOTE：</strong>
+hbase多version的列簇，不同column之间没有任何对应关系，所以不要尝试在不同的column之间找行的对应关系。</p>
+</blockquote>
+
+<h2>hbasedao介绍</h2>
+
+<p>hbasedao是一个简单地解决kv数据到业务对象适配的中间层，类似关系型数据库orm中间层<code>mybatis</code>。</p>
+
+<h4>针对于hbase存储结构抽象出来的类结构：</h4>
+
+<p><img src="/assets/media/hbasedao_relation.png"/></p>
+
+<h4>使用</h4>
+
+<p>封装业务对象成DO类，一个rowKey对应一个DO类的对象，通过指定DO类里的column，中间层可以做到针对于指定column的查询。使用hbasedao之后，查询的方式如下：</p>
+
+<pre><code>public UserHBaseDO get(String rowKey) throws HBaseDAOException {
+    HBaseDO hBaseDO = new HBaseDO();
+    hBaseDO.setTableName(UserHBaseDO.TABLE_NAME);
+    hBaseDO.setRowKey(rowKey);
+    hBaseDO.addColumnFamily(UserHBaseDO.CF_NAME_info_cf)
+        .putColumn(UserHBaseDO.CL_NAME_head_image)
+        .putColumn(UserHBaseDO.CL_NAME_last_visit_time);
+    hBaseDO.addColumnFamily(UserHBaseDO.CF_NAME_relation_cf, 10)
+        .putColumn(UserHBaseDO.CL_NAME_follow_user)
+        .putColumn(UserHBaseDO.CL_NAME_be_followed_user);
+    super.getHbaseDao().get(hBaseDO);
+    UserHBaseDO userHBaseDO = null;
+    try {
+        userHBaseDO = new UserHBaseDO(hBaseDO);
+    } catch (UnsupportedEncodingException e) {
+        new HBaseDAOException(e);
+    }
+    return userHBaseDO;
+}
+</code></pre>
+
+<h4>支持的API</h4>
+
+<ol>
+<li>以对象的方式插入数据</li>
+<li>批量插入数据</li>
+<li>传入rowKey，查询对象。可支持针对不同的列簇指定查询的version数量，支持指定列簇中数据的时间范围</li>
+<li>传入多个rowKey，查询对象的列表</li>
+<li>删除指定的rowKey的一行记录</li>
+<li>指定开始扫描的rowKey，开始按行扫描数据，可以限制扫描的结果集大小</li>
+</ol>
+
+<pre><code>public interface HBaseDAO {
+    public void put(HBaseDO hBaseDO) throws HBaseDAOException;
+    public void putList(List&lt;HBaseDO&gt; hBaseDOList, String tableName) 
+        throws HBaseDAOException;
+    public void get(HBaseDO hBaseDO) throws HBaseDAOException;
+    public void getList(List&lt;HBaseDO&gt; hBaseDOList, String tableName) 
+        throws HBaseDAOException;
+    public void delete(HBaseDO hBaseDO) throws HBaseDAOException;
+    public List&lt;HBaseDO&gt; scan(String tableName, String startRow, String endRow, 
+        int maxVersion, int maxResultSize, Map&lt;String, List&lt;String&gt;&gt; columnFamilyMap) 
+        throws HBaseDAOException;
+}
+</code></pre>
+
+<h2>使用举例（step by step）</h2>
+
+<p>代码工程结构，sample包里提供了详细的使用举例。可以看到，使用时只需要定义hbase表对应的DO类，在此类中编写对象和hbase里数据的对应关系，在DAO层以上就可以提供和mybatis类似的接口访问形式。</p>
+
+<pre><code>├── pom.xml
+├── src
+│   ├── main
+│   │   ├── java
+│   │   │   └── com
+│   │   │       └── taobao
+│   │   │           └── hbasedao
+│   │   │               ├── ColumnFamilyInfo.java
+│   │   │               ├── HBaseCell.java
+│   │   │               ├── HBaseClientDaoSupport.java
+│   │   │               ├── HBaseColumnFamily.java
+│   │   │               ├── HBaseConsole.java
+│   │   │               ├── HBaseDAO.java
+│   │   │               ├── HBaseDAOException.java
+│   │   │               ├── HBaseDAOFactory.java
+│   │   │               ├── HBaseDAOImpl.java
+│   │   │               ├── HBaseDO.java
+│   │   │               ├── HBaseVO.java
+│   │   │               ├── MapAble.java
+│   │   │               └── sample
+│   │   │                   ├── dao
+│   │   │                   │   └── UserHBaseDAO.java
+│   │   │                   ├── dataobject
+│   │   │                   │   └── UserHBaseDO.java
+│   │   │                   └── vo
+│   │   │                       └── FollowerVO.java
+│   │   └── resources
+│   └── test
+│       ├── java
+│       │   └── com
+│       │       └── taobao
+│       │           └── hbasedao
+│       │               └── sample
+│       │                   └── test
+│       │                       └── UserHBaseDAOTest.java
+│       └── resources
+│           └── hbase-dao.xml
+</code></pre>
+
+<p>####步骤</p>
+
+<ol>
+<li><p>引入依赖</p>
+
+<pre><code>&lt;dependency&gt;
+&lt;groupId&gt;com.taobao.hbasedao&lt;/groupId&gt;
+&lt;artifactId&gt;hbasedao&lt;/artifactId&gt;
+&lt;version&gt;1.0.0-SNAPSHOT&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre></li>
+
+<li><p>定义hbae表对应的DO类，相当于使用mybatis时，定义的sqlmap，需要给出hbase表的schema信息，如：列簇名、列名、列簇的最大version，列簇和列的绑定关系等。</p>
+
+<pre><code>public class UserHBaseDO implements MapAble&lt;UserHBaseDO&gt; {
+public static final String TABLE_NAME = &quot;hbasedao_user&quot;;
+public static final String CF_NAME_info_cf = &quot;info_cf&quot;;
+public static final int MAX_SIZE_CF_NAME_info_cf = 1;
+public static final String CF_NAME_relation_cf = &quot;relation_cf&quot;;
+public static final int MAX_SIZE_CF_NAME_relation_cf = 1000;
+public static final String CL_NAME_head_image = &quot;head_image&quot;;
+public static final String CL_NAME_last_visit_time = &quot;last_visit_time&quot;;
+public static final String CL_NAME_follow_user = &quot;follow_user&quot;;
+public static final String CL_NAME_be_followed_user = &quot;be_followed_user&quot;;
+private static Map&lt;String, List&lt;String&gt;&gt; columnFamilyMap;
+static {
+    columnFamilyMap = new HashMap&lt;String, List&lt;String&gt;&gt;();
+    columnFamilyMap.put(CF_NAME_info_cf,
+            Arrays.asList(new String[] { CL_NAME_head_image, CL_NAME_last_visit_time }));
+    columnFamilyMap.put(CF_NAME_relation_cf,
+            Arrays.asList(new String[] { CL_NAME_follow_user, CL_NAME_be_followed_user }));
+}
+private String rowKey;
+private String headImage;
+private long lastVisitTime;
+private final List&lt;FollowerVO&gt; followVOList = new ArrayList&lt;FollowerVO&gt;();
+private final List&lt;FollowerVO&gt; beFollowedVOList = new ArrayList&lt;FollowerVO&gt;();
+</code></pre></li>
+
+<li><p>实现MapAble接口，MapAble接口包括两个方法，一个是插入数据时将用户定义的UserHBaseDO转化为框架使用的HBaseDO，一个是查询时将HBaseDO里包含的数据转为为用户定义UserHBaseDO。</p>
+
+<pre><code>@Override
+public HBaseDO converDOToHBaseDO() {
+HBaseDO hbaseDO = new HBaseDO();
+hbaseDO.setRowKey(this.rowKey);
+hbaseDO.setTableName(UserHBaseDO.TABLE_NAME);
+for (Map.Entry&lt;String, List&lt;String&gt;&gt; columnFamilyEntry : 
+    columnFamilyMap.entrySet()) {
+    String columnFamilyName = columnFamilyEntry.getKey();
+    List&lt;String&gt; columnNameList = columnFamilyEntry.getValue();
+    HBaseColumnFamily columnFamily = new HBaseColumnFamily();
+    for (String columnName : columnNameList) {
+        if (CF_NAME_info_cf.equals(columnFamilyName) &amp;&amp; 
+            CL_NAME_head_image.equals(columnName)) {
+            if (this.headImage != null) {
+                List&lt;HBaseCell&gt; cellDOList = new ArrayList&lt;HBaseCell&gt;();
+                HBaseCell cellDO = new HBaseCell();
+                cellDO.setValue(this.headImage);
+                cellDOList.add(cellDO);
+                columnFamily.putColumn(columnName, cellDOList);
+            }
+        }
+        ...
+    }
+    hbaseDO.getColumnFamilyMap().put(columnFamilyName, columnFamily);
+}
+return hbaseDO;
+}
+@Override
+public UserHBaseDO convertHBaseDOToDO(HBaseDO hBaseDO) throws UnsupportedEncodingException {
+this.rowKey = hBaseDO.getRowKey();
+List&lt;KeyValue&gt; results = hBaseDO.getResults();
+for (Map.Entry&lt;String, List&lt;String&gt;&gt; columnFamilyEntry : 
+    columnFamilyMap.entrySet()) {
+    String columnFamilyName = columnFamilyEntry.getKey();
+    List&lt;String&gt; columnNameList = columnFamilyEntry.getValue();
+    for (String columnName : columnNameList) {
+        if (CF_NAME_info_cf.equals(columnFamilyName) &amp;&amp; 
+            CL_NAME_head_image.equals(columnName)) {
+            for (KeyValue kv : results) {
+                if (columnFamilyName.equals(new String(kv.getFamily()))
+                        &amp;&amp; columnName.equals(new String(kv.getQualifier()))) {
+                    this.headImage = new String(kv.getValue(), &quot;UTF-8&quot;);
+                }
+            }
+        }
+        ...
+    }
+}
+return this;
+}
+</code></pre></li>
+
+<li><p>然后就是定义DAO类，主要的逻辑已经在UserHBaseDO写了，这里的实现可以足够简单，查询的代码在hbasedao介绍里已经给出，插入数据的代码如下：</p>
+
+<pre><code>public void insert(UserHBaseDO userHBaseDO) throws HBaseDAOException {
+super.getHbaseDao().put(userHBaseDO.converDOToHBaseDO());
+}
+</code></pre></li>
+
+<li><p>编写测试用例</p>
+
+<pre><code>@Test
+public void test_insert() throws HBaseDAOException {
+ApplicationContext context = new ClassPathXmlApplicationContext(&quot;hbase-dao.xml&quot;);
+UserHBaseDAO userHBaseDAO = context.getBean(&quot;userHBaseDAO&quot;, UserHBaseDAO.class);
+UserHBaseDO userHBaseDO = new UserHBaseDO();
+userHBaseDO.setRowKey(&quot;2222&quot;);
+userHBaseDO.setHeadImage(&quot;icon1.jpg&quot;);
+userHBaseDO.setLastVisitTime(4820023);
+int i = 0;
+FollowerVO followerVO1 = new FollowerVO(&quot;444_errik&quot;);
+followerVO1.setTimeStamp(System.currentTimeMillis() + i++);
+FollowerVO followerVO2 = new FollowerVO(&quot;555_wiie&quot;);
+followerVO2.setTimeStamp(System.currentTimeMillis() + i++);
+FollowerVO followerVO3 = new FollowerVO(&quot;666_gate&quot;);
+followerVO3.setTimeStamp(System.currentTimeMillis() + i++);
+userHBaseDO.getFollowVOList().add(followerVO1);
+userHBaseDO.getFollowVOList().add(followerVO2);
+userHBaseDO.getFollowVOList().add(followerVO3);
+FollowerVO followerVO4 = new FollowerVO(&quot;999_hena&quot;);
+userHBaseDO.getBeFollowedVOList().add(followerVO4);
+userHBaseDAO.insert(userHBaseDO);
+}
+@Test
+public void test_get() throws HBaseDAOException {
+ApplicationContext context = new ClassPathXmlApplicationContext(&quot;hbase-dao.xml&quot;);
+UserHBaseDAO userHBaseDAO = context.getBean(&quot;userHBaseDAO&quot;, UserHBaseDAO.class);
+UserHBaseDO userHBaseDO = userHBaseDAO.get(&quot;2222&quot;);
+System.out.println(userHBaseDO);
+}
+</code></pre></li>
+</ol>
+
+<blockquote>
+<p>完整地代码示例请参考<code>com.taobao.hbasedao.sample</code></p>
+</blockquote>
+
+        <hr>
+        <div class="pagination">
+            <ul>
+                <ul>
+                    
+                    
+                    <li class="prev disabled"><a>&larr; Previous</a></li>
+                    
+
+                    <li><a href="/archive">Archive</a></li>
+
+                    
+                    <li class="next"><a href="/mac/os-x10.9%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91%E5%8D%87%E7%BA%A7svn1.8/" title="os x10.9源码编译升级svn1.8">Next &rarr;</a></li>
+                    
+                    
+                </ul>
+            </ul>
+        </div>
+        <hr>
+        
+<div id="disqus_thread"></div>
+<script>
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    </div>
+
+    <div class="span3">
+        <h4>Published</h4>
+        <div class="date"><span>2014-01-03</span></div>
+        <br>
+        <h4>Categories</h4>
+        <ul class="tag_box">
+            
+            <li>
+  <a href="/categories/#hbase-ref">hbase <span>1</span></a>
+</li>
+            
+            <li>
+  <a href="/categories/#java-ref">java <span>4</span></a>
+</li>
+            
+        </ul>
+        <br>
+        <h4>Tags</h4>
+        <ul class="tag_box">
+            
+            <li>
+  <a href="/tags/#hbase-ref">hbase <span>1</span></a>
+</li>
+            
+            <li>
+  <a href="/tags/#java-ref">java <span>4</span></a>
+</li>
+            
+        </ul>
+    </div>
+</div>
+
+    </div>
+
+    <footer>
+        <p>&copy; mahang 2013
+            with help from <a href="http://github.com/wendal/gor" target="_blank" title="Gor -- Fast Blog">Gor</a>
+            and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+            and Idea from <a href="http://ruhoh.com" target="_blank" title="The Definitive Technical Blogging Framework">ruhoh</a>
+	</p>
+	<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cdiv align='center' id='cnzz_stat_icon_1000037964'%3E%3C/div%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1000037964%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+    </footer>
+
+</div> <!-- /container -->
+
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint linenums";
+  }
+  prettyPrint();
+</script>
+
+
+<script>
+    var _gaq=[['_setAccount','UA-123-12'],['_trackPageview']];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g,s)}(document,'script'));
+</script>
+</body>
+</html>
