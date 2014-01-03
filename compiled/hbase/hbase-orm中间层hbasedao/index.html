@@ -85,7 +85,9 @@
 
 <div class="row">
     <div class="span9">
-        <h2>背景</h2>
+        <h1>hbase orm中间层hbasedao</h1>
+
+<h2>背景</h2>
 
 <p>hbase是分布式的kv(key value)存储系统，hbase提供的针对底层数据的操作也是基于kv维度的，使用起来更像是Map的操作方式。但是上层业务应用一般是采用的面向对象的设计，这就导致了使用hbase的底层api必须要写很多的代码来做KV原始数据到上层业务对象的转化。</p>
 
@@ -109,19 +111,24 @@
 </ul>
 
 <table>
-<thead><tr>
-<th>列名</th>
-<th align="center">说明</th>
-</tr></thead>
+<thead>
+<tr>
+<td>列名</td>
+<td align="center">说明</td>
+</tr>
+</thead>
+
 <tbody>
 <tr>
 <td>id</td>
 <td align="center">用户id</td>
 </tr>
+
 <tr>
 <td>head_image</td>
 <td align="center">头像</td>
 </tr>
+
 <tr>
 <td>last_visit_time</td>
 <td align="center">上次登录时间</td>
@@ -134,15 +141,19 @@
 </ul>
 
 <table>
-<thead><tr>
-<th>列名</th>
-<th align="center">说明</th>
-</tr></thead>
+<thead>
+<tr>
+<td>列名</td>
+<td align="center">说明</td>
+</tr>
+</thead>
+
 <tbody>
 <tr>
 <td>userId</td>
 <td align="center">用户id</td>
 </tr>
+
 <tr>
 <td>follow_user</td>
 <td align="center">关注的人</td>
@@ -155,15 +166,19 @@
 </ul>
 
 <table>
-<thead><tr>
-<th>列名</th>
-<th align="center">说明</th>
-</tr></thead>
+<thead>
+<tr>
+<td>列名</td>
+<td align="center">说明</td>
+</tr>
+</thead>
+
 <tbody>
 <tr>
 <td>userId</td>
 <td align="center">用户id</td>
 </tr>
+
 <tr>
 <td>be_followed_user</td>
 <td align="center">关注我的人</td>
@@ -178,27 +193,33 @@
 <p>####hbase的方式：</p>
 
 <table>
-<thead><tr>
-<th>rowKey</th>
-<th>列簇</th>
-<th>列</th>
-</tr></thead>
+<thead>
+<tr>
+<td>rowKey</td>
+<td>列簇</td>
+<td>列</td>
+</tr>
+</thead>
+
 <tbody>
 <tr>
 <td>userId</td>
 <td>info_cf（单version）</td>
 <td>head_image</td>
 </tr>
+
 <tr>
 <td></td>
 <td></td>
 <td>last_visit_time</td>
 </tr>
+
 <tr>
 <td></td>
 <td>relation_cf   (多个version)</td>
 <td>follow_user</td>
 </tr>
+
 <tr>
 <td></td>
 <td></td>
@@ -208,11 +229,11 @@
 </table>
 
 <p>存入hbase的数据的逻辑结构会是：
-<img src="/assets/media/hbase_data.png" width="90%"/></p>
+<img src="http://www.codeforfun.info/assets/media/hbase_data.png" alt="hbase_data.png" />
+
+&gt;通过上面mysql表到hbase表的迁移过程，可以清楚地看到：mysql中 和userId一对一的用户基本信息迁移到hbase可以用无version特性的列簇保存；一对多的关注关系迁移到hbase，可以利用hbase多version的列簇保存。下面介绍的hbasedao中间层就会主要解决mysql迁移到hbase的适配，包括单version（一对一）和多version（一对多）的情形。</p>
 
 <blockquote>
-<p>通过上面mysql表到hbase表的迁移过程，可以清楚地看到：mysql中 和userId一对一的用户基本信息迁移到hbase可以用无version特性的列簇保存；一对多的关注关系迁移到hbase，可以利用hbase多version的列簇保存。下面介绍的hbasedao中间层就会主要解决mysql迁移到hbase的适配，包括单version（一对一）和多version（一对多）的情形。</p>
-
 <p><strong>NOTE：</strong>
 hbase多version的列簇，不同column之间没有任何对应关系，所以不要尝试在不同的column之间找行的对应关系。</p>
 </blockquote>
@@ -223,7 +244,8 @@ hbase多version的列簇，不同column之间没有任何对应关系，所以�
 
 <h4>针对于hbase存储结构抽象出来的类结构：</h4>
 
-<p><img src="/assets/media/hbasedao_relation.png"/></p>
+<p><img src="http://www.codeforfun.info/assets/media/hbasedao_relation.png" alt="habasedao_realtion.png" />
+</p>
 
 <h4>使用</h4>
 
@@ -454,7 +476,7 @@ System.out.println(userHBaseDO);
 
 <blockquote>
 <p>完整地代码示例请参考<code>com.taobao.hbasedao.sample</code>
-源码工程在：<a href="https://github.com/mh494078416/hbasedao">hbasedao</a></p>
+代码工程在：<a href="https://github.com/mh494078416/hbasedao">hbasedao</a></p>
 </blockquote>
 
         <hr>

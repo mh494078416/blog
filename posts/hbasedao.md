@@ -10,6 +10,8 @@ tags:
 - java
 ---
 
+hbase orm中间层hbasedao
+===
 
 背景
 ---
@@ -30,102 +32,39 @@ hbase要解决的问题是海量数据的分布式存储，传统数据库如mys
 
 * 用户信息表
 
-<table>
-<thead><tr>
-<th>列名</th>
-<th align="center">说明</th>
-</tr></thead>
-<tbody>
-<tr>
-<td>id</td>
-<td align="center">用户id</td>
-</tr>
-<tr>
-<td>head_image</td>
-<td align="center">头像</td>
-</tr>
-<tr>
-<td>last_visit_time</td>
-<td align="center">上次登录时间</td>
-</tr>
-</tbody>
-</table>
+| 列名					| 说明				|
+| ----------------- |:-------------:	|
+| id     				| 用户id		 	|
+| head_image  		| 头像				|
+| last_visit_time	| 上次登录时间		|
 
 * 用户关注表
 
-<table>
-<thead><tr>
-<th>列名</th>
-<th align="center">说明</th>
-</tr></thead>
-<tbody>
-<tr>
-<td>userId</td>
-<td align="center">用户id</td>
-</tr>
-<tr>
-<td>follow_user</td>
-<td align="center">关注的人</td>
-</tr>
-</tbody>
-</table>
+| 列名					| 说明				|
+| ----------------- |:-------------:	|
+| userId     			| 用户id		 	|
+| follow_user  		| 关注的人			|
 
 * 用户粉丝表
 
-<table>
-<thead><tr>
-<th>列名</th>
-<th align="center">说明</th>
-</tr></thead>
-<tbody>
-<tr>
-<td>userId</td>
-<td align="center">用户id</td>
-</tr>
-<tr>
-<td>be_followed_user</td>
-<td align="center">关注我的人</td>
-</tr>
-</tbody>
-</table>
+| 列名					| 说明				|
+| ----------------- |:-------------:	|
+| userId     			| 用户id		 	|
+| be_followed_user  | 关注我的人		|
 
 >之所以用户关系两张表来保存是因为，用户关系数据量比较大的情况下，采用分库分表存储的方案，又要提供正向、反向的查询，所以需要分别以关注者和被关注者为路由字段存储两份。
 
 ####hbase的方式：
 
-<table>
-<thead><tr>
-<th>rowKey</th>
-<th>列簇</th>
-<th>列</th>
-</tr></thead>
-<tbody>
-<tr>
-<td>userId</td>
-<td>info_cf（单version）</td>
-<td>head_image</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>last_visit_time</td>
-</tr>
-<tr>
-<td></td>
-<td>relation_cf   (多个version)</td>
-<td>follow_user</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>be_followed_user</td>
-</tr>
-</tbody>
-</table>
+| rowKey	| 列簇							|列	|
+|-------- |-------------------------	|---------|
+| userId  | info_cf（单version）		| head_image|
+| 			| 								|last_visit_time|
+| 			| relation_cf	(多个version)	|follow_user|
+| 			| 								|be_followed_user|
 
 存入hbase的数据的逻辑结构会是：
-<img src="/assets/media/hbase_data.png" width="90%"/>
-
+![hbase_data.png](http://www.codeforfun.info/assets/media/hbase_data.png)
 >通过上面mysql表到hbase表的迁移过程，可以清楚地看到：mysql中 和userId一对一的用户基本信息迁移到hbase可以用无version特性的列簇保存；一对多的关注关系迁移到hbase，可以利用hbase多version的列簇保存。下面介绍的hbasedao中间层就会主要解决mysql迁移到hbase的适配，包括单version（一对一）和多version（一对多）的情形。
 
 >**NOTE：**
@@ -137,8 +76,7 @@ hbasedao介绍
 hbasedao是一个简单地解决kv数据到业务对象适配的中间层，类似关系型数据库orm中间层`mybatis`。
 
 #### 针对于hbase存储结构抽象出来的类结构：
-<img src="/assets/media/hbasedao_relation.png"/>
-
+![habasedao_realtion.png](http://www.codeforfun.info/assets/media/hbasedao_relation.png)
 #### 使用
 封装业务对象成DO类，一个rowKey对应一个DO类的对象，通过指定DO类里的column，中间层可以做到针对于指定column的查询。使用hbasedao之后，查询的方式如下：
 
@@ -370,7 +308,6 @@ public void test_get() throws HBaseDAOException {
 ```
 
 >完整地代码示例请参考`com.taobao.hbasedao.sample`
-源码工程在：[hbasedao](https://github.com/mh494078416/hbasedao)
-
+代码工程在：[hbasedao](https://github.com/mh494078416/hbasedao)
 
 
