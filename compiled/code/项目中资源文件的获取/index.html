@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>项目中资源文件的获取</title>
+    
+    <meta name="author" content="mahang">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/twitter/stylesheets/bootstrap.min.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/twitter/stylesheets/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/twitter/widgets/google_prettify/stylesheets/twitter-bootstrap.css" type="text/css" rel="stylesheet" media="all">
+
+
+    <!-- Le fav and touch icons -->
+    <!-- Update these with your own images
+      <link rel="shortcut icon" href="images/favicon.ico">
+      <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+      <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+      <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+    -->
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" href="/">树莓派的奇幻漂流</a>
+            <ul class="nav">
+                
+                
+
+
+  <li><a href="/archive">Archive</a></li>
+
+
+                
+                
+
+
+  <li><a href="/tags">Tags</a></li>
+
+
+                
+                
+
+
+  <li><a href="/categories">Categories</a></li>
+
+
+                
+                
+
+
+  <li><a href="/pages">Pages</a></li>
+
+
+                
+                
+
+
+  <li><a href="/about">About Me</a></li>
+
+
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="content">
+        <div class="page-header">
+    <h1>项目中资源文件的获取 </h1>
+</div>
+
+<div class="row">
+    <div class="span9">
+        <ul>
+<li>通过类加载器获取</li>
+</ul>
+
+<pre><code>InputStream inputStream1 = this.getClass().getClassLoader()
+                .getResourceAsStream(&quot;ExternalResource/data.xml&quot;);
+</code></pre>
+
+<ul>
+<li>spring ApplicationContext获取</li>
+</ul>
+
+<pre><code>public class SpringApplicationContextHolder implements ApplicationContextAware {
+    private static ApplicationContext context;
+
+    @Override
+    public void setApplicationContext(ApplicationContext context) throws BeansException {
+        SpringApplicationContextHolder.context = context;
+    }
+
+    public static Object getSpringBean(String beanName) {
+        notEmpty(beanName, &quot;bean name is required&quot;);
+        return context.getBean(beanName);
+    }
+
+    public static File getResourceFile(String resource) throws IOException {
+        return context.getResource(resource).getFile();
+    }
+}
+</code></pre>
+
+<p>需要注意的是，本地调试eclipse编译时只会把固定格式的文件（比如xml）copy到classes目录下，但txt格式的文件它是不会copy过去的。本来正常运行的代码，因为不同的文件格式却怎么也获取不到文件的输入流，在这个小坑里也折腾了好一会儿，记录下来，防止下次忘记了。</p>
+
+        <hr>
+        <div class="pagination">
+            <ul>
+                <ul>
+                    
+                    <li class="prev"><a href="/code/%E8%AF%BB%E5%8F%96%E7%BD%91%E7%BB%9C%E4%B8%8A%E6%96%87%E4%BB%B6%E5%88%B0%E5%86%85%E5%AD%98/" title="读取网络上文件到内存">&larr; Previous</a></li>
+                    
+                    
+
+                    <li><a href="/archive">Archive</a></li>
+
+                    
+                    
+                    <li class="next disabled"><a>Next &rarr;</a>
+                        
+                </ul>
+            </ul>
+        </div>
+        <hr>
+        
+<div id="disqus_thread"></div>
+<script>
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    </div>
+
+    <div class="span3">
+        <h4>Published</h4>
+        <div class="date"><span>2011-11-09</span></div>
+        <br>
+        <h4>Categories</h4>
+        <ul class="tag_box">
+            
+            <li>
+  <a href="/categories/#code-ref">code <span>2</span></a>
+</li>
+            
+            <li>
+  <a href="/categories/#java-ref">java <span>4</span></a>
+</li>
+            
+        </ul>
+        <br>
+        <h4>Tags</h4>
+        <ul class="tag_box">
+            
+            <li>
+  <a href="/tags/#code-ref">code <span>2</span></a>
+</li>
+            
+            <li>
+  <a href="/tags/#java-ref">java <span>4</span></a>
+</li>
+            
+        </ul>
+    </div>
+</div>
+
+    </div>
+
+    <footer>
+        <p>&copy; mahang 2013
+            with help from <a href="http://github.com/wendal/gor" target="_blank" title="Gor -- Fast Blog">Gor</a>
+            and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+            and Idea from <a href="http://ruhoh.com" target="_blank" title="The Definitive Technical Blogging Framework">ruhoh</a>
+	</p>
+	<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cdiv align='center' id='cnzz_stat_icon_1000037964'%3E%3C/div%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1000037964%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+    </footer>
+
+</div> <!-- /container -->
+
+<script src="/assets/twitter/javascripts/prettify.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint linenums";
+  }
+  prettyPrint();
+</script>
+
+<script>
+    var _gaq=[['_setAccount','UA-123-12'],['_trackPageview']];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g,s)}(document,'script'));
+</script>
+
+</body>
+</html>

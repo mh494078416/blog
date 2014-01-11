@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>java函数式编程之lambda表达式</title>
+    
+    <meta name="author" content="mahang">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/twitter/stylesheets/bootstrap.min.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/twitter/stylesheets/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/twitter/widgets/google_prettify/stylesheets/twitter-bootstrap.css" type="text/css" rel="stylesheet" media="all">
+
+
+    <!-- Le fav and touch icons -->
+    <!-- Update these with your own images
+      <link rel="shortcut icon" href="images/favicon.ico">
+      <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+      <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+      <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+    -->
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" href="/">树莓派的奇幻漂流</a>
+            <ul class="nav">
+                
+                
+
+
+  <li><a href="/archive">Archive</a></li>
+
+
+                
+                
+
+
+  <li><a href="/tags">Tags</a></li>
+
+
+                
+                
+
+
+  <li><a href="/categories">Categories</a></li>
+
+
+                
+                
+
+
+  <li><a href="/pages">Pages</a></li>
+
+
+                
+                
+
+
+  <li><a href="/about">About Me</a></li>
+
+
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="content">
+        <div class="page-header">
+    <h1>java函数式编程之lambda表达式 </h1>
+</div>
+
+<div class="row">
+    <div class="span9">
+        <p>作为比较老牌的面向对象的编程语言java，在对函数式编程的支持上一直不温不火。</p>
+
+<p>认为面向对象式编程就应该纯粹的面向对象，于是经常看到这样的写法：如果你想写一个方法，那么就必须把它放到一个类里面，然后new出来对象，对象调用这个方法。</p>
+
+<p>这种方式在函数式编程语言看来太死板，没有必要在对待多种编程范式上采取非此即彼的做法。</p>
+
+<p>如今比较现代的编程语言也都是多编程范式的支持，不再去对一种编程范式固守一隅，一种语言可能会同时具有面向对象、函数式、元编程等多种特性，这方面java的后来者C#都走在她的前面。</p>
+
+<p>终于在jdk8里发现了lambda表达式的影子，java也开始加入这种函数式编程特性，java码农们终于在之前老土的方法之外有了一种更为简便的选择。</p>
+
+<ul>
+<li>首先来看，lambda之前java的做法：
+使用匿名内部类：</li>
+</ul>
+
+<pre><code>public void testAnonymousClass() {
+    Integer[] nums = {2, 5, 1, 6};
+    Arrays.sort(nums, new Comparator&lt;Integer&gt;() {
+        @Override
+        public int compare(Integer o1, Integer o2) {
+            if(o1 &lt; o2) 
+                return -1;
+            return 0;
+        }
+    });
+    for (Integer n : nums) {
+        System.out.println(n);
+    }
+}
+</code></pre>
+
+<ul>
+<li>函数式编程语言的做法，这里拿go的代码为例：</li>
+</ul>
+
+<pre><code>package main
+import (
+    &quot;fmt&quot;
+)
+// 插入排序
+func sort(nums []int, compare func (a, b int) int) {
+    length := len(nums)
+    for i := length - 1; i &gt;= 0; i-- {
+        for j := i; j + 1 &lt; length; j++ {
+            cur := nums[j]
+            next := nums[j + 1]
+            if compare(cur, next) &gt; 0 {
+                nums[j], nums[j + 1] = next, cur
+            }
+        }
+    }
+}
+func main() {
+    nums := []int{2, 5, 1, 6}
+    sort(nums, func(a, b int) int {
+            if a &gt; b {
+                return 1
+            }
+            return 0
+        })
+    fmt.Println(nums)
+}
+</code></pre>
+
+<p>go的代码看上去比较长，由于没有像java一样使用类库提供的排序算法，所以go自己实现的插入排序。
+这里go语言具有函数里面传函数的能力（也叫高阶函数），所以代码看起来简洁了很多。一般这种场景，函数式编程语言使用匿名函数的方式，在java的看来就必须通过匿名内部类来实现。首先实现一个接口，接口里面定义好方法，匿名内部类实现接口，然后在传入的函数中，通过传递的对象，实现对匿名内部类里的方法的回调。这也就是lambda表达式之前的基本做法。</p>
+
+<ul>
+<li>lambda表达式是对java实现函数式编程一个取巧方式的补充，下面来看lambda方式的做法：</li>
+</ul>
+
+<pre><code>public void testAnonymousClass() {
+    Integer[] nums = {2, 5, 1, 6};
+    Arrays.sort(nums, (o1, o2) -&gt; {
+        if(o1 &lt; o2) 
+            return -1;
+        return 0;
+    });
+    for (Integer n : nums) {
+        System.out.println(n);
+    }
+}
+</code></pre>
+
+<p>函数式接口：这是java在解决函数式编程，引入lambda表达式的同时引入的一个概念，具体的意思就是，定义的一个接口，接口里面必须有且只有一个方法，这样的接口就成为函数式接口。
+在可以使用lambda表达式的地方，方法声明时必须包含一个函数式的接口。任何函数式接口都可以使用lambda表达式替换。
+下面来看lambda的基本逻辑：</p>
+
+<pre><code>button.onAction(new EventHandler&lt;ActionEvent&gt;() {
+    @Override
+    public void handle(ActionEvent e) {
+        doSomethingWith(e);
+    }
+});
+</code></pre>
+
+<p>使用lambda表达式替换：</p>
+
+<pre><code>button.onAction((ActionEvent e) -&gt; {
+    doSomethingWith(e);
+});
+</code></pre>
+
+<p>此lambda表达式的类型可由编译器推断为EventHandler<ActionEvent>，因为onAction()方法采用的对象类型为 EventHandler<ActionEvent>。
+由于EventHandler只有一个方法即handle()，此lambda表达式必然是handle()方法的实现。
+可以继续简化lambda表达式：</p>
+
+<pre><code>button.onAction((e) -&gt; {
+    doSomethingWith(e);
+});
+</code></pre>
+
+<p>此lambda表达式的参数必须是ActionEvent，因为其类型是由EventHandler接口的 handle()方法指定的。
+因此，我们可以简化此lambda表达式，因为其参数类型可以推断。
+还可以继续简化：</p>
+
+<pre><code>button.onAction(e -&gt; doSomethingWith(e));
+</code></pre>
+
+<p>当lambda表达式只有一个参数且参数类型可以推断时，则不需要括号。
+lambda表达式中的代码块只包含一个语句，因此可以去掉大括号和分号。</p>
+
+<p>可以猜测lambda表达式的实现可能是由java编译器在编译java字节码时，会翻译这样的语法糖，最终还是转化为匿名内部类来实现，至少从语义上看来是这样的。那么它究竟怎样做到的，这里的文章可以给出答案：
+<a href="http://developer.51cto.com/art/201302/380803.htm">和Lambdas的第一次亲密接触</a></p>
+
+<p>采用的办法是在使用lambda表达式的类中生成一个实例方法，那么当然能够访问到这个类中定义的实例变量、静态变量和公开、私有方法。
+那和函数式编程相随相生的闭包问题是否支持了呢？
+通过上面的介绍可以看出java对函数式编程的实现，主要还是在编译时对lambda表达式的一些转化。
+让人看起来像是支持了匿名函数等函数式编程的特性，其实还是使用java自己的一套实现。所以在使用lambda表达式的时候最好头脑清醒，不要纠结是否闭包了。
+以上谈的是jdk8的预览版本，也可能正式版会做很多的改进，那就不得而知了。</p>
+
+<p>相关文章：</p>
+
+<p><a href="http://developer.51cto.com/art/201304/387681.htm">Java 8为什么需要Lambda表达式</a></p>
+
+<p><a href="http://developer.51cto.com/art/201206/344308.htm">Java 8的Lambda表达式</a></p>
+
+<p><a href="http://www.cnblogs.com/xuqingfeng/archive/2013/04/26/about-Java8-lambda-expression.html">说说Java 8中的Lambda表达式</a></p>
+
+        <hr>
+        <div class="pagination">
+            <ul>
+                <ul>
+                    
+                    <li class="prev"><a href="/go/go%E5%AE%9E%E7%8E%B0%E6%8E%92%E5%BA%8F%E7%9A%84%E9%93%BE%E8%A1%A8/" title="go实现排序的链表">&larr; Previous</a></li>
+                    
+                    
+
+                    <li><a href="/archive">Archive</a></li>
+
+                    
+                    <li class="next"><a href="/go/go%E8%AF%AD%E8%A8%80channel%E7%9A%84%E5%88%AB%E6%A0%B7%E7%94%A8%E6%B3%95/" title="go语言channel的别样用法">Next &rarr;</a></li>
+                    
+                    
+                </ul>
+            </ul>
+        </div>
+        <hr>
+        
+<div id="disqus_thread"></div>
+<script>
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    </div>
+
+    <div class="span3">
+        <h4>Published</h4>
+        <div class="date"><span>2013-08-06</span></div>
+        <br>
+        <h4>Categories</h4>
+        <ul class="tag_box">
+            
+            <li>
+  <a href="/categories/#java-ref">java <span>4</span></a>
+</li>
+            
+        </ul>
+        <br>
+        <h4>Tags</h4>
+        <ul class="tag_box">
+            
+            <li>
+  <a href="/tags/#java-ref">java <span>4</span></a>
+</li>
+            
+            <li>
+  <a href="/tags/#lambda-ref">lambda <span>1</span></a>
+</li>
+            
+        </ul>
+    </div>
+</div>
+
+    </div>
+
+    <footer>
+        <p>&copy; mahang 2013
+            with help from <a href="http://github.com/wendal/gor" target="_blank" title="Gor -- Fast Blog">Gor</a>
+            and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+            and Idea from <a href="http://ruhoh.com" target="_blank" title="The Definitive Technical Blogging Framework">ruhoh</a>
+	</p>
+	<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cdiv align='center' id='cnzz_stat_icon_1000037964'%3E%3C/div%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1000037964%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+    </footer>
+
+</div> <!-- /container -->
+
+<script src="/assets/twitter/javascripts/prettify.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint linenums";
+  }
+  prettyPrint();
+</script>
+
+<script>
+    var _gaq=[['_setAccount','UA-123-12'],['_trackPageview']];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g,s)}(document,'script'));
+</script>
+
+</body>
+</html>
