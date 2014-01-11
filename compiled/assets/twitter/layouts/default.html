@@ -57,7 +57,15 @@
 
 </div> <!-- /container -->
 
-{{{ google_prettify }}}
+<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint linenums";
+  }
+  prettyPrint();
+</script>
+
 {{{ analytics }}}
 </body>
 </html>
