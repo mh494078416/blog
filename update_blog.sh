@@ -13,7 +13,6 @@ git commit -m "update blog"
 echo "git push origin master"
 git push origin master
 
-
 echo "cd compiled"
 cd compiled
 
