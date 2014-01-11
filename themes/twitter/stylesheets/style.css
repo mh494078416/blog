@@ -87,3 +87,30 @@ html, body {
 .navbar .nav > li > a {
   color: #49AFCD;
 }
+
+
+table {
+  font-family: verdana,arial,sans-serif;
+  font-size:13px;
+  color:#333333;
+  border-width: 1px;
+  border-color: #AAAAAA;
+  border-collapse: collapse;
+  line-height: 1.2;
+  margin: 15px 0;
+}
+table th {
+  border-width: 1px;
+  padding: 8px;
+  border-style: solid;
+  border-color: #AAAAAA;
+}
+table tr:nth-child(2n) {
+  background-color: #F8F7FA;
+}
+table td {
+  border-width: 1px;
+  padding: 8px;
+  border-style: solid;
+  border-color: #AAAAAA;
+}
