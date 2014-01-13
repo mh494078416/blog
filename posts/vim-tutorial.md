@@ -1,6 +1,6 @@
 ---
 title: vim快捷键
-date: '2014-01-13'
+date: '2013-01-13'
 description: vim
 categories:
 - vim
