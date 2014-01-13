@@ -2,12 +2,12 @@
 <rss version="2.0">  <channel>
     <title>树莓派的奇幻漂流</title>
     <link>http://www.codeforfun.info</link>
-    <pubDate>2014-01-13 01:17:12 +0800</pubDate>
+    <pubDate>2014-01-13 01:19:07 +0800</pubDate>
     <item>
       <title>vim快捷键</title>
       <link>http://www.codeforfun.info/vim/vim%E5%BF%AB%E6%8D%B7%E9%94%AE/</link>
       <pubDate>2014-01-13 12:00:00 +0800</pubDate>
-      <description>&lt;p&gt;&lt;img src=&#34;/assets/vim_tutorial.png&#34; /&gt;&lt;/p&gt;&#xA;&#xA;&lt;p&gt;[原图](&amp;ldquo;/assets/vim_tutorial.png&amp;rdquo;)&lt;/p&gt;&#xA;</description>
+      <description>&lt;p&gt;&lt;img src=&#34;/assets/media/vim_tutorial.png&#34; /&gt;&lt;/p&gt;&#xA;&#xA;&lt;p&gt;[原图](&amp;ldquo;/assets/media/vim_tutorial.png&amp;rdquo;)&lt;/p&gt;&#xA;</description>
     </item>
     <item>
       <title>hbase orm中间层hbasedao</title>
