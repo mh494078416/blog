@@ -8,7 +8,7 @@ tags:
 - vim
 ---
 
-<img src="/assets/media/vi_tutorial.png" />
+<img src="/assets/media/vi_tutorial.png" width="95%" />
 
-[原图]("/assets/media/vi_tutorial.png")
+[原图](/assets/media/vi_tutorial.png)
 
