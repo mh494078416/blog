@@ -4,6 +4,11 @@
 		<loc>http://www.codeforfun.info/</loc>
 	</url>
 	<url>
+		<loc>http://www.codeforfun.info/vim/vim%E5%BF%AB%E6%8D%B7%E9%94%AE/</loc>
+		<lastmod>2014-01-13</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
 		<loc>http://www.codeforfun.info/hbase/hbase-orm%E4%B8%AD%E9%97%B4%E5%B1%82hbasedao/</loc>
 		<lastmod>2014-01-03</lastmod>
 		<changefreq>weekly</changefreq>
