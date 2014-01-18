@@ -173,7 +173,7 @@ public interface HBaseDAO {
 
 1. 引入依赖
 
-	```
+```
 <dependency>
   <groupId>com.taobao.hbasedao</groupId>
   <artifactId>hbasedao</artifactId>
@@ -183,7 +183,7 @@ public interface HBaseDAO {
 
 2. 定义hbae表对应的DO类，相当于使用mybatis时，定义的sqlmap，需要给出hbase表的schema信息，如：列簇名、列名、列簇的最大version，列簇和列的绑定关系等。
 
-	```
+```
 public class UserHBaseDO implements MapAble<UserHBaseDO> {
 	public static final String TABLE_NAME = "hbasedao_user";
 	public static final String CF_NAME_info_cf = "info_cf";
@@ -211,7 +211,7 @@ public class UserHBaseDO implements MapAble<UserHBaseDO> {
 
 3. 实现MapAble接口，MapAble接口包括两个方法，一个是插入数据时将用户定义的UserHBaseDO转化为框架使用的HBaseDO，一个是查询时将HBaseDO里包含的数据转为为用户定义UserHBaseDO。
 
-	```
+```
 @Override
 public HBaseDO converDOToHBaseDO() {
 	HBaseDO hbaseDO = new HBaseDO();
@@ -266,7 +266,7 @@ public UserHBaseDO convertHBaseDOToDO(HBaseDO hBaseDO) throws UnsupportedEncodin
 
 4. 然后就是定义DAO类，主要的逻辑已经在UserHBaseDO写了，这里的实现可以足够简单，查询的代码在hbasedao介绍里已经给出，插入数据的代码如下：
 
-	```
+```
 public void insert(UserHBaseDO userHBaseDO) throws HBaseDAOException {
 	super.getHbaseDao().put(userHBaseDO.converDOToHBaseDO());
 }
@@ -274,7 +274,7 @@ public void insert(UserHBaseDO userHBaseDO) throws HBaseDAOException {
 
 5. 编写测试用例
 
-	```
+```
 @Test
 public void test_insert() throws HBaseDAOException {
 	ApplicationContext context = new ClassPathXmlApplicationContext("hbase-dao.xml");

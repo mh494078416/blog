@@ -342,136 +342,144 @@ hbase多version的列簇，不同column之间没有任何对应关系，所以�
 <h4>步骤</h4>
 
 <ol>
-<li><p>引入依赖</p>
+<li>引入依赖</li>
+</ol>
 
 <pre><code>&lt;dependency&gt;
-&lt;groupId&gt;com.taobao.hbasedao&lt;/groupId&gt;
-&lt;artifactId&gt;hbasedao&lt;/artifactId&gt;
-&lt;version&gt;1.0.0-SNAPSHOT&lt;/version&gt;
+  &lt;groupId&gt;com.taobao.hbasedao&lt;/groupId&gt;
+  &lt;artifactId&gt;hbasedao&lt;/artifactId&gt;
+  &lt;version&gt;1.0.0-SNAPSHOT&lt;/version&gt;
 &lt;/dependency&gt;
-</code></pre></li>
+</code></pre>
 
-<li><p>定义hbae表对应的DO类，相当于使用mybatis时，定义的sqlmap，需要给出hbase表的schema信息，如：列簇名、列名、列簇的最大version，列簇和列的绑定关系等。</p>
+<ol>
+<li>定义hbae表对应的DO类，相当于使用mybatis时，定义的sqlmap，需要给出hbase表的schema信息，如：列簇名、列名、列簇的最大version，列簇和列的绑定关系等。</li>
+</ol>
 
 <pre><code>public class UserHBaseDO implements MapAble&lt;UserHBaseDO&gt; {
-public static final String TABLE_NAME = &quot;hbasedao_user&quot;;
-public static final String CF_NAME_info_cf = &quot;info_cf&quot;;
-public static final int MAX_SIZE_CF_NAME_info_cf = 1;
-public static final String CF_NAME_relation_cf = &quot;relation_cf&quot;;
-public static final int MAX_SIZE_CF_NAME_relation_cf = 1000;
-public static final String CL_NAME_head_image = &quot;head_image&quot;;
-public static final String CL_NAME_last_visit_time = &quot;last_visit_time&quot;;
-public static final String CL_NAME_follow_user = &quot;follow_user&quot;;
-public static final String CL_NAME_be_followed_user = &quot;be_followed_user&quot;;
-private static Map&lt;String, List&lt;String&gt;&gt; columnFamilyMap;
-static {
-    columnFamilyMap = new HashMap&lt;String, List&lt;String&gt;&gt;();
-    columnFamilyMap.put(CF_NAME_info_cf,
-            Arrays.asList(new String[] { CL_NAME_head_image, CL_NAME_last_visit_time }));
-    columnFamilyMap.put(CF_NAME_relation_cf,
-            Arrays.asList(new String[] { CL_NAME_follow_user, CL_NAME_be_followed_user }));
-}
-private String rowKey;
-private String headImage;
-private long lastVisitTime;
-private final List&lt;FollowerVO&gt; followVOList = new ArrayList&lt;FollowerVO&gt;();
-private final List&lt;FollowerVO&gt; beFollowedVOList = new ArrayList&lt;FollowerVO&gt;();
-</code></pre></li>
+    public static final String TABLE_NAME = &quot;hbasedao_user&quot;;
+    public static final String CF_NAME_info_cf = &quot;info_cf&quot;;
+    public static final int MAX_SIZE_CF_NAME_info_cf = 1;
+    public static final String CF_NAME_relation_cf = &quot;relation_cf&quot;;
+    public static final int MAX_SIZE_CF_NAME_relation_cf = 1000;
+    public static final String CL_NAME_head_image = &quot;head_image&quot;;
+    public static final String CL_NAME_last_visit_time = &quot;last_visit_time&quot;;
+    public static final String CL_NAME_follow_user = &quot;follow_user&quot;;
+    public static final String CL_NAME_be_followed_user = &quot;be_followed_user&quot;;
+    private static Map&lt;String, List&lt;String&gt;&gt; columnFamilyMap;
+    static {
+        columnFamilyMap = new HashMap&lt;String, List&lt;String&gt;&gt;();
+        columnFamilyMap.put(CF_NAME_info_cf,
+                Arrays.asList(new String[] { CL_NAME_head_image, CL_NAME_last_visit_time }));
+        columnFamilyMap.put(CF_NAME_relation_cf,
+                Arrays.asList(new String[] { CL_NAME_follow_user, CL_NAME_be_followed_user }));
+    }
+    private String rowKey;
+    private String headImage;
+    private long lastVisitTime;
+    private final List&lt;FollowerVO&gt; followVOList = new ArrayList&lt;FollowerVO&gt;();
+    private final List&lt;FollowerVO&gt; beFollowedVOList = new ArrayList&lt;FollowerVO&gt;();
+</code></pre>
 
-<li><p>实现MapAble接口，MapAble接口包括两个方法，一个是插入数据时将用户定义的UserHBaseDO转化为框架使用的HBaseDO，一个是查询时将HBaseDO里包含的数据转为为用户定义UserHBaseDO。</p>
+<ol>
+<li>实现MapAble接口，MapAble接口包括两个方法，一个是插入数据时将用户定义的UserHBaseDO转化为框架使用的HBaseDO，一个是查询时将HBaseDO里包含的数据转为为用户定义UserHBaseDO。</li>
+</ol>
 
 <pre><code>@Override
 public HBaseDO converDOToHBaseDO() {
-HBaseDO hbaseDO = new HBaseDO();
-hbaseDO.setRowKey(this.rowKey);
-hbaseDO.setTableName(UserHBaseDO.TABLE_NAME);
-for (Map.Entry&lt;String, List&lt;String&gt;&gt; columnFamilyEntry : 
-    columnFamilyMap.entrySet()) {
-    String columnFamilyName = columnFamilyEntry.getKey();
-    List&lt;String&gt; columnNameList = columnFamilyEntry.getValue();
-    HBaseColumnFamily columnFamily = new HBaseColumnFamily();
-    for (String columnName : columnNameList) {
-        if (CF_NAME_info_cf.equals(columnFamilyName) &amp;&amp; 
-            CL_NAME_head_image.equals(columnName)) {
-            if (this.headImage != null) {
-                List&lt;HBaseCell&gt; cellDOList = new ArrayList&lt;HBaseCell&gt;();
-                HBaseCell cellDO = new HBaseCell();
-                cellDO.setValue(this.headImage);
-                cellDOList.add(cellDO);
-                columnFamily.putColumn(columnName, cellDOList);
+    HBaseDO hbaseDO = new HBaseDO();
+    hbaseDO.setRowKey(this.rowKey);
+    hbaseDO.setTableName(UserHBaseDO.TABLE_NAME);
+    for (Map.Entry&lt;String, List&lt;String&gt;&gt; columnFamilyEntry : 
+        columnFamilyMap.entrySet()) {
+        String columnFamilyName = columnFamilyEntry.getKey();
+        List&lt;String&gt; columnNameList = columnFamilyEntry.getValue();
+        HBaseColumnFamily columnFamily = new HBaseColumnFamily();
+        for (String columnName : columnNameList) {
+            if (CF_NAME_info_cf.equals(columnFamilyName) &amp;&amp; 
+                CL_NAME_head_image.equals(columnName)) {
+                if (this.headImage != null) {
+                    List&lt;HBaseCell&gt; cellDOList = new ArrayList&lt;HBaseCell&gt;();
+                    HBaseCell cellDO = new HBaseCell();
+                    cellDO.setValue(this.headImage);
+                    cellDOList.add(cellDO);
+                    columnFamily.putColumn(columnName, cellDOList);
+                }
             }
+            ...
         }
-        ...
+        hbaseDO.getColumnFamilyMap().put(columnFamilyName, columnFamily);
     }
-    hbaseDO.getColumnFamilyMap().put(columnFamilyName, columnFamily);
-}
-return hbaseDO;
+    return hbaseDO;
 }
 @Override
 public UserHBaseDO convertHBaseDOToDO(HBaseDO hBaseDO) throws UnsupportedEncodingException {
-this.rowKey = hBaseDO.getRowKey();
-List&lt;KeyValue&gt; results = hBaseDO.getResults();
-for (Map.Entry&lt;String, List&lt;String&gt;&gt; columnFamilyEntry : 
-    columnFamilyMap.entrySet()) {
-    String columnFamilyName = columnFamilyEntry.getKey();
-    List&lt;String&gt; columnNameList = columnFamilyEntry.getValue();
-    for (String columnName : columnNameList) {
-        if (CF_NAME_info_cf.equals(columnFamilyName) &amp;&amp; 
-            CL_NAME_head_image.equals(columnName)) {
-            for (KeyValue kv : results) {
-                if (columnFamilyName.equals(new String(kv.getFamily()))
-                        &amp;&amp; columnName.equals(new String(kv.getQualifier()))) {
-                    this.headImage = new String(kv.getValue(), &quot;UTF-8&quot;);
+    this.rowKey = hBaseDO.getRowKey();
+    List&lt;KeyValue&gt; results = hBaseDO.getResults();
+    for (Map.Entry&lt;String, List&lt;String&gt;&gt; columnFamilyEntry : 
+        columnFamilyMap.entrySet()) {
+        String columnFamilyName = columnFamilyEntry.getKey();
+        List&lt;String&gt; columnNameList = columnFamilyEntry.getValue();
+        for (String columnName : columnNameList) {
+            if (CF_NAME_info_cf.equals(columnFamilyName) &amp;&amp; 
+                CL_NAME_head_image.equals(columnName)) {
+                for (KeyValue kv : results) {
+                    if (columnFamilyName.equals(new String(kv.getFamily()))
+                            &amp;&amp; columnName.equals(new String(kv.getQualifier()))) {
+                        this.headImage = new String(kv.getValue(), &quot;UTF-8&quot;);
+                    }
                 }
             }
+            ...
         }
-        ...
     }
+    return this;
 }
-return this;
-}
-</code></pre></li>
+</code></pre>
 
-<li><p>然后就是定义DAO类，主要的逻辑已经在UserHBaseDO写了，这里的实现可以足够简单，查询的代码在hbasedao介绍里已经给出，插入数据的代码如下：</p>
+<ol>
+<li>然后就是定义DAO类，主要的逻辑已经在UserHBaseDO写了，这里的实现可以足够简单，查询的代码在hbasedao介绍里已经给出，插入数据的代码如下：</li>
+</ol>
 
 <pre><code>public void insert(UserHBaseDO userHBaseDO) throws HBaseDAOException {
-super.getHbaseDao().put(userHBaseDO.converDOToHBaseDO());
+    super.getHbaseDao().put(userHBaseDO.converDOToHBaseDO());
 }
-</code></pre></li>
+</code></pre>
 
-<li><p>编写测试用例</p>
+<ol>
+<li>编写测试用例</li>
+</ol>
 
 <pre><code>@Test
 public void test_insert() throws HBaseDAOException {
-ApplicationContext context = new ClassPathXmlApplicationContext(&quot;hbase-dao.xml&quot;);
-UserHBaseDAO userHBaseDAO = context.getBean(&quot;userHBaseDAO&quot;, UserHBaseDAO.class);
-UserHBaseDO userHBaseDO = new UserHBaseDO();
-userHBaseDO.setRowKey(&quot;2222&quot;);
-userHBaseDO.setHeadImage(&quot;icon1.jpg&quot;);
-userHBaseDO.setLastVisitTime(4820023);
-int i = 0;
-FollowerVO followerVO1 = new FollowerVO(&quot;444_errik&quot;);
-followerVO1.setTimeStamp(System.currentTimeMillis() + i++);
-FollowerVO followerVO2 = new FollowerVO(&quot;555_wiie&quot;);
-followerVO2.setTimeStamp(System.currentTimeMillis() + i++);
-FollowerVO followerVO3 = new FollowerVO(&quot;666_gate&quot;);
-followerVO3.setTimeStamp(System.currentTimeMillis() + i++);
-userHBaseDO.getFollowVOList().add(followerVO1);
-userHBaseDO.getFollowVOList().add(followerVO2);
-userHBaseDO.getFollowVOList().add(followerVO3);
-FollowerVO followerVO4 = new FollowerVO(&quot;999_hena&quot;);
-userHBaseDO.getBeFollowedVOList().add(followerVO4);
-userHBaseDAO.insert(userHBaseDO);
+    ApplicationContext context = new ClassPathXmlApplicationContext(&quot;hbase-dao.xml&quot;);
+    UserHBaseDAO userHBaseDAO = context.getBean(&quot;userHBaseDAO&quot;, UserHBaseDAO.class);
+    UserHBaseDO userHBaseDO = new UserHBaseDO();
+    userHBaseDO.setRowKey(&quot;2222&quot;);
+    userHBaseDO.setHeadImage(&quot;icon1.jpg&quot;);
+    userHBaseDO.setLastVisitTime(4820023);
+    int i = 0;
+    FollowerVO followerVO1 = new FollowerVO(&quot;444_errik&quot;);
+    followerVO1.setTimeStamp(System.currentTimeMillis() + i++);
+    FollowerVO followerVO2 = new FollowerVO(&quot;555_wiie&quot;);
+    followerVO2.setTimeStamp(System.currentTimeMillis() + i++);
+    FollowerVO followerVO3 = new FollowerVO(&quot;666_gate&quot;);
+    followerVO3.setTimeStamp(System.currentTimeMillis() + i++);
+    userHBaseDO.getFollowVOList().add(followerVO1);
+    userHBaseDO.getFollowVOList().add(followerVO2);
+    userHBaseDO.getFollowVOList().add(followerVO3);
+    FollowerVO followerVO4 = new FollowerVO(&quot;999_hena&quot;);
+    userHBaseDO.getBeFollowedVOList().add(followerVO4);
+    userHBaseDAO.insert(userHBaseDO);
 }
 @Test
 public void test_get() throws HBaseDAOException {
-ApplicationContext context = new ClassPathXmlApplicationContext(&quot;hbase-dao.xml&quot;);
-UserHBaseDAO userHBaseDAO = context.getBean(&quot;userHBaseDAO&quot;, UserHBaseDAO.class);
-UserHBaseDO userHBaseDO = userHBaseDAO.get(&quot;2222&quot;);
-System.out.println(userHBaseDO);
+    ApplicationContext context = new ClassPathXmlApplicationContext(&quot;hbase-dao.xml&quot;);
+    UserHBaseDAO userHBaseDAO = context.getBean(&quot;userHBaseDAO&quot;, UserHBaseDAO.class);
+    UserHBaseDO userHBaseDO = userHBaseDAO.get(&quot;2222&quot;);
+    System.out.println(userHBaseDO);
 }
-</code></pre></li>
-</ol>
+</code></pre>
 
 <blockquote>
 <p>完整地代码示例请参考<code>com.taobao.hbasedao.sample</code>
