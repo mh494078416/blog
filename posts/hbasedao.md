@@ -63,9 +63,10 @@ hbase要解决的问题是海量数据的分布式存储，传统数据库如mys
 
 存入hbase的数据的逻辑结构会是：
 ![hbase_data.png](http://www.codeforfun.info/assets/media/hbase_data.png)
->通过上面mysql表到hbase表的迁移过程，可以清楚地看到：mysql中 和userId一对一的用户基本信息迁移到hbase可以用无version特性的列簇保存；一对多的关注关系迁移到hbase，可以利用hbase多version的列簇保存。下面介绍的hbasedao中间层就会主要解决mysql迁移到hbase的适配，包括单version（一对一）和多version（一对多）的情形。
 
->**NOTE：**
+> 通过上面mysql表到hbase表的迁移过程，可以清楚地看到：mysql中 和userId一对一的用户基本信息迁移到hbase可以用无version特性的列簇保存；一对多的关注关系迁移到hbase，可以利用hbase多version的列簇保存。下面介绍的hbasedao中间层就会主要解决mysql迁移到hbase的适配，包括单version（一对一）和多version（一对多）的情形。
+
+> **NOTE：**
 hbase多version的列簇，不同column之间没有任何对应关系，所以不要尝试在不同的column之间找行的对应关系。
 
 
@@ -305,7 +306,7 @@ public void test_get() throws HBaseDAOException {
 }
 ```
 
->完整地代码示例请参考`com.taobao.hbasedao.sample`
+> 完整地代码示例请参考`com.taobao.hbasedao.sample`
 代码工程在：[hbasedao](https://github.com/mh494078416/hbasedao)
 
 
