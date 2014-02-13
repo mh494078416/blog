@@ -4,6 +4,11 @@
 		<loc>http://www.codeforfun.info/</loc>
 	</url>
 	<url>
+		<loc>http://www.codeforfun.info/java/%E8%AE%A1%E7%AE%97%E5%9C%B0%E5%9B%BE%E4%B8%8A%E4%B8%80%E4%B8%AA%E7%82%B9%E9%99%84%E8%BF%91%E7%9A%84%E7%82%B9%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95%E5%AE%9E%E8%B7%B5/</loc>
+		<lastmod>2014-02-13</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
 		<loc>http://www.codeforfun.info/hbase/hbase-orm%E4%B8%AD%E9%97%B4%E5%B1%82hbasedao/</loc>
 		<lastmod>2014-01-03</lastmod>
 		<changefreq>weekly</changefreq>

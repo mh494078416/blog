@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>项目中资源文件的获取</title>
+    <title>计算地图上一个点附近的点的两种方法实践</title>
     
     <meta name="author" content="mahang">
 
@@ -78,59 +78,90 @@
 
     <div class="content">
         <div class="page-header">
-    <h1>项目中资源文件的获取 </h1>
+    <h1>计算地图上一个点附近的点的两种方法实践 </h1>
 </div>
 
 <div class="row">
     <div class="span9">
-        <ul>
-<li>通过类加载器获取</li>
-</ul>
+        <h3>geohash + sql数据库</h3>
 
-<pre><code>InputStream inputStream1 = this.getClass().getClassLoader()
-                .getResourceAsStream(&quot;ExternalResource/data.xml&quot;);
-</code></pre>
+<ol>
+<li><p>首先按照地址的经纬度按照下图的方法得出0101的编码，编码位数越多，描述地址的精确度越高。具体方法是：先计算维度，范围(18.09, 53.33)平分成两个区间(18.09, 35.71)、(35.71, 53.33)， 如果目标纬度位于前一个区间，则编码为0，否则编码为1。由于39.92324属于(35.71, 53.33)，所以取编码为1。然后再将(35.71, 53.33)分成 (35.71, 44.52), (44.52, 53.33)两个区间，而39.92324位于(35.71, 44.52)，所以编码为0。以此类推，直到精度符合要求为止，得到纬度编码为1011 1000 1100 0111 1001。
+<img src="assets/media/geohash.png"></img></p></li>
+
+<li><p>然后再对得出的类似这种形式的地址<code>11100 11101 00100 01111 00000 01101 01011 00001</code>进行base32编码，用0-9、b-z（去掉a, i, l, o）这32个字母进行base32编码，得到(39.92324, 116.3906)的编码为wx4g0ec1，这个就是地址的geohash值。</p></li>
+
+<li><p>可以把编码之后的地址数据放入数据库，以geohash字段建索引。</p></li>
+
+<li><p>查找一个点附近的店就可以通过这种方式，sql数据库：<code>SELECT * FROM address WHERE geohash LIKE 'wx4g0%'</code>。wx4g0代表的是地图上一个正方形的块，如下图阴影选择的区域。</p>
+
+<p><img src="assets/media/geoselect.png"></img></p></li>
+</ol>
+
+<h3>经度、维度取交集 + 内存排序</h3>
+
+<ol>
+<li>保存地址数据的时候，冗余一个城市的字段</li>
+<li>系统启动时加载所有的地址点到内存</li>
+<li>以城市对数据分片，每个城市内分别建立经度、纬度上地址点的索引，使用TreeMap<Double, Point>保存</li>
+<li>给出一个经度120.024082，计算附近1000m以内的点，比如：事先计算好的1000m距离的经度差是0.01042，那么就可以查询在[120.018872, 120.029292]范围内的点，同样的方法，查询到纬度距离1000米以内的点</li>
+<li>然后取两个集合的交集，如果取得的交集是空，那么可以重复步骤2，扩大查找范围到1000m*5，再次查询经度、纬度上的点，然后再取交集</li>
+<li>取得交集后的点就是图中以红点为中心，正方型圈出来的点，然后计算与红点的具体距离，距离计算公式可以参考这篇文章里的算法</li>
+<li>然后对交集里的点按距离排序，就能够得到按照距离排序后的点了</li>
+
+<li><p>为什么按照城市分片是因为，如果在全国范围内构件经纬度的索引，查询一个点附近的点，这个跨度就会很大，可能1000m内纬度距离内的点就会遍布在内蒙古和海南，这就会把距离很远的点也列入附近的点考虑的范围，实际取交集后重合的点却很少。所以一种优化的做法是，按照城市的维度分别构建经度、纬度的map。给出一个点时首先根据经纬度计算出它所在的城市，然后在城市的范围内查找，这样取交集成功的机会就会大很多，查找效率会提高不少</p>
+
+<p><img src="assets/media/point.png" width="80%"></img></p></li>
+</ol>
+
+<h3>优缺点比较：</h3>
 
 <ul>
-<li>spring ApplicationContext获取</li>
+<li><p>geohash</p>
+
+<p>优点：</p>
+
+<ul>
+<li>可以支持地址点的位置信息变化的情况，需要更新数据库里地geohash字段</li>
+<li>数据量小时，数据库很好的承接了附近点的计算</li>
 </ul>
 
-<pre><code>public class SpringApplicationContextHolder implements ApplicationContextAware {
-    private static ApplicationContext context;
+<p>缺点：
+- 特殊情况时计算的附近的点不准确，比如正好处于正方形边缘的点
+- 需要提前计算geohash值，并持久化到数据库中
+- 数据量增多，like查询会变慢，数据库查询、写入压力大，容易形成单点
+- 开发成本较高</p></li>
 
-    @Override
-    public void setApplicationContext(ApplicationContext context) throws BeansException {
-        SpringApplicationContextHolder.context = context;
-    }
+<li><p>内存计算</p>
 
-    public static Object getSpringBean(String beanName) {
-        notEmpty(beanName, &quot;bean name is required&quot;);
-        return context.getBean(beanName);
-    }
+<p>优点：</p>
 
-    public static File getResourceFile(String resource) throws IOException {
-        return context.getResource(resource).getFile();
-    }
-}
-</code></pre>
+<ul>
+<li>计算附近的点相对准确</li>
+<li>开发成本低，不需要额外建表</li>
+<li>可以通过不同机器加载分片的数据，解决数据量大的问题</li>
+</ul>
 
-<p>需要注意的是，本地调试eclipse编译时只会把固定格式的文件（比如xml）copy到classes目录下，但txt格式的文件它是不会copy过去的。本来正常运行的代码，因为不同的文件格式却怎么也获取不到文件的输入流，在这个小坑里也折腾了好一会儿，记录下来，防止下次忘记了。</p>
+<p>缺点：
+- 需要系统启动时加载数据并构件经度、纬度上地址点的索引，在构建完索引之前，是没法提供服务的
+- 地址点的位置信息不能改变，对于经常变化位置的场景需要采用geohash   - 对于两个属于不同市的相距很近的点是计算不到的，这个需要根据场景取舍，此方法适用于附近的餐馆、银行等场景，因为它们有极大可能处在同一市内，而不适用于周围的人</p></li>
+</ul>
 
         <hr>
         <div class="pagination">
             <ul>
                 <ul>
                     
-                    <li class="prev"><a href="/code/%E8%AF%BB%E5%8F%96%E7%BD%91%E7%BB%9C%E4%B8%8A%E6%96%87%E4%BB%B6%E5%88%B0%E5%86%85%E5%AD%98/" title="读取网络上文件到内存">&larr; Previous</a></li>
                     
+                    <li class="prev disabled"><a>&larr; Previous</a></li>
                     
 
                     <li><a href="/archive">Archive</a></li>
 
                     
+                    <li class="next"><a href="/hbase/hbase-orm%E4%B8%AD%E9%97%B4%E5%B1%82hbasedao/" title="hbase orm中间层hbasedao">Next &rarr;</a></li>
                     
-                    <li class="next disabled"><a>Next &rarr;</a>
-                        
+                    
                 </ul>
             </ul>
         </div>
@@ -154,14 +185,10 @@
 
     <div class="span3">
         <h4>Published</h4>
-        <div class="date"><span>2011-11-09</span></div>
+        <div class="date"><span>2014-02-13</span></div>
         <br>
         <h4>Categories</h4>
         <ul class="tag_box">
-            
-            <li>
-  <a href="/categories/#code-ref">code <span>2</span></a>
-</li>
             
             <li>
   <a href="/categories/#java-ref">java <span>5</span></a>
@@ -171,10 +198,6 @@
         <br>
         <h4>Tags</h4>
         <ul class="tag_box">
-            
-            <li>
-  <a href="/tags/#code-ref">code <span>2</span></a>
-</li>
             
             <li>
   <a href="/tags/#java-ref">java <span>5</span></a>

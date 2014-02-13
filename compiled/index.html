@@ -83,6 +83,43 @@
         
 
 <div class="post">
+    <h3 class="title"><a href="/java/%E8%AE%A1%E7%AE%97%E5%9C%B0%E5%9B%BE%E4%B8%8A%E4%B8%80%E4%B8%AA%E7%82%B9%E9%99%84%E8%BF%91%E7%9A%84%E7%82%B9%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95%E5%AE%9E%E8%B7%B5/">计算地图上一个点附近的点的两种方法实践</a> <span class="date">2014-02-13</span></h3>
+
+    <h3>geohash + sql数据库</h3>
+
+<ol>
+<li><p>首先按照地址的经纬度按照下图的方法得出0101的编码，编码位数越多，描述地址的精确度越高。具体方法是：先计算维度，范围(18.09, 53.33)平分成两个区间(18.09, 35.71)、(35.71, 53.33)， 如果目标纬度位于前一个区间，则编码为0，否则编码为1。由于39.92324属于(35.71, 53.33)，所以取编码为1。然后再将(35.71, 53.33)分成 (35.71, 44.52), (44.52, 53.33)两个区间，而39.92324位于(35.71, 44.52)，所以编码为0。以此类推，直到精度符合要求为止，得到纬度编码为1011 1000 1100 0111 1001。
+<img src="assets/media/geohash.png"></img></p></li>
+
+<li><p>然后再对得出的类似这种形式的地址<code>11100 11101 00100 01111 00000 01101 01011 00001</code>进行base32编码，用0-9、b-z（去掉a, i, l, o）这32个字母进行base32编码，得到(39.92324, 116.3906)的编码为wx4g0ec1，这个就是地址的geohash值。</p></li>
+
+<li><p>可以把编码之后的地址数据放入数据库，以geohash字段建索引。</p></li>
+
+<li><p>查找一个点附近的店就可以通过这种方式，sql数据库：<code>SELECT * FROM address WHERE geohash LIKE 'wx4g0%'</code>。wx4g0代表的是地图上一个正方形的块，如下图阴影选择的区域。</p>
+
+<p><img src="assets/media/geoselect.png"></img></p></li>
+</ol>
+
+<h3>经度、维度取交集 + 内存排序</h3>
+
+<ol>
+<li>保存地址数据的时候，冗余一个城市的字段</li>
+<li>系统启动时加载所有的地址点到内存</li>
+<li>以城市对数据分片，每个城市内分别建立经度、纬度上地址点的索引，使用TreeMap<Double, Point>保存</li>
+<li>给出一个经度120.024082，计算附近1000m以内的点，比如：事先计算好的1000m距离的经度差是0.01042，那么就可以查询在[120.018872, 120.029292]范围内的点，同样的方法，查询到纬度距离1000米以内的点</li>
+<li>然后取两个集合的交集，如果取得的交集是空，那么可以重复步骤2，扩大查找范围到1000m*5，再次查询经度、纬度上的点，然后再取交集</li>
+<li>取得交集后的点就是图中以红点为中心，正方型圈出来的点，然后计算与红点的具体距离，距离计算公式可以参考这篇文章里的算法</li>
+<li>然后对交集里的点按距离排序，就能够得到按照距离排序后的点了</li>
+<li>为什么按照城市分片是因为，如果在全国范围内构件经纬度的索引，查询一个点附近的点，这个跨度就会很大，可能1000m内纬度距离内的点就会遍布在内蒙古和海南，这就会把距离很远的点也列入附近的点考虑的范围，实际取交集后重合的点却很少。所以一种优化的做法是，按照城市的维度分别构建经度、纬度的map。给出一个点时首先根据经纬度计算出它所在的城市，然后在城市的范围内查找，这样取交集成功的机会就会大很多，查找效率会提高不少</li>
+</ol>
+
+
+    <div class="more">
+        <a href="/java/%E8%AE%A1%E7%AE%97%E5%9C%B0%E5%9B%BE%E4%B8%8A%E4%B8%80%E4%B8%AA%E7%82%B9%E9%99%84%E8%BF%91%E7%9A%84%E7%82%B9%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95%E5%AE%9E%E8%B7%B5/" class="btn">read more..</a>
+    </div>
+</div>
+
+<div class="post">
     <h3 class="title"><a href="/hbase/hbase-orm%E4%B8%AD%E9%97%B4%E5%B1%82hbasedao/">hbase orm中间层hbasedao</a> <span class="date">2014-01-03</span></h3>
 
     <h2>背景</h2>
@@ -424,37 +461,6 @@ func (this SortedLinkedList) PutOnTop(value interface{}) {
     </div>
 </div>
 
-<div class="post">
-    <h3 class="title"><a href="/go/go%E8%AF%AD%E8%A8%80channel%E7%9A%84%E5%88%AB%E6%A0%B7%E7%94%A8%E6%B3%95/">go语言channel的别样用法</a> <span class="date">2013-07-10</span></h3>
-
-    <p>1.返回值使用通道</p>
-
-<pre><code>func main() {
-    // 生成随机数作为一个服务
-    randService := randGenerator()
-    // 从服务中读取随机数并打印
-    fmt.Printf(&quot;%d\n&quot;,&lt;-randService)
-}
-func randGenerator() chan int {
-    // 创建通道
-    out := make(chan int)
-    // 创建协程
-    go func() {
-        for {
-            //向通道内写入数据，如果无人读取会等待
-            out &lt;- rand.Int()
-        }
-    }()
-    return out
-}
-</code></pre>
-
-
-    <div class="more">
-        <a href="/go/go%E8%AF%AD%E8%A8%80channel%E7%9A%84%E5%88%AB%E6%A0%B7%E7%94%A8%E6%B3%95/" class="btn">read more..</a>
-    </div>
-</div>
-
 
 <div class="pagination">
   <ul>
@@ -484,19 +490,7 @@ func randGenerator() chan int {
 </li>
                 
                 <li>
-  <a href="/categories/#hbase-ref">hbase <span>1</span></a>
-</li>
-                
-                <li>
-  <a href="/categories/#java-ref">java <span>4</span></a>
-</li>
-                
-                <li>
-  <a href="/categories/#vim-ref">vim <span>1</span></a>
-</li>
-                
-                <li>
-  <a href="/categories/#raspberry-ref">raspberry <span>2</span></a>
+  <a href="/categories/#java-ref">java <span>5</span></a>
 </li>
                 
                 <li>
@@ -505,6 +499,18 @@ func randGenerator() chan int {
                 
                 <li>
   <a href="/categories/#Gor-ref">Gor <span>1</span></a>
+</li>
+                
+                <li>
+  <a href="/categories/#raspberry-ref">raspberry <span>2</span></a>
+</li>
+                
+                <li>
+  <a href="/categories/#vim-ref">vim <span>1</span></a>
+</li>
+                
+                <li>
+  <a href="/categories/#hbase-ref">hbase <span>1</span></a>
 </li>
                 
                 <li>
