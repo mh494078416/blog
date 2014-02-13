@@ -89,7 +89,7 @@
 
 <ol>
 <li><p>首先按照地址的经纬度按照下图的方法得出0101的编码，编码位数越多，描述地址的精确度越高。具体方法是：先计算维度，范围(18.09, 53.33)平分成两个区间(18.09, 35.71)、(35.71, 53.33)， 如果目标纬度位于前一个区间，则编码为0，否则编码为1。由于39.92324属于(35.71, 53.33)，所以取编码为1。然后再将(35.71, 53.33)分成 (35.71, 44.52), (44.52, 53.33)两个区间，而39.92324位于(35.71, 44.52)，所以编码为0。以此类推，直到精度符合要求为止，得到纬度编码为1011 1000 1100 0111 1001。
-<img src="assets/media/geohash.png"></img></p></li>
+<img src="/assets/media/geohash.png"></img></p></li>
 
 <li><p>然后再对得出的类似这种形式的地址<code>11100 11101 00100 01111 00000 01101 01011 00001</code>进行base32编码，用0-9、b-z（去掉a, i, l, o）这32个字母进行base32编码，得到(39.92324, 116.3906)的编码为wx4g0ec1，这个就是地址的geohash值。</p></li>
 
@@ -97,7 +97,7 @@
 
 <li><p>查找一个点附近的店就可以通过这种方式，sql数据库：<code>SELECT * FROM address WHERE geohash LIKE 'wx4g0%'</code>。wx4g0代表的是地图上一个正方形的块，如下图阴影选择的区域。</p>
 
-<p><img src="assets/media/geoselect.png"></img></p></li>
+<p><img src="/assets/media/geoselect.png"></img></p></li>
 </ol>
 
 <h3>经度、维度取交集 + 内存排序</h3>
@@ -486,23 +486,15 @@ func (this SortedLinkedList) PutOnTop(value interface{}) {
                 </li>
                 
                 <li>
-  <a href="/categories/#java-ref">java <span>5</span></a>
-</li>
-                
-                <li>
-  <a href="/categories/#raspberry-ref">raspberry <span>2</span></a>
-</li>
-                
-                <li>
-  <a href="/categories/#code-ref">code <span>2</span></a>
-</li>
-                
-                <li>
   <a href="/categories/#go-ref">go <span>7</span></a>
 </li>
                 
                 <li>
   <a href="/categories/#hbase-ref">hbase <span>1</span></a>
+</li>
+                
+                <li>
+  <a href="/categories/#java-ref">java <span>5</span></a>
 </li>
                 
                 <li>
@@ -514,7 +506,15 @@ func (this SortedLinkedList) PutOnTop(value interface{}) {
 </li>
                 
                 <li>
+  <a href="/categories/#code-ref">code <span>2</span></a>
+</li>
+                
+                <li>
   <a href="/categories/#Gor-ref">Gor <span>1</span></a>
+</li>
+                
+                <li>
+  <a href="/categories/#raspberry-ref">raspberry <span>2</span></a>
 </li>
                 
             </ul>
