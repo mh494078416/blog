@@ -85,7 +85,11 @@
 <div class="post">
     <h3 class="title"><a href="/java/%E8%AE%A1%E7%AE%97%E5%9C%B0%E5%9B%BE%E4%B8%8A%E4%B8%80%E4%B8%AA%E7%82%B9%E9%99%84%E8%BF%91%E7%9A%84%E7%82%B9%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95%E5%AE%9E%E8%B7%B5/">计算地图上一个点附近的点的两种方法实践</a> <span class="date">2014-02-13</span></h3>
 
-    <h3>一、geohash + sql数据库</h3>
+    <p>随着移动终端的普及，LBS的应用慢慢增多起来，比如附近的人功能成了陌陌微信等im的标配，以及大众点评的附近的餐馆、酒店等。</p>
+
+<p>通过一个点的gps信息找出它附近的点，就是上面这样功能的核心。通常有两种实现方法，各有优缺点，需要根据场景不同选择适合的。</p>
+
+<h3>一、geohash + sql数据库</h3>
 
 <ol>
 <li><p>首先按照地址的经纬度按照下图的方法得出0101的编码，编码位数越多，描述地址的精确度越高。具体方法是：先计算维度，范围(18.09, 53.33)平分成两个区间(18.09, 35.71)、(35.71, 53.33)， 如果目标纬度位于前一个区间，则编码为0，否则编码为1。由于39.92324属于(35.71, 53.33)，所以取编码为1。然后再将(35.71, 53.33)分成 (35.71, 44.52), (44.52, 53.33)两个区间，而39.92324位于(35.71, 44.52)，所以编码为0。以此类推，直到精度符合要求为止，得到纬度编码为1011 1000 1100 0111 1001。
@@ -486,11 +490,11 @@ func (this SortedLinkedList) PutOnTop(value interface{}) {
                 </li>
                 
                 <li>
-  <a href="/categories/#go-ref">go <span>7</span></a>
+  <a href="/categories/#java-ref">java <span>5</span></a>
 </li>
                 
                 <li>
-  <a href="/categories/#mac-ref">mac <span>1</span></a>
+  <a href="/categories/#raspberry-ref">raspberry <span>2</span></a>
 </li>
                 
                 <li>
@@ -498,7 +502,15 @@ func (this SortedLinkedList) PutOnTop(value interface{}) {
 </li>
                 
                 <li>
-  <a href="/categories/#java-ref">java <span>5</span></a>
+  <a href="/categories/#go-ref">go <span>7</span></a>
+</li>
+                
+                <li>
+  <a href="/categories/#Gor-ref">Gor <span>1</span></a>
+</li>
+                
+                <li>
+  <a href="/categories/#mac-ref">mac <span>1</span></a>
 </li>
                 
                 <li>
@@ -507,14 +519,6 @@ func (this SortedLinkedList) PutOnTop(value interface{}) {
                 
                 <li>
   <a href="/categories/#vim-ref">vim <span>1</span></a>
-</li>
-                
-                <li>
-  <a href="/categories/#raspberry-ref">raspberry <span>2</span></a>
-</li>
-                
-                <li>
-  <a href="/categories/#Gor-ref">Gor <span>1</span></a>
 </li>
                 
             </ul>
