@@ -28,3 +28,25 @@ add10(3)
 
 // 函数式编程的柯里化其实相当于实现了数据公式：fa(x, y) = fb(x)(y)，把函数fa拆解成两个函数fb(x)和fb(x)(y)
 ```
+
+output:
+
+```
+scala> def fn1(x: Int, y: Int) = x + y
+fn1: (x: Int, y: Int)Int
+
+scala> def fn2(x: Int)(y: Int) = x + y
+fn2: (x: Int)(y: Int)Int
+
+scala> fn1(1, 2)
+res43: Int = 3
+
+scala> fn2(1)(2)
+res44: Int = 3
+
+scala> var add10 = fn2(10)(_)
+add10: Int => Int = <function1>
+
+scala> add10(3)
+res45: Int = 13
+```
