@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>About Me</title>
+    <title>函数式编程语言的柯里化含义</title>
+    
+    <meta name="description" content="函数是编程语言的柯里化含义">
     
     <meta name="author" content="mahang">
 
@@ -63,9 +65,9 @@
 
                 
                 
-  <li class="active"><a href="/about" class="active">About Me</a></li>
 
 
+  <li><a href="/about">About Me</a></li>
 
 
                 
@@ -77,77 +79,87 @@
 <div class="container">
 
     <div class="content">
-        
+        <div class="page-header">
+    <h1>函数式编程语言的柯里化含义 </h1>
+</div>
+
 <div class="row">
     <div class="span9">
-        <p>Java码农一枚</p>
+        <p>函数式编程语言的几个特征中比较难于理解的就是柯里化了，下面一个简单的例子帮助理解一下，一句话概括的话就是：
+    柯里化使函数式编程语言具有动态创建函数的能力。</p>
+
+<pre><code>// 普通过程式编程语言的写法
+def fn1(x: Int, y: Int) = x + y
+// 函数式编程语言的写法
+def fn2(x: Int)(y: Int) = x + y
+
+fn1(1, 2)
+fn2(1)(2)
+
+// 但是函数式编程语言具有柯里化的特性，允许动态的创建一个函数，比如
+var add10 = fn2(10)(_)
+add10(3)
+
+// 函数式编程的柯里化其实相当于实现了数据公式：fa(x, y) = fb(x)(y)，把函数fa拆解成两个函数fb(x)和fb(x)(y)
+</code></pre>
+
+        <hr>
+        <div class="pagination">
+            <ul>
+                <ul>
+                    
+                    
+                    <li class="prev disabled"><a>&larr; Previous</a></li>
+                    
+
+                    <li><a href="/archive">Archive</a></li>
+
+                    
+                    <li class="next"><a href="/java/%E8%AE%A1%E7%AE%97%E5%9C%B0%E5%9B%BE%E4%B8%8A%E4%B8%80%E4%B8%AA%E7%82%B9%E9%99%84%E8%BF%91%E7%9A%84%E7%82%B9%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95%E5%AE%9E%E8%B7%B5/" title="计算地图上一个点附近的点的两种方法实践">Next &rarr;</a></li>
+                    
+                    
+                </ul>
+            </ul>
+        </div>
+        <hr>
+        
+<div id="disqus_thread"></div>
+<script>
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
 
     </div>
+
     <div class="span3">
-        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
-            <ul class="nav nav-list">
-                <li class="nav-header">Site</li>
-                <li><a href="/archive">Archives</a></li>
-                <li><a href="/categories">Categories</a></li>
-                <li><a href="/tags">Tags</a></li>
-                <li><a href="/about">About</a></li>
-            </ul>
-        </div>
-        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
-            <ul class="nav nav-list">
-                <li class="nav-header">
-                    Categories
-                </li>
-                
-                <li>
-  <a href="/categories/#go-ref">go <span>7</span></a>
-</li>
-                
-                <li>
-  <a href="/categories/#java-ref">java <span>5</span></a>
-</li>
-                
-                <li>
-  <a href="/categories/#hbase-ref">hbase <span>1</span></a>
-</li>
-                
-                <li>
-  <a href="/categories/#raspberry-ref">raspberry <span>2</span></a>
-</li>
-                
-                <li>
-  <a href="/categories/#mac-ref">mac <span>1</span></a>
-</li>
-                
-                <li>
-  <a href="/categories/#Gor-ref">Gor <span>1</span></a>
-</li>
-                
-                <li>
+        <h4>Published</h4>
+        <div class="date"><span>2014-07-07</span></div>
+        <br>
+        <h4>Categories</h4>
+        <ul class="tag_box">
+            
+            <li>
   <a href="/categories/#scala-ref">scala <span>1</span></a>
 </li>
-                
-                <li>
-  <a href="/categories/#vim-ref">vim <span>1</span></a>
+            
+        </ul>
+        <br>
+        <h4>Tags</h4>
+        <ul class="tag_box">
+            
+            <li>
+  <a href="/tags/#scala-ref">scala <span>1</span></a>
 </li>
-                
-                <li>
-  <a href="/categories/#code-ref">code <span>2</span></a>
-</li>
-                
-            </ul>
-        </div>
-        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
-            <ul class="nav nav-list">
-                <li class="nav-header">
-                    Links
-                </li>
-                <li><a href="http://www.cnblogs.com/mahang/" target="_blank">mac的学习笔记</a></li>
-            </ul>
-        </div>
-        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
-            <iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=2&ptype=1&speed=0&skin=5&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=1876499121&verifier=49ff9b08&dpc=1"></iframe>
-        </div>
+            
+        </ul>
     </div>
 </div>
 

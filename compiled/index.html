@@ -83,6 +83,33 @@
         
 
 <div class="post">
+    <h3 class="title"><a href="/scala/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E7%9A%84%E6%9F%AF%E9%87%8C%E5%8C%96%E5%90%AB%E4%B9%89/">函数式编程语言的柯里化含义</a> <span class="date">2014-07-07</span></h3>
+
+    <p>函数式编程语言的几个特征中比较难于理解的就是柯里化了，下面一个简单的例子帮助理解一下，一句话概括的话就是：
+    柯里化使函数式编程语言具有动态创建函数的能力。</p>
+
+<pre><code>// 普通过程式编程语言的写法
+def fn1(x: Int, y: Int) = x + y
+// 函数式编程语言的写法
+def fn2(x: Int)(y: Int) = x + y
+
+fn1(1, 2)
+fn2(1)(2)
+
+// 但是函数式编程语言具有柯里化的特性，允许动态的创建一个函数，比如
+var add10 = fn2(10)(_)
+add10(3)
+
+// 函数式编程的柯里化其实相当于实现了数据公式：fa(x, y) = fb(x)(y)，把函数fa拆解成两个函数fb(x)和fb(x)(y)
+</code></pre>
+
+
+    <div class="more">
+        <a href="/scala/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E7%9A%84%E6%9F%AF%E9%87%8C%E5%8C%96%E5%90%AB%E4%B9%89/" class="btn">read more..</a>
+    </div>
+</div>
+
+<div class="post">
     <h3 class="title"><a href="/java/%E8%AE%A1%E7%AE%97%E5%9C%B0%E5%9B%BE%E4%B8%8A%E4%B8%80%E4%B8%AA%E7%82%B9%E9%99%84%E8%BF%91%E7%9A%84%E7%82%B9%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95%E5%AE%9E%E8%B7%B5/">计算地图上一个点附近的点的两种方法实践</a> <span class="date">2014-02-13</span></h3>
 
     <p>随着移动终端的普及，LBS的应用慢慢增多起来，比如附近的人功能成了陌陌微信等im的标配，以及大众点评的附近的餐馆、酒店等。</p>
@@ -425,46 +452,6 @@ func (this SortedLinkedList) PutOnTop(value interface{}) {
     </div>
 </div>
 
-<div class="post">
-    <h3 class="title"><a href="/java/java%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B9%8Blambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/">java函数式编程之lambda表达式</a> <span class="date">2013-08-06</span></h3>
-
-    <p>作为比较老牌的面向对象的编程语言java，在对函数式编程的支持上一直不温不火。</p>
-
-<p>认为面向对象式编程就应该纯粹的面向对象，于是经常看到这样的写法：如果你想写一个方法，那么就必须把它放到一个类里面，然后new出来对象，对象调用这个方法。</p>
-
-<p>这种方式在函数式编程语言看来太死板，没有必要在对待多种编程范式上采取非此即彼的做法。</p>
-
-<p>如今比较现代的编程语言也都是多编程范式的支持，不再去对一种编程范式固守一隅，一种语言可能会同时具有面向对象、函数式、元编程等多种特性，这方面java的后来者C#都走在她的前面。</p>
-
-<p>终于在jdk8里发现了lambda表达式的影子，java也开始加入这种函数式编程特性，java码农们终于在之前老土的方法之外有了一种更为简便的选择。</p>
-
-<ul>
-<li>首先来看，lambda之前java的做法：
-使用匿名内部类：</li>
-</ul>
-
-<pre><code>public void testAnonymousClass() {
-    Integer[] nums = {2, 5, 1, 6};
-    Arrays.sort(nums, new Comparator&lt;Integer&gt;() {
-        @Override
-        public int compare(Integer o1, Integer o2) {
-            if(o1 &lt; o2) 
-                return -1;
-            return 0;
-        }
-    });
-    for (Integer n : nums) {
-        System.out.println(n);
-    }
-}
-</code></pre>
-
-
-    <div class="more">
-        <a href="/java/java%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B9%8Blambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="btn">read more..</a>
-    </div>
-</div>
-
 
 <div class="pagination">
   <ul>
@@ -490,27 +477,11 @@ func (this SortedLinkedList) PutOnTop(value interface{}) {
                 </li>
                 
                 <li>
-  <a href="/categories/#java-ref">java <span>5</span></a>
-</li>
-                
-                <li>
-  <a href="/categories/#raspberry-ref">raspberry <span>2</span></a>
-</li>
-                
-                <li>
-  <a href="/categories/#code-ref">code <span>2</span></a>
-</li>
-                
-                <li>
   <a href="/categories/#go-ref">go <span>7</span></a>
 </li>
                 
                 <li>
-  <a href="/categories/#Gor-ref">Gor <span>1</span></a>
-</li>
-                
-                <li>
-  <a href="/categories/#mac-ref">mac <span>1</span></a>
+  <a href="/categories/#java-ref">java <span>5</span></a>
 </li>
                 
                 <li>
@@ -518,7 +489,27 @@ func (this SortedLinkedList) PutOnTop(value interface{}) {
 </li>
                 
                 <li>
+  <a href="/categories/#raspberry-ref">raspberry <span>2</span></a>
+</li>
+                
+                <li>
+  <a href="/categories/#mac-ref">mac <span>1</span></a>
+</li>
+                
+                <li>
+  <a href="/categories/#Gor-ref">Gor <span>1</span></a>
+</li>
+                
+                <li>
+  <a href="/categories/#scala-ref">scala <span>1</span></a>
+</li>
+                
+                <li>
   <a href="/categories/#vim-ref">vim <span>1</span></a>
+</li>
+                
+                <li>
+  <a href="/categories/#code-ref">code <span>2</span></a>
 </li>
                 
             </ul>
